@@ -118,11 +118,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function attachCreateAccountEvent() {
         const createAccountLink = document.querySelector('.newAcc a');
+        const resetPasswordLink = document.querySelector('.forgot-link');
         if (createAccountLink) {
 
             createAccountLink.removeEventListener('click', showSignupForm);
 
             createAccountLink.addEventListener('click', showSignupForm);
+        }
+        if (resetPasswordLink) {
+            resetPasswordLink.removeEventListener('click', showResetForm);
+
+            resetPasswordLink.addEventListener('click', showResetForm);
         }
     }
 
@@ -148,8 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
             signupBox.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
 
             signupBox.innerHTML = `
-                <h2 class="login-title">Créer un compte</h2>
-                <p class="login-subtitle">Rejoignez City Flow pour gérer votre ville intelligente</p>
+
 
                 <form>
                     <input type="file" id="imageUpload" name="profilPicture" accept=".png, .jpg, .jpeg, .gif"
@@ -195,6 +200,53 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     <div class="newAcc">
                         <p>Vous avez déjà un compte? <a href="#" id="back-to-login">Se connecter</a></p>
+                    </div>
+                </form>
+            `;
+
+            loginBox.remove();
+            wrapper.insertBefore(signupBox, document.querySelector('.city-features'));
+
+
+            setTimeout(() => {
+                signupBox.style.opacity = '0.95';
+                signupBox.style.transform = 'translateY(0)';
+            }, 50);
+
+
+            document.getElementById('back-to-login').addEventListener('click', showLoginForm);
+        }, 500);
+    }
+
+    function showResetForm(e) {
+        e.preventDefault();
+
+
+        const loginBox = document.querySelector('.box');
+        const wrapper = document.querySelector('.wrapper');
+
+
+        loginBox.style.opacity = '0';
+        loginBox.style.transform = 'translateY(20px)';
+        loginBox.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+        setTimeout(() => {
+
+            const signupBox = document.createElement('div');
+            signupBox.className = 'box signup-box';
+            signupBox.style.opacity = '0';
+            signupBox.style.transform = 'translateY(20px)';
+            signupBox.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+            signupBox.innerHTML = `
+                <h2 class="login-title">Reintialiser votre mot de passe</h2>
+                <form>
+                    <div class="inputBox">
+                        <input type="email" placeholder="Adresse e-mail" name="email" required>
+                        <i class='bx bxs-envelope'></i>
+                    </div>
+                    <div class="newAcc">
+                        <p>Vous vous souvenez de votre mot de passe ?  <a href="#" id="back-to-login">Se connecter</a></p>
                     </div>
                 </form>
             `;

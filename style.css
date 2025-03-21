@@ -28,7 +28,6 @@ body {
 .round-image {
     border-radius: 50%;
     width: 150px;
-    height: 150px;
     object-fit: cover;
 }
 
@@ -329,7 +328,7 @@ body {
     font-weight: 500;
 }
 
-/* Animation pour faire apparaître les éléments */
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -351,7 +350,7 @@ body {
     animation-fill-mode: both;
 }
 
-/* Media queries pour la réactivité */
+
 @media only screen and (max-width: 768px) {
     .box {
         width: 90%;
