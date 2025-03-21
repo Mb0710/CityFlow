@@ -115,13 +115,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     attachCreateAccountEvent();
 
-    // Fonction pour attacher l'événement au lien "Créer un compte"
+
     function attachCreateAccountEvent() {
         const createAccountLink = document.querySelector('.newAcc a');
         if (createAccountLink) {
-            // Retirer les anciens événements pour éviter les doublons
+
             createAccountLink.removeEventListener('click', showSignupForm);
-            // Ajouter le nouvel événement
+
             createAccountLink.addEventListener('click', showSignupForm);
         }
     }
@@ -205,20 +205,20 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 500);
     }
 
-    // Fonction pour afficher le formulaire de connexion
+
     function showLoginForm(e) {
         e.preventDefault();
 
-        // Récupérer le formulaire d'inscription existant
+
         const signupBox = document.querySelector('.box.signup-box');
         const wrapper = document.querySelector('.wrapper');
 
-        // Animation de sortie
+
         signupBox.style.opacity = '0';
         signupBox.style.transform = 'translateY(20px)';
 
         setTimeout(() => {
-            // Recréer le formulaire de connexion
+
             const newLoginBox = document.createElement('div');
             newLoginBox.className = 'box';
             newLoginBox.style.opacity = '0';
