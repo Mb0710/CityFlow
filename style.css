@@ -25,6 +25,18 @@ body {
     align-items: center;
 }
 
+.round-image {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.round-image:hover {
+    filter: brightness(-120%);
+}
+
+
 .box {
     background-color: rgba(255, 255, 255, 0.95);
     padding: 40px;

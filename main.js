@@ -152,9 +152,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 <p class="login-subtitle">Rejoignez City Flow pour gérer votre ville intelligente</p>
 
                 <form>
+                    <input type="file" id="imageUpload" name="profilPicture" accept=".png, .jpg, .jpeg, .gif"
+                    style="display:none">
+                    <label for="imageUpload">
+                        <img src="assets/profilPic.png" class="round-image" alt="">
+                    </label>
                     <div class="inputBox">
                         <input type="text" placeholder="Nom complet" name="fullname" required>
                         <i class='bx bxs-user'></i>
+                    </div>
+                    <div class="inputBox">
+                        <select name="gender" required >
+                            <option value="">Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="others">Others</option>
+                        </select>
+                        <i class='bx bx-male-female'></i>
+                    </div>
+                    <div class="inputBox">
+                        <input type="text" placeholder="Profession" name="Profession" required>
+                        <i class='bx bx-briefcase'></i>
                     </div>
                     <div class="inputBox">
                         <input type="email" placeholder="Adresse e-mail" name="email" required>
@@ -175,26 +193,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     <button type="submit" class="button">Créer un compte</button>
 
-                    <div class="login-divider">
-                        <span>ou</span>
-                    </div>
-
-                    <div class="social-login">
-                        <button type="button" class="social-btn google"><i class='bx bxl-google'></i> Google</button>
-                        <button type="button" class="social-btn linkedin"><i class='bx bxl-linkedin'></i> LinkedIn</button>
-                    </div>
-
                     <div class="newAcc">
                         <p>Vous avez déjà un compte? <a href="#" id="back-to-login">Se connecter</a></p>
                     </div>
                 </form>
             `;
 
-            // Remplacer le formulaire
             loginBox.remove();
             wrapper.insertBefore(signupBox, document.querySelector('.city-features'));
 
-            // Animation d'entrée
+
             setTimeout(() => {
                 signupBox.style.opacity = '0.95';
                 signupBox.style.transform = 'translateY(0)';
