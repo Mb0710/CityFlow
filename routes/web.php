@@ -4,4 +4,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('login');
-}); #test
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+
+Route::get('/freetour', function () {
+    return view('freetour');
+});
