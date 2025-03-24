@@ -6,8 +6,8 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/map', function () {
+    return view('map');
 });
 
 Route::get('/freetour', function () {
