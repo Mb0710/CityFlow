@@ -158,28 +158,23 @@ document.addEventListener('DOMContentLoaded', function () {
             signupBox.innerHTML = `
 
 
-                <form>
+                 <form data-action="{{ route('register.submit') }}" method="POST" enctype="multipart/form-data">
                     <input type="file" id="imageUpload" name="profilPicture" accept=".png, .jpg, .jpeg, .gif"
                     style="display:none">
                     <label for="imageUpload">
                         <img src="assets/profilPic.png" class="round-image" alt="">
                     </label>
                     <div class="inputBox">
-                        <input type="text" placeholder="Nom complet" name="fullname" required>
+                        <input type="text" placeholder="Pseudonyme" name="login" required>
                         <i class='bx bxs-user'></i>
                     </div>
                     <div class="inputBox">
-                        <select name="gender" required >
-                            <option value="" disabled selected>Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="others">Others</option>
-                        </select>
-                        <i class='bx bx-male-female'></i>
+                        <input type="text" placeholder="Nom" name="name" required>
+                        <i class='bx bxs-user'></i>
                     </div>
                     <div class="inputBox">
-                        <input type="text" placeholder="Profession" name="Profession" required>
-                        <i class='bx bx-briefcase'></i>
+                        <input type="text" placeholder="Prenom" name="firstname" required>
+                        <i class='bx bxs-user'></i>
                     </div>
                     <div class="inputBox">
                         <input type="email" placeholder="Adresse e-mail" name="email" required>
@@ -190,10 +185,29 @@ document.addEventListener('DOMContentLoaded', function () {
                         <i class='bx bxs-lock'></i>
                     </div>
                     <div class="inputBox">
-                        <input type="password" placeholder="Confirmer le mot de passe" name="confirm_password" required>
-                        <i class='bx bxs-lock'></i>
+                        <input type="date" placeholder="Date de naissance" name="birth_date" required>
+                        <i class='bx bx-calendar'></i>
                     </div>
-
+                    <div class="inputBox">
+                        <select name="gender" required >
+                            <option value="" disabled selected>Genre</option>
+                            <option value="male">Homme</option>
+                            <option value="female">Femme</option>
+                            <option value="others">Autre</option>
+                        </select>
+                        <i class='bx bx-male-female'></i>
+                    </div>
+                    <div class="inputBox">
+                        <select name="status" required >
+                            <option value="" disabled selected>Status</option>
+                            <option value="resident">Resident</option>
+                            <option value="female">Travailleur</option>
+                            <option value="visitor">Visiteur</option>
+                            <option value="official">Officiel</option>
+                        </select>
+                    <i class='bx bx-briefcase'></i>
+                    </div>
+                    
                     <div class="remember-forgot">
                         <label><input type="checkbox" required> J'accepte les conditions</label>
                     </div>
