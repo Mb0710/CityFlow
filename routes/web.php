@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+
 
 Route::get('/', function () {
     return view('login');
@@ -8,8 +10,4 @@ Route::get('/', function () {
 
 Route::get('/map', function () {
     return view('map');
-});
-
-Route::get('/freetour', function () {
-    return view('freetour');
 });
