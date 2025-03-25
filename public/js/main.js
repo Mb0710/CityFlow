@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
             signupBox.innerHTML = `
 
 
-                 <form data-action="{{ route('register.submit') }}" method="POST" enctype="multipart/form-data">
+                 <form  enctype="multipart/form-data">
                     <input type="file" id="imageUpload" name="profilPicture" accept=".png, .jpg, .jpeg, .gif"
                     style="display:none">
                     <label for="imageUpload">
