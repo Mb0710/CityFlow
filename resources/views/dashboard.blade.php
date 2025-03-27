@@ -16,10 +16,10 @@
         <div id="container3D"></div>
         <div class="logo-container">
             <img src="./assets/logo.png" alt="City Flow Logo">
-            <button>Explorer la map</button>
-            <button>Ajouter des elements</button>
-            <button>Mon Profile</button>
-            <button id="deco">Deconnexion</button>
+            <div class="cloud"><button>Explorer la ville</button></div>
+            <div class="cloud"><button>Mon Profile</button></div>
+            <div class="cloud"><button>Ameliorer ma ville</button></div>
+            <div class="cloud" id="deco"><button>Deconnexion</button></div>
         </div>
 
     </div>

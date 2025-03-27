@@ -14,3 +14,8 @@ Route::get('/freetour', function () {
     return view('freetour');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+
+
