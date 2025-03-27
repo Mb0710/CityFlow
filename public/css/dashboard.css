@@ -11,7 +11,6 @@ body {
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-size: cover;
-    flex-direction: column;
     overflow: hidden;
 }
 
@@ -19,14 +18,11 @@ body {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
     position: relative;
     z-index: 5;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
 }
 
 .round-image {
@@ -45,16 +41,13 @@ body {
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    max-width: 380px;
-    max-height: 70vh;
-    box-sizing: border-box;
+    width: 380px;
     margin: 0 auto;
     position: relative;
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.8);
     z-index: 5;
     opacity: 0.95;
-    overflow-y: auto;
 }
 
 .box:hover {
@@ -177,13 +170,6 @@ body {
 
 .inputBox:hover .bx-male-female {
     color: #0d47a1;
-}
-
-.signup-box form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Espace les éléments du formulaire */
-    padding-bottom: 20px; /* Ajoute un peu d'espace en bas */
 }
 
 
@@ -321,12 +307,16 @@ body {
 }
 
 .logo-container {
-    position:fixed;
-    top: -50px;
-    left: 50%;
+    position: absolute;
+    top: -300px;
+    left: 10%;
     transform: translateX(-50%);
-    width: 200px;
+    width: 300px;
     z-index: 10;
+}
+
+#deco{
+    background: #34c924;
 }
 
 .logo-container img {
@@ -407,6 +397,31 @@ body {
     animation-fill-mode: both;
 }
 
+button {
+    width: 100%;
+    background: linear-gradient(180deg, #ffffff, #e3f2fd);
+    color: #37474f;
+    border: none;
+    padding: 15px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(173, 216, 230, 0.5);
+    transition: all 0.3s;
+    margin-bottom: 20px;
+    border: 2px solid #ffffff;
+    text-align: left;
+    display: block;
+    margin-left: 0;
+} 
+
+button:hover {
+    background: linear-gradient(180deg, #e3f2fd, #ffffff);
+    box-shadow: 0 12px 25px rgba(173, 216, 230, 0.7);
+    transform: translateY(-3px);
+}
+
 
 @media only screen and (max-width: 768px) {
     .box {
@@ -451,20 +466,3 @@ body {
         width: 90%;
     }
 }
-
-@media only screen and (max-height: 600px) {
-    .box {
-        padding: 20px;
-        max-height: 90vh;
-    }
-    
-    .inputBox {
-        margin-bottom: 15px;
-    }
-    
-    .round-image {
-        width: 100px; /* Réduit la taille de l'image de profil */
-    }
-}
-
-
