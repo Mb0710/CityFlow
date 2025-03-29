@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>City Flow - Plateforme de Gestion de Ville Intelligente</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="icon" href="{{ asset("./assets/logo2.png") }}">
@@ -22,7 +23,7 @@
 
             <form>
                 <div class="inputBox">
-                    <input type="text" placeholder="Nom d'utilisateur" name="username" required>
+                    <input type="text" placeholder="Nom d'utilisateur" name="login" required>
                     <i class='bx bxs-user-circle'></i>
                 </div>
                 <div class="inputBox">
