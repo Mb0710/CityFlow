@@ -7,7 +7,7 @@ Route::get('/', function () {
 });
 
 Route::get('/map', function () {
-    return view('map');
+    return view('maptest');
 });
 
 Route::get('/freetour', function () {
