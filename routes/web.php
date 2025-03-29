@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return view('login');
@@ -51,5 +52,16 @@ Route::get('/check-email', function (Illuminate\Http\Request $request) {
     return response()->json([
         'available' => !$exists
     ]);
+});
+
+Route::get('/test-email', function () {
+    $to = "mouloud.choupouloude@gmail.com"; // Remplacez par votre adresse email
+
+    Mail::raw('Ceci est un test d\'envoi d\'email depuis Laravel City Flow', function ($message) use ($to) {
+        $message->to($to)
+            ->subject('Test Email City Flow');
+    });
+
+    return 'Email de test envoyé à ' . $to;
 });
 
