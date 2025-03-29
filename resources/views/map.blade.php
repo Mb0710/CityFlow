@@ -151,10 +151,39 @@
               { visibility: "off" }
             ]
           }
+          
         ]
+        
+      });
+
+      var strictBounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(49.025, 2.055),
+        new google.maps.LatLng(49.045, 2.075)
+      );
+
+      // Écouter l'événement de fin de déplacement de la carte
+      google.maps.event.addListener(map, 'dragend', function () {
+        if (strictBounds.contains(map.getCenter())) return;
+
+        // La carte est en dehors des limites - Replacer la carte dans les limites
+        var c = map.getCenter(),
+            x = c.lng(),
+            y = c.lat(),
+            maxX = strictBounds.getNorthEast().lng(),
+            maxY = strictBounds.getNorthEast().lat(),
+            minX = strictBounds.getSouthWest().lng(),
+            minY = strictBounds.getSouthWest().lat();
+
+        if (x < minX) x = minX;
+        if (x > maxX) x = maxX;
+        if (y < minY) y = minY;
+        if (y > maxY) y = maxY;
+
+        // Recentrer la carte dans les limites
+        map.setCenter(new google.maps.LatLng(y, x));
       });
     }
-
+    
     // Fonction pour ajouter un marker
     function addMarker() {
       // Récupérer le nom du marker à partir de l'input
