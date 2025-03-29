@@ -182,8 +182,10 @@ body {
 .signup-box form {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Espace les éléments du formulaire */
-    padding-bottom: 20px; /* Ajoute un peu d'espace en bas */
+    gap: 15px;
+    /* Espace les éléments du formulaire */
+    padding-bottom: 20px;
+    /* Ajoute un peu d'espace en bas */
 }
 
 
@@ -250,6 +252,13 @@ body {
     position: relative;
     color: #78909c;
     font-size: 14px;
+}
+
+.validation-feedback {
+    font-size: 0.8rem;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
 }
 
 .social-login {
@@ -321,7 +330,7 @@ body {
 }
 
 .logo-container {
-    position:fixed;
+    position: fixed;
     top: -50px;
     left: 50%;
     transform: translateX(-50%);
@@ -457,14 +466,13 @@ body {
         padding: 20px;
         max-height: 90vh;
     }
-    
+
     .inputBox {
         margin-bottom: 15px;
     }
-    
+
     .round-image {
-        width: 100px; /* Réduit la taille de l'image de profil */
+        width: 100px;
+        /* Réduit la taille de l'image de profil */
     }
 }
-
-
