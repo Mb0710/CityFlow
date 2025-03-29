@@ -404,20 +404,20 @@ document.addEventListener('DOMContentLoaded', function () {
         birthDateInput.addEventListener('input', function () {
             const birthDate = new Date(this.value);
             const today = new Date();
-            const minAge = 13; // Âge minimum (par exemple pour COPPA)
-            const maxAge = 120; // Âge maximum raisonnable
+            const minAge = 13;
+            const maxAge = 100;
 
-            // Calcul de l'âge
+
             const ageDiff = today.getFullYear() - birthDate.getFullYear();
             const isMonthGreater = today.getMonth() < birthDate.getMonth();
             const isMonthEqual = today.getMonth() === birthDate.getMonth();
             const isDayLess = today.getDate() < birthDate.getDate();
 
-            // Ajustement de l'âge si le mois actuel est avant le mois d'anniversaire, 
-            // ou si c'est le même mois mais le jour actuel est avant le jour d'anniversaire
+
+
             const age = isMonthGreater || (isMonthEqual && isDayLess) ? ageDiff - 1 : ageDiff;
 
-            // Vérification de la validité
+
             if (isNaN(birthDate.getTime())) {
                 birthDateFeedback.textContent = 'Date de naissance invalide';
                 birthDateFeedback.style.color = 'red';
