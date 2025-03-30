@@ -15,7 +15,7 @@
     <div class="wrapper">
         <div id="container3D"></div>
         <div class="logo-container">
-            <img src="./assets/logo.png" alt="City Flow Logo">
+            <img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo">
             <div class="cloud"><button>Explorer la ville</button></div>
             <div class="cloud"><button>Mon Profile</button></div>
             <div class="cloud"><button>Ameliorer ma ville</button></div>

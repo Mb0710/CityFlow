@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
@@ -49,15 +51,36 @@ class AuthController extends Controller
         // Connexion automatique après l'inscription
         Auth::login($user);
 
-        if ($request->ajax() || $request->wantsJson()) {
+        event(new Registered($user));
+
+        /*if ($request->ajax() || $request->wantsJson()) {
             return response()->json([
                 'message' => 'Compte créé avec succès',
                 'redirect' => route('login')
             ], 201);
 
-        }
+        }*/
 
-        return redirect()->route('login')->with('success', 'Compte créé avec succès');
+        return redirect()->route('verification.notice')->with('success', 'Compte créé avec succès');
+    }
+
+    public function verifyNotice()
+    {
+        return view('auth.verify-email');
+    }
+
+    public function verifyEmail(EmailVerificationRequest $request)
+    {
+        $request->fulfill();
+
+        return redirect()->route('login');
+    }
+
+    public function verifyHandler(Request $request)
+    {
+        $request->user()->sendEmailVerificationNotification();
+
+        return back()->with('message', 'Verification link sent!');
     }
 
     public function login(Request $request)
