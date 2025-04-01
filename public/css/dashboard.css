@@ -152,7 +152,7 @@ body {
     box-shadow: 0 12px 25px rgba(173, 216, 230, 0.6);
 }
 
-/* Style spécial pour le bouton de déconnexion */
+/* Style spécial pour le bouton de déconnexion. */
 #deco {
     background: linear-gradient(135deg, #34c924, #2ecc71);
     color: white;
