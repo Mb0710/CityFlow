@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Mail;
@@ -18,8 +19,7 @@ Route::get('/freetour', function () {
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::apiResource('user', AuthController::class);
 
 Route::middleware('auth')->group(function () {
@@ -56,7 +56,11 @@ Route::get('/check-email', function (Illuminate\Http\Request $request) {
     ]);
 });
 
+Route::post('/forgot-password', [ResetPasswordController::class, 'passwordEmail'])->middleware('guest')->name('password.email');
 
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'passwordReset'])->middleware('guest')->name('password.reset');
+
+Route::post('/reset-password', [ResetPasswordController::class, 'passwordUpdate'])->middleware('guest')->name('password.update');
 
 Route::get('/test-email', function () {
     $to = "mouloud.choupouloude@gmail.com"; // Remplacez par votre adresse email

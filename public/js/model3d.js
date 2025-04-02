@@ -39,34 +39,6 @@ loader.load(
 );
 
 
-/*loader.load(
-    './assets/cloud.glb',
-    function (gltf) {
-        object = gltf.scene;
-
-
-        const box = new THREE.Box3().setFromObject(object);
-        const center = box.getCenter(new THREE.Vector3());
-
-
-        object.position.set(15, -0, -20);
-
-
-        const size = box.getSize(new THREE.Vector3());
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const scale = 16.0 / maxDim;
-        object.scale.set(scale, scale, scale);
-
-
-        scene.add(object);
-
-
-        camera.position.set(-1, -10, -10);
-
-
-        animate();
-    }
-);*/
 
 const renderer = new THREE.WebGLRenderer({
     alpha: true,

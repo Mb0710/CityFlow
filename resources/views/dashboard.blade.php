@@ -14,16 +14,8 @@
 <body>
     <div class="wrapper">
         <div id="container3D"></div>
-        <div class="logo-container">
-            <img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo">
-            <div class="cloud"><button>Explorer la ville</button></div>
-            <div class="cloud"><button>Mon Profile</button></div>
-            <div class="cloud"><button>Ameliorer ma ville</button></div>
-            <div class="cloud" id="deco"><button>Deconnexion</button></div>
-        </div>
-
     </div>
-    <script type="module" src="{{ asset('js/model3d.js') }}"></script>
+    <script type="module" src="{{ asset('js/dashboard3d.js') }}"></script>
 
 </body>
 
