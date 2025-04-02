@@ -14,7 +14,7 @@ const cloudPositions = [
     { x: -2, y: -5, z: -20, action: () => { window.location.href = '/Gestion'; } },
     { x: 4, y: -2, z: -20, action: () => { window.location.href = '/Admin'; } },
     { x: 10, y: -4, z: -20, action: () => { window.location.href = '/Profil'; } },
-    { x: 16, y: -1, z: -20, action: () => { window.location.href = '/logout'; } }
+    { x: 15, y: 0, z: -20, action: () => { window.location.href = '/logout'; } }
 ];
 
 
@@ -50,7 +50,7 @@ loader.load(
 
 cloudPositions.forEach((position, index) => {
     loader.load(
-        `./assets/cloud${index}.glb`,
+        `./assets/cloud${index}.1.glb`,
         function (gltf) {
             const cloudObject = gltf.scene;
 
