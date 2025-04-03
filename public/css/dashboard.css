@@ -52,6 +52,24 @@ body {
 
 
 
+.box {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 380px;
+    max-height: 70vh;
+    box-sizing: border-box;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    z-index: 5;
+    opacity: 0.95;
+    overflow-y: auto;
+    position: absolute;
+    left: 10%;
+    top: 60%;
+}
 
 
 .cloud-button:hover {

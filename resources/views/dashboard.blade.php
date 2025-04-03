@@ -15,6 +15,9 @@
     <div class="wrapper">
         <div id="container3D"></div>
     </div>
+    <div class="box">
+        <h2>Bienvenue {{ Auth::user()->login}}</h2>
+    </div>
     <script type="module" src="{{ asset('js/dashboard3d.js') }}"></script>
 
 </body>

@@ -10,8 +10,8 @@ let animationActive = true;
 const loader = new GLTFLoader();
 
 const cloudPositions = [
-    { x: -10, y: -2, z: -20, action: () => { window.location.href = '/Explorer'; } },
-    { x: -2, y: -5, z: -20, action: () => { window.location.href = '/Gestion'; } },
+    { x: -10, y: -1, z: -19, action: () => { window.location.href = '/map'; } },
+    { x: -3, y: -3, z: -20, action: () => { window.location.href = '/Gestion'; } },
     { x: 4, y: -2, z: -20, action: () => { window.location.href = '/Admin'; } },
     { x: 10, y: -4, z: -20, action: () => { window.location.href = '/Profil'; } },
     { x: 15, y: 0, z: -20, action: () => { window.location.href = '/logout'; } }
