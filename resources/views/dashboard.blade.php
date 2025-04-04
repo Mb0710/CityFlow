@@ -16,10 +16,21 @@
         <div id="container3D"></div>
     </div>
     <div class="box">
-        <h2>Bienvenue {{ Auth::user()->login}}</h2>
+        <h2>Bienvenue {{ $user->login}}, vous avez {{$user->points}} points</h2>
     </div>
     <script type="module" src="{{ asset('js/dashboard3d.js') }}"></script>
 
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('{{ route("user.data") }}')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.user); 
+                
+            });
+    });
+</script>
 
 </html>

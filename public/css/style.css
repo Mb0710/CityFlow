@@ -29,6 +29,21 @@ body {
     min-height: 100vh;
 }
 
+.filter {
+    margin-bottom: 20px;
+}
+
+#map {
+    border: 1px;
+    width: 50vw;
+    height: 85vh;
+    align-self: center;
+    margin: 0 auto;
+    border-radius: 15px;
+    border: 5px solid rgba(255, 255, 255, 0.8);
+}
+
+
 .round-image {
     border-radius: 50%;
     width: 150px;
@@ -55,6 +70,12 @@ body {
     z-index: 5;
     opacity: 0.95;
     overflow-y: auto;
+}
+
+.boxMap {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    margin-left: -10%;
 }
 
 .box:hover {
@@ -415,6 +436,45 @@ body {
 
 .feature span {
     font-weight: 500;
+}
+
+.map-container {
+    width: 100%;
+    max-width: 1400px;
+    padding: 20px;
+}
+
+.map-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    width: 100%;
+}
+
+.box-left {
+    width: 100%;
+}
+
+.box-right {
+    width: 100%;
+}
+
+.box-right .box {
+    height: 85vh;
+    max-height: 85vh;
+    overflow-y: auto;
+    margin: 0;
+}
+
+@media only screen and (max-width: 768px) {
+    .map-layout {
+        grid-template-columns: 1fr;
+    }
+
+    #map {
+        height: 50vh;
+        width: 100%;
+    }
 }
 
 

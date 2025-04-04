@@ -18,7 +18,6 @@ return new class extends Migration {
             $table->string('name');
             $table->text('description')->nullable();
             $table->enum('type', ['résidentiel', 'commercial', 'industriel', 'loisirs', 'administratif']);
-            $table->json('coordinates')->nullable();
             $table->timestamps();
         });
     }

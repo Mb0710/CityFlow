@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('login');
@@ -20,16 +21,23 @@ Route::get('/freetour', function () {
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::apiResource('user', AuthController::class);
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->middleware('verified')->name('dashboard');
+    
 
     Route::get('/map', function () {
         return view('map');
     })->name('map');
+
+    Route::get('/dashboard', function () {
+        return view('dashboard', ['user' => Auth::user()]);
+    })->middleware('verified')->name('dashboard');
+
+    Route::get('/user/data', [UserController::class, 'getData'])->name('user.data');
 
     Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->name('verification.notice');
 
