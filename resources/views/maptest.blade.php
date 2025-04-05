@@ -65,10 +65,8 @@
       color: #721c24;
     }
   </style>
-<form id="csrf-form" style="display:none;">
-    @csrf
-</form>
 </head>
+
 <body>
   <div class="container">
     <div class="card card-L">
@@ -88,13 +86,6 @@
   <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    // Ajoutez le token CSRF à chaque requête AJAX
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-    });
-    
     // Variables globales
     let map;
     let markers = [];
@@ -131,8 +122,21 @@
       return marker;
     }
     
-    function searchTestPoint(lat, lng) {
-      $.post('/testpoint', {lat: lat, lng: lng}, function(match) {
+function searchTestPoint(lat, lng) {
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  
+  $.ajax({
+    url: '/testpoint',
+    type: 'POST',
+    data: {
+      _token: csrfToken,
+      lat: lat,
+      lng: lng
+    },
+    dataType: 'json',
+    success: function(match) {
+      console.log("Points récupérés:", match);
+      if (Array.isArray(match)) {
         $.each(match, function(i, val) {
           var platval = val.lat;
           var plngval = val.lng;
@@ -141,8 +145,43 @@
           var pLatLng = new google.maps.LatLng(platval, plngval);
           createMarker(pLatLng, picn, pname, true);
         });
+      } else {
+        console.warn("Format de réponse inattendu:", match);
+      }
+    },
+    error: function(error) {
+      console.error("Erreur lors de la recherche des points:", error);
+      showStatusMessage("Erreur lors de la récupération des points existants.", "error");
+    }
+  });
+}
+    
+function saveMarkerToDatabase(marker) {
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  
+  const data = {
+    _token: csrfToken,
+    name: marker.name,
+    lat: marker.position.lat,
+    lng: marker.position.lng
+  };
+  
+  console.log("Envoi des données pour sauvegarde:", data);
+  
+  return $.ajax({
+    url: '/testpoint/store',
+    type: 'POST',
+    data: data,
+    dataType: 'json',
+    error: function(xhr, status, error) {
+      console.error("Détails de l'erreur:", {
+        status: xhr.status,
+        statusText: xhr.statusText,
+        responseText: xhr.responseText
       });
     }
+  });
+}
     
     function createmap(latlng) {
       map = new google.maps.Map(document.getElementById("map"), {
@@ -152,84 +191,7 @@
         zoom: 15,
         streetViewControl: false,
         mapTypeControl: false,
-        styles: [
-          {
-            "featureType": "landscape.natural",
-            "elementType": "geometry.fill",
-            "stylers": [
-              {
-                "visibility": "on"
-              },
-              {
-                "color": "#e0efef"
-              }
-            ]
-          },
-          {
-            "featureType": "poi",
-            "elementType": "geometry.fill",
-            "stylers": [
-              {
-                "visibility": "on"
-              },
-              {
-                "hue": "#1900ff"
-              },
-              {
-                "color": "#c0e8e8"
-              }
-            ]
-          },
-          {
-            "featureType": "road",
-            "elementType": "geometry",
-            "stylers": [
-              {
-                "lightness": 100
-              },
-              {
-                "visibility": "simplified"
-              }
-            ]
-          },
-          {
-            "featureType": "road",
-            "elementType": "labels",
-            "stylers": [
-              {
-                "visibility": "off"
-              }
-            ]
-          },
-          {
-            "featureType": "transit.line",
-            "elementType": "geometry",
-            "stylers": [
-              {
-                "visibility": "on"
-              },
-              {
-                "lightness": 700
-              }
-            ]
-          },
-          {
-            "featureType": "water",
-            "elementType": "all",
-            "stylers": [
-              {
-                "color": "#7dcdcd"
-              }
-            ]
-          },
-          {
-        featureType: "poi",
-        elementType: "labels",
-        stylers: [
-              { visibility: "off" }
-        ]
-    }
-        ]
+        styles: [/* Vos styles ici */]
       });
       
       var marker = new google.maps.Marker({
@@ -316,27 +278,6 @@
       }, 3000);
     }
 
-
-
-function saveMarkerToDatabase(marker) {
-    const csrfToken = $('#csrf-form input[name="_token"]').val();
-    
-    const data = {
-        _token: csrfToken,
-        name: marker.name,
-        lat: marker.position.lat,
-        lng: marker.position.lng
-    };
-    
-    return $.ajax({
-        url: '/testpoint/store',
-        type: 'POST',
-        data: data,
-        dataType: 'json'
-    });
-}
-
-    
     function initMap() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success);
@@ -398,20 +339,30 @@ function saveMarkerToDatabase(marker) {
         let promises = [];
         
         // Sauvegarder chaque marker non sauvegardé
-        unsavedMarkers.forEach((marker, index) => {
+        unsavedMarkers.forEach((marker) => {
           const promise = saveMarkerToDatabase(marker)
             .done(function(response) {
+              console.log("Réponse du serveur:", response);
               // Marquer le marker comme sauvegardé
-              markers[index].saved = true;
-              savedCount++;
+              const index = markers.findIndex(m => 
+                m.name === marker.name && 
+                m.position.lat === marker.position.lat && 
+                m.position.lng === marker.position.lng
+              );
               
-              // Changer l'icône pour indiquer qu'il est sauvegardé
-              if (marker.googleMarker) {
-                marker.googleMarker.setIcon("https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png");
+              if (index !== -1) {
+                markers[index].saved = true;
+                savedCount++;
+                
+                // Changer l'icône pour indiquer qu'il est sauvegardé
+                if (markers[index].googleMarker) {
+                  markers[index].googleMarker.setIcon("https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png");
+                }
               }
             })
             .fail(function(error) {
               console.error("Erreur lors de la sauvegarde du marker:", error);
+              showStatusMessage(`Erreur: ${error.status} - ${error.statusText}`, "error");
             });
           
           promises.push(promise);
@@ -420,7 +371,11 @@ function saveMarkerToDatabase(marker) {
         // Attendre que toutes les sauvegardes soient terminées
         $.when.apply($, promises).then(function() {
           updateMarkerList();
-          showStatusMessage(`${savedCount} marker(s) sauvegardé(s) avec succès!`, "success");
+          if (savedCount > 0) {
+            showStatusMessage(`${savedCount} marker(s) sauvegardé(s) avec succès!`, "success");
+          } else {
+            showStatusMessage("Aucun marker n'a pu être sauvegardé.", "error");
+          }
         });
       });
     });
@@ -429,7 +384,7 @@ function saveMarkerToDatabase(marker) {
       const list = document.getElementById("marker-list");
       list.innerHTML = "";
 
-      markers.forEach((marker, index) => {
+      markers.forEach((marker) => {
         const li = document.createElement("li");
         li.className = "marker-item";
         li.innerHTML = `
