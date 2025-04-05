@@ -1,17 +1,32 @@
 function success(position){
-    console.log(position);
     var latval = position.coords.latitude;
     var lngval = position.coords.longitude;
+    console.log([latval, lngval]);
     myLatLng = new google.maps.LatLng(latval,lngval);
     createmap(myLatLng);
 
 
     searchTestPoint(latval,lngval);
 }
+function createMarker(latlng,icn,name){
+    var marker = new google.maps.Marker({
+        position : latlng,
+        map : map,
+        icon:icn,
+        title:name
+    });
+}
 
-function searchTestPoint(lat,lng){
-    $.post('https://location/testpoint',{lat:lat,lng:lng},function(match){
-        console.log(match);
+function searchTestPoint(lat, lng) {
+    $.post('/testpoint', {lat: lat, lng: lng}, function(match) {
+        $.each(match, function(i, val) {
+            var platval = val.lat;
+            var plngval = val.lng;
+            var pname = val.name;
+            var picn = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
+            var pLatLng = new google.maps.LatLng(platval, plngval);
+            createMarker(pLatLng, picn, pname);
+        });
     });
 }
 let map;
@@ -324,3 +339,30 @@ function createmap(latlng){ // crée la map comme innit map mais avec en centre 
             map: map,
         })
 }
+
+var strictBounds = new google.maps.LatLngBounds(
+    new google.maps.LatLng(49.025, 2.055),
+    new google.maps.LatLng(49.045, 2.075)
+);
+
+// Écouter l'événement de fin de déplacement de la carte
+google.maps.event.addListener(map, 'dragend', function () {
+    if (strictBounds.contains(map.getCenter())) return;
+
+    // La carte est en dehors des limites - Replacer la carte dans les limites
+    var c = map.getCenter(),
+        x = c.lng(),
+        y = c.lat(),
+        maxX = strictBounds.getNorthEast().lng(),
+        maxY = strictBounds.getNorthEast().lat(),
+        minX = strictBounds.getSouthWest().lng(),
+        minY = strictBounds.getSouthWest().lat();
+
+    if (x < minX) x = minX;
+    if (x > maxX) x = maxX;
+    if (y < minY) y = minY;
+    if (y > maxY) y = maxY;
+
+    // Recentrer la carte dans les limites
+    map.setCenter(new google.maps.LatLng(y, x));
+});

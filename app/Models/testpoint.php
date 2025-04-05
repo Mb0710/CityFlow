@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserAction extends Model
+class TestPoint extends Model
 {
-    protected $fommable=['name','lat','lng'];
+    protected $table = 'pointtest';
+    protected $fillable = ['name', 'lat', 'lng'];
 }
-
 ?>

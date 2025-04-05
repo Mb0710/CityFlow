@@ -59,10 +59,7 @@
         <button onclick="addMarker()">Ajouter Marker</button>
         <h4>Liste des Markers :</h4>
         <ul id="marker-list"></ul>
-        <form action="{{ route('modifbouton') }}" method="GET">
-    @csrf
-    <button type="modifbouton" class="btn btn-primary">Modifier cet objet</button>
-</form>
+
     </div>
   </div>
 
