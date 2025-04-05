@@ -13,6 +13,17 @@ use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
+    private function updateLoginPoints($user)
+    {
+        $today = now()->toDateString();
+
+        if ($user->last_login_date === null || $user->last_login_date < $today) {
+            $user->points += 5;
+            $user->last_login_date = $today;
+            $user->save();
+        }
+    }
+
     public function register(Request $request)
     {
         // Validation des données
@@ -27,14 +38,14 @@ class AuthController extends Controller
             'member_type' => 'required|in:resident,visitor,official,worker'
         ]);
 
-        // Si la validation échoue
+
         if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors()
             ], 422);
         }
 
-        // Création de l'utilisateur
+
         $user = User::create([
             'login' => $request->login,
             'name' => $request->name,
@@ -49,18 +60,13 @@ class AuthController extends Controller
                 : null
         ]);
 
-        // Connexion automatique après l'inscription
+
         Auth::login($user);
+        $this->updateLoginPoints($user);
 
         event(new Registered($user));
 
-        /*if ($request->ajax() || $request->wantsJson()) {
-            return response()->json([
-                'message' => 'Compte créé avec succès',
-                'redirect' => route('login')
-            ], 201);
 
-        }*/
 
         return redirect()->route('verification.notice')->with('success', 'Compte créé avec succès');
     }
@@ -90,6 +96,10 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            $user = Auth::user();
+
+            $this->updateLoginPoints($user);
 
             return response()->json([
                 'message' => 'Connexion réussie',
@@ -124,8 +134,6 @@ class AuthController extends Controller
             ], 422);
         }
 
-        // Ici, vous devriez implémenter la logique d'envoi d'email de réinitialisation
-        // Laravel a un système intégré pour cela : Password::sendResetLink()
 
         return response()->json([
             'message' => 'Un email de réinitialisation a été envoyé'

@@ -20,7 +20,8 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'birth_date',
         'gender',
         'member_type',
-        'profile_picture'
+        'profile_picture',
+        'last_login_date'
     ];
 
     protected $hidden = [
