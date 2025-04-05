@@ -19,7 +19,7 @@ Route::get('/maptest', function () {
     return view('maptest');
 });
 
-Route::post('/testpoint/store', [App\Http\Controllers\TestPointController::class, 'storeTestPoint']);
+Route::post('/testpoint/store', [TestPointController::class, 'storeTestPoint']);
 Route::post('/testpoint', [App\Http\Controllers\TestPointController::class, 'searchTestPoint']);
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');

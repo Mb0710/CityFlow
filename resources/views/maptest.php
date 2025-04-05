@@ -65,8 +65,10 @@
       color: #721c24;
     }
   </style>
+<form id="csrf-form" style="display:none;">
+    @csrf
+</form>
 </head>
-
 <body>
   <div class="container">
     <div class="card card-L">
@@ -313,12 +315,14 @@
         statusElement.style.display = "none";
       }, 3000);
     }
-    
+
+
+
 function saveMarkerToDatabase(marker) {
-    const token = $('meta[name="csrf-token"]').attr('content');
+    const csrfToken = $('#csrf-form input[name="_token"]').val();
     
     const data = {
-        _token: token,
+        _token: csrfToken,
         name: marker.name,
         lat: marker.position.lat,
         lng: marker.position.lng
@@ -331,6 +335,7 @@ function saveMarkerToDatabase(marker) {
         dataType: 'json'
     });
 }
+
     
     function initMap() {
       if (navigator.geolocation) {
