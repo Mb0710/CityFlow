@@ -75,6 +75,13 @@ body {
     left: 70%;
 }
 
+.box#errorBox {
+    left: 40%;
+    top: 10%;
+    z-index: 100;
+    display: none;
+    border: solid red;
+}
 
 .cloud-button:hover {
     transform: scale(1.1);

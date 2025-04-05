@@ -11,7 +11,10 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
-<body>
+<body data-user-role="{{ $user->level}}">
+    <div class="box" id="errorBox">
+        <h2>Non ! Vous devez avoir un rôle plus élevé pour accéder à la gestion.</h2>
+    </div>
     <div class="wrapper">
         <div id="container3D"></div>
     </div>
