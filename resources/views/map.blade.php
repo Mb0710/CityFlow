@@ -14,6 +14,9 @@
 </head>
 
 <body>
+    <div class="logo-container logo-left">
+        <a href="/"><img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo"></a>
+    </div>
     <div class="wrapper map-container">
         <div class="map-layout">
             <div class="box-left">

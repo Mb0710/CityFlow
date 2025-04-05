@@ -388,6 +388,12 @@ body {
     object-fit: contain;
 }
 
+.logo-container.logo-left {
+    left: 0;
+    top: 0;
+    transform: none;
+}
+
 #container3D {
     position: fixed;
     top: 0;

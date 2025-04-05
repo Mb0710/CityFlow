@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect()->route('dashboard');
+    }
     return view('login');
 })->name('login');
 
@@ -24,10 +27,6 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->middleware('verified')->name('dashboard');
-    
 
     Route::get('/map', function () {
         return view('map');
