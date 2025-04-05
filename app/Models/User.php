@@ -48,4 +48,40 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
             return 5 * pow(2, $nextStreak - 1);
         }
     }
+
+    public function getUserLevel()
+    {
+        $points = $this->points;
+
+        $levels = [
+            'débutant' => 0,
+            'intermédiaire' => 50,
+            'avancé' => 100,
+            'expert' => 200
+        ];
+
+        $currentLevel = 'débutant';
+        $nextLevel = null;
+        $nextLevelPoints = null;
+        $pointsNeeded = null;
+
+        foreach ($levels as $level => $threshold) {
+            if ($points >= $threshold) {
+                $currentLevel = $level;
+            } else if ($nextLevel === null) {
+                $nextLevel = $level;
+                $nextLevelPoints = $threshold;
+                $pointsNeeded = $threshold - $points;
+                break;
+            }
+        }
+
+        return [
+            'current' => $currentLevel,
+            'next' => $nextLevel,
+            'next_points' => $nextLevelPoints,
+            'points_needed' => $pointsNeeded,
+            'progress' => $nextLevel ? round(($points / $nextLevelPoints) * 100) : 100
+        ];
+    }
 }

@@ -8,7 +8,7 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    
+
     // Retourne simplement les données de l'utilisateur connecté de manière sécurisée.
     public function getData()
     {
@@ -18,5 +18,5 @@ class UserController extends Controller
         ]);
     }
 
-    
+
 }
