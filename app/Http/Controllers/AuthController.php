@@ -9,19 +9,60 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
+use Carbon\Carbon;
 
 
 class AuthController extends Controller
 {
     private function updateLoginPoints($user)
     {
-        $today = now()->toDateString();
+        $today = Carbon::now()->toDateString();
+        $pointsToAdd = 0;
 
-        if ($user->last_login_date === null || $user->last_login_date < $today) {
-            $user->points += 5;
+
+        $firstLoginToday = ($user->last_login_date === null || $user->last_login_date < $today);
+
+        if ($firstLoginToday) {
+
+            $yesterday = Carbon::now()->subDay()->toDateString();
+            $isConsecutiveLogin = ($user->last_login_date === $yesterday);
+
+            if ($isConsecutiveLogin) {
+
+                $loginStreak = $user->login_streak ?? 0;
+                $loginStreak++;
+
+
+                if ($loginStreak > 7) {
+                    $loginStreak = 1;
+                }
+
+
+                if ($loginStreak == 7) {
+                    $pointsToAdd = 240;
+                } else {
+                    $pointsToAdd = 5 * pow(2, $loginStreak - 1);
+                }
+
+                $user->login_streak = $loginStreak;
+            } else {
+
+                $user->login_streak = 1;
+                $pointsToAdd = 5;
+            }
+
+
+            $user->points += $pointsToAdd;
             $user->last_login_date = $today;
             $user->save();
         }
+
+
+        \App\Models\UserConnection::create([
+            'user_id' => $user->id,
+            'connection_time' => now(),
+            'points_earned' => $pointsToAdd
+        ]);
     }
 
     public function register(Request $request)

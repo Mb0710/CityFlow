@@ -37,4 +37,15 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
             'birth_date' => 'date'
         ];
     }
+
+    public function getNextLoginPoints()
+    {
+        $nextStreak = ($this->login_streak % 7) + 1;
+
+        if ($nextStreak == 7) {
+            return 240;
+        } else {
+            return 5 * pow(2, $nextStreak - 1);
+        }
+    }
 }

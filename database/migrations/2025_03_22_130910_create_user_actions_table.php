@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('action_details');
             $table->enum('related_to', ['object', 'service', 'profile']);
             $table->unsignedBigInteger('related_id')->nullable();
-            $table->float('points_earned')->default(0.5);
+            $table->float('points_earned');
             $table->timestamps();
         });
     }

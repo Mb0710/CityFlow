@@ -18,17 +18,21 @@
     <div class="box">
         <h2>Bienvenue {{ $user->login}}, vous avez {{$user->points}} points</h2>
     </div>
+    <div class="box right">
+        <h2>Vous etes à {{ $user->login_streak}} jours de connexion consécutif ! </h2>
+        <h2>Connectez-vous demain pour gagner {{ $user->getNextLoginPoints()}} points </h2>
+    </div>
     <script type="module" src="{{ asset('js/dashboard3d.js') }}"></script>
 
 </body>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         fetch('{{ route("user.data") }}')
             .then(response => response.json())
             .then(data => {
-                console.log(data.user); 
-                
+                console.log(data.user);
+
             });
     });
 </script>

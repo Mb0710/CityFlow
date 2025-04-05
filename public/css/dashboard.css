@@ -71,6 +71,10 @@ body {
     top: 60%;
 }
 
+.box.right {
+    left: 70%;
+}
+
 
 .cloud-button:hover {
     transform: scale(1.1);
