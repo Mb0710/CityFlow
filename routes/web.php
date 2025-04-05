@@ -15,7 +15,7 @@ Route::get('/freetour', function () {
     return view('freetour');
 });
 
-
+Route::post('/testpoint','testpointController@testpoint');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

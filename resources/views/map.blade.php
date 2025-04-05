@@ -59,6 +59,10 @@
         <button onclick="addMarker()">Ajouter Marker</button>
         <h4>Liste des Markers :</h4>
         <ul id="marker-list"></ul>
+        <form action="{{ route('modifbouton') }}" method="GET">
+    @csrf
+    <button type="modifbouton" class="btn btn-primary">Modifier cet objet</button>
+</form>
     </div>
   </div>
 
@@ -74,114 +78,328 @@
         minZoom: 14,
         maxZoom: 19,
         zoom: 15,
+        streetViewControl: false,
+        mapTypeControl: false,
         styles: [
-          {
-            "featureType": "landscape.natural",
-            "elementType": "geometry.fill",
+        {
+            "featureType": "all",
+            "elementType": "labels",
             "stylers": [
-              {
-                "visibility": "on"
-              },
-              {
-                "color": "#e0efef"
-              }
+                {
+                    "visibility": "off"
+                }
             ]
-          },
-          {
+        },
+        {
+            "featureType": "all",
+            "elementType": "labels.text",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
+            "featureType": "all",
+            "elementType": "labels.icon",
+            "stylers": [
+                {
+                    "visibility": "on"
+                }
+            ]
+        },
+        {
+            "featureType": "landscape",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "visibility": "on"
+                },
+                {
+                    "color": "#38692d"
+                }
+            ]
+        },
+        {
+            "featureType": "landscape.man_made",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "visibility": "on"
+                },
+                {
+                    "color": "#989898"
+                }
+            ]
+        },
+        {
+            "featureType": "landscape.man_made",
+            "elementType": "geometry.stroke",
+            "stylers": [
+                {
+                    "color": "#000000"
+                }
+            ]
+        },
+        {
+            "featureType": "landscape.natural",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "visibility": "on"
+                },
+                {
+                    "color": "#386c28"
+                }
+            ]
+        },
+        {
             "featureType": "poi",
             "elementType": "geometry.fill",
             "stylers": [
-              {
-                "visibility": "on"
-              },
-              {
-                "hue": "#1900ff"
-              },
-              {
-                "color": "#c0e8e8"
-              }
+                {
+                    "visibility": "on"
+                },
+                {
+                    "color": "#ffffff"
+                }
             ]
-          },
-          {
-            "featureType": "road",
+        },
+        {
+            "featureType": "poi.attraction",
+            "elementType": "geometry.fill",
+            "stylers": [
+                {
+                    "color": "#ffffff"
+                },
+                {
+                    "visibility": "on"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.business",
+            "elementType": "geometry.fill",
+            "stylers": [
+                {
+                    "color": "#ffffff"
+                },
+                {
+                    "visibility": "on"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.government",
+            "elementType": "geometry.fill",
+            "stylers": [
+                {
+                    "color": "#ffffff"
+                },
+                {
+                    "visibility": "on"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.medical",
             "elementType": "geometry",
             "stylers": [
-              {
-                "lightness": 100
-              },
-              {
-                "visibility": "simplified"
-              }
+                {
+                    "color": "#fcfcfc"
+                },
+                {
+                    "visibility": "on"
+                }
             ]
-          },
-          {
-            "featureType": "road",
+        },
+        {
+            "featureType": "poi.medical",
             "elementType": "labels",
             "stylers": [
-              {
-                "visibility": "off"
-              }
+                {
+                    "visibility": "off"
+                }
             ]
-          },
-          {
+        },
+        {
+            "featureType": "poi.park",
+            "elementType": "geometry.fill",
+            "stylers": [
+                {
+                    "color": "#788c40"
+                },
+                {
+                    "visibility": "on"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.place_of_worship",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "invert_lightness": true
+                },
+                {
+                    "visibility": "on"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.school",
+            "elementType": "geometry.fill",
+            "stylers": [
+                {
+                    "color": "#ffffff"
+                },
+                {
+                    "visibility": "on"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.sports_complex",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#ffffff"
+                }
+            ]
+        },
+        {
+            "featureType": "road.highway",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#000000"
+                }
+            ]
+        },
+        {
+            "featureType": "road.highway",
+            "elementType": "labels",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
+            "featureType": "road.arterial",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#000000"
+                }
+            ]
+        },
+        {
+            "featureType": "road.local",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#000000"
+                }
+            ]
+        },
+        {
+            "featureType": "transit",
+            "elementType": "geometry.fill",
+            "stylers": [
+                {
+                    "weight": "0.01"
+                },
+                {
+                    "saturation": "-33"
+                },
+                {
+                    "visibility": "on"
+                },
+                {
+                    "hue": "#ff0000"
+                }
+            ]
+        },
+        {
+            "featureType": "transit",
+            "elementType": "labels.icon",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
             "featureType": "transit.line",
             "elementType": "geometry",
             "stylers": [
-              {
-                "visibility": "on"
-              },
-              {
-                "lightness": 700
-              }
+                {
+                    "color": "#000000"
+                },
+                {
+                    "weight": "0.01"
+                }
             ]
-          },
-          {
-            "featureType": "water",
-            "elementType": "all",
+        },
+        {
+            "featureType": "transit.line",
+            "elementType": "geometry.fill",
             "stylers": [
-              {
-                "color": "#7dcdcd"
-              }
+                {
+                    "visibility": "on"
+                },
+                {
+                    "color": "#ff0000"
+                }
             ]
-          },
-          {
-            featureType: "poi",
-            elementType: "labels",
-            stylers: [
-              { visibility: "off" }
+        },
+        {
+            "featureType": "water",
+            "elementType": "geometry.fill",
+            "stylers": [
+                {
+                    "color": "#7088b0"
+                }
             ]
-          }
-          
-        ]
-        
-      });
+        },
+        {
+                featureType: "poi",
+                elementType: "labels",
+                stylers: [
+                { visibility: "off" }
+                ]
+            }
+    ]
 
-      var strictBounds = new google.maps.LatLngBounds(
-        new google.maps.LatLng(49.025, 2.055),
-        new google.maps.LatLng(49.045, 2.075)
-      );
+        });
 
-      // Écouter l'événement de fin de déplacement de la carte
-      google.maps.event.addListener(map, 'dragend', function () {
-        if (strictBounds.contains(map.getCenter())) return;
+        var strictBounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(49.025, 2.055),
+            new google.maps.LatLng(49.045, 2.075)
+        );
 
-        // La carte est en dehors des limites - Replacer la carte dans les limites
-        var c = map.getCenter(),
-            x = c.lng(),
-            y = c.lat(),
-            maxX = strictBounds.getNorthEast().lng(),
-            maxY = strictBounds.getNorthEast().lat(),
-            minX = strictBounds.getSouthWest().lng(),
-            minY = strictBounds.getSouthWest().lat();
+        // Écouter l'événement de fin de déplacement de la carte
+        google.maps.event.addListener(map, 'dragend', function () {
+            if (strictBounds.contains(map.getCenter())) return;
 
-        if (x < minX) x = minX;
-        if (x > maxX) x = maxX;
-        if (y < minY) y = minY;
-        if (y > maxY) y = maxY;
+            // La carte est en dehors des limites - Replacer la carte dans les limites
+            var c = map.getCenter(),
+                x = c.lng(),
+                y = c.lat(),
+                maxX = strictBounds.getNorthEast().lng(),
+                maxY = strictBounds.getNorthEast().lat(),
+                minX = strictBounds.getSouthWest().lng(),
+                minY = strictBounds.getSouthWest().lat();
 
-        // Recentrer la carte dans les limites
-        map.setCenter(new google.maps.LatLng(y, x));
-      });
+            if (x < minX) x = minX;
+            if (x > maxX) x = maxX;
+            if (y < minY) y = minY;
+            if (y > maxY) y = maxY;
+
+            // Recentrer la carte dans les limites
+            map.setCenter(new google.maps.LatLng(y, x));
+        });
     }
     
     // Fonction pour ajouter un marker
