@@ -11,9 +11,12 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
-<body data-user-role="{{ $user->level}}">
+<body data-user-role="{{ $user->level}}" data-is-admin="{{ $user->is_admin}}">
     <div class="box" id="errorBox">
         <h2>Non ! Vous devez avoir un rôle plus élevé pour accéder à la gestion.</h2>
+    </div>
+    <div class="box" id="errorBox2">
+        <h2>Non ! Vous n'êtes pas admin ! </h2>
     </div>
     <div class="wrapper">
         <div id="container3D"></div>
@@ -32,18 +35,18 @@
         <h2>Connectez-vous demain pour gagner {{ $user->getNextLoginPoints()}} points. </h2>
     </div>
     <script type="module" src="{{ asset('js/dashboard3d.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('{{ route("user.data") }}')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.user);
 
+                });
+        });
+    </script>
 </body>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        fetch('{{ route("user.data") }}')
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.user);
 
-            });
-    });
-</script>
 
 </html>

@@ -36,6 +36,10 @@ Route::middleware('auth')->group(function () {
         return view('dashboard', ['user' => Auth::user()]);
     })->middleware('verified')->name('dashboard');
 
+    Route::get('/Profil', function () {
+        return view('profil', ['user' => Auth::user()]);
+    })->middleware('verified')->name('profil');
+
     Route::get('/user/data', [UserController::class, 'getData'])->name('user.data');
 
     Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->name('verification.notice');

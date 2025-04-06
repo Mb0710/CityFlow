@@ -9,7 +9,11 @@ let animationActive = true;
 
 const loader = new GLTFLoader();
 const userRole = document.body.getAttribute("data-user-role");
+const isAdmin = document.body.getAttribute("data-is-admin");
 const errorBox = document.getElementById("errorBox");
+const errorBox2 = document.getElementById("errorBox2");
+
+console.log("isAdmin:", isAdmin);
 
 const cloudPositions = [
     { x: -10, y: -1, z: -19, action: () => { window.location.href = '/map'; } },
@@ -23,7 +27,17 @@ const cloudPositions = [
             }
         }
     },
-    { x: 4, y: -2, z: -20, action: () => { window.location.href = '/Admin'; } },
+    {
+        x: 4, y: -2, z: -20,
+        action: () => {
+            if (isAdmin == 0) {
+                errorBox2.style.display = "block";
+            }
+            else {
+                window.location.href = '/Admin';
+            }
+        }
+    },
     { x: 10, y: -4, z: -20, action: () => { window.location.href = '/Profil'; } },
     { x: 15, y: 0, z: -20, action: () => { window.location.href = '/logout'; } }
 ];
@@ -171,6 +185,10 @@ function onMouseMove(event) {
 window.addEventListener("mousemove", onMouseMove);
 
 window.addEventListener("click", function (event) {
+
+    errorBox.style.display = "none";
+    errorBox2.style.display = "none";
+
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
