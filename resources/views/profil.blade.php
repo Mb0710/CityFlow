@@ -37,8 +37,8 @@
           <div class="info-item"><strong>Pseudonyme : </strong> {{ $user->login}}<span id="pseudo"></span></div>
           <div class="info-item"><strong>Âge :</strong> {{ $age }} ans <span id="age"></span></div>
           <div class="info-item"><strong>Genre : </strong> {{ $user->gender}} <span id="genre"></span></div>
-          <div class="info-item"><strong>Date de naissance : </strong>{{ $user->birth_date}} <span
-              id="dateNaissance"></span></div>
+          <div class="info-item"><strong>Date de naissance :
+            </strong>{{ Carbon::parse($user->birth_date)->format('d/m/Y') }} <span id="dateNaissance"></span></div>
         </div>
 
 
