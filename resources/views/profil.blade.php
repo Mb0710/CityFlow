@@ -23,12 +23,14 @@
 
   <form id="profile-form" method="POST" action="{{ route('update.profile') }}" enctype="multipart/form-data">
     @csrf
-    <div class="profile-container">
+    <div class="profile-container @if($user->id !== $currentUser->id) centered @endif">
       <div class="profile-card left">
         <div class="profile-info">
 
           <div class="avatar-container">
-            <button type="button" class="edit-btn">✏️ Modifier</button>
+            @if($user->id === $currentUser->id)
+        <button type="button" class="edit-btn">✏️ Modifier</button>
+      @endif
             <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="Photo de Profil" class="avatar" />
             <input type="file" id="profile-picture-input" name="profile_picture" style="display: none;">
           </div>
@@ -74,23 +76,25 @@
         </div>
       </div>
 
+      @if($user->id === $currentUser->id)
       <div class="profile-card right">
-        <div class="info-block">
-          <h3>Privé 🔒</h3>
-          <div class="info-item"><strong>Nom : </strong> <input name="name" value="{{ $user->name }}" readonly></div>
-          <div class="info-item"><strong>Prénom : </strong><input name="firstname" value="{{ $user->firstname }}"
-              readonly></div>
-          <div class="info-item"><strong>Email : </strong><input name="email" value="{{ $user->email }}" readonly></div>
-          <div class="info-item">
-            <strong>Mot de passe : </strong>
-            <input type="password" name="password" autocomplete="new-password" readonly>
-          </div>
-          <div class="info-item">
-            <strong>Confirmer le mot de passe : </strong>
-            <input type="password" name="password_confirmation" autocomplete="new-password" readonly>
-          </div>
+      <div class="info-block">
+        <h3>Privé 🔒</h3>
+        <div class="info-item"><strong>Nom : </strong> <input name="name" value="{{ $user->name }}" readonly></div>
+        <div class="info-item"><strong>Prénom : </strong><input name="firstname" value="{{ $user->firstname }}"
+          readonly></div>
+        <div class="info-item"><strong>Email : </strong><input name="email" value="{{ $user->email }}" readonly></div>
+        <div class="info-item">
+        <strong>Mot de passe : </strong>
+        <input type="password" name="password" autocomplete="new-password" readonly>
+        </div>
+        <div class="info-item">
+        <strong>Confirmer le mot de passe : </strong>
+        <input type="password" name="password_confirmation" autocomplete="new-password" readonly>
         </div>
       </div>
+      </div>
+    @endif
     </div>
   </form>
 

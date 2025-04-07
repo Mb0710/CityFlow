@@ -25,6 +25,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         $validator = Validator::make($request->all(), [
+            'login' => 'required|string|max:255|unique:users,login,' . $user->id,
             'name' => 'required|string|max:255',
             'firstname' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
@@ -41,7 +42,7 @@ class UserController extends Controller
             ], 422);
         }
 
-
+        $user->login = $request->login;
         $user->name = $request->name;
         $user->firstname = $request->firstname;
         $user->email = $request->email;
@@ -70,12 +71,24 @@ class UserController extends Controller
         ]);
     }
 
-    public function showProfile()
+    public function showProfile($username = null)
     {
-        $user = Auth::user();
+        if ($username) {
 
-        return view('profile', [
-            'user' => $user
+            $user = User::where('login', $username)->first();
+
+            if (!$user) {
+
+                abort(404, "Utilisateur non trouvé.");
+            }
+        } else {
+
+            $user = Auth::user();
+        }
+
+        return view('profil', [
+            'user' => $user,
+            'currentUser' => Auth::user()
         ]);
     }
 

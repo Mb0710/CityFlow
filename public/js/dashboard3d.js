@@ -38,7 +38,7 @@ const cloudPositions = [
             }
         }
     },
-    { x: 10, y: -4, z: -20, action: () => { window.location.href = '/Profil'; } },
+    { x: 10, y: -4, z: -20, action: () => { window.location.href = '/profil'; } },
     { x: 15, y: 0, z: -20, action: () => { window.location.href = '/logout'; } }
 ];
 

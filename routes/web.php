@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/update-profile', [App\Http\Controllers\UserController::class, 'updateProfile'])->name('update.profile');
 
-    Route::get('/profile', [App\Http\Controllers\UserController::class, 'showProfile'])->name('profile')->middleware('auth');
+    Route::get('/profil/{username?}', [UserController::class, 'showProfile'])->name('profile');
 
     Route::get('/dashboard', function () {
         return view('dashboard', ['user' => Auth::user()]);

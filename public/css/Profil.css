@@ -139,6 +139,12 @@ label {
   font-weight: bold;
 }
 
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Champs de formulaire */
 input[type="text"],
 input[type="number"],
