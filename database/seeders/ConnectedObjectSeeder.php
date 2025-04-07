@@ -12,16 +12,18 @@ class ConnectedObjectSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run() : void
+    public function run(): void
     {
+        // 🔁 On récupère toutes les zones pour leur associer des objets connectés
         $zones = CityZone::all();
 
-        // 🔁 pour chaque zone
         foreach ($zones as $zone) {
+            // 🎲 Détermine un nombre d’objets aléatoire à générer pour chaque zone
             $numberOfObjects = rand(15, 20);
             $this->command->info("Zone '{$zone->name}' (type: {$zone->type}) → {$numberOfObjects} objets connectés générés.");
 
             for ($i = 0; $i < $numberOfObjects; $i++) {
+                //  On tire aléatoirement un type d’objet
                 $objectType = fake()->randomElement([
                     'lampadaire',
                     'capteur_pollution',
@@ -30,28 +32,31 @@ class ConnectedObjectSeeder extends Seeder
                     'caméra'
                 ]);
 
-                $coords = [
-                    'lat' => fake()->latitude(48.80, 48.90),
-                    'lng' => fake()->longitude(2.30, 2.40),
-                ];
+                //  Coordonnées GPS générées dans les limites précises de Cergy
+                $lat = fake()->latitude(49.025, 49.045);
+                $lng = fake()->longitude(2.055, 2.075);
 
-                // 🔁 On adapte dynamiquement le contenu de l’objet selon le type tiré
+                //  Données communes à tous les types d’objets
                 $commonData = [
                     'unique_id' => Str::uuid(),
                     'status' => fake()->randomElement(['actif', 'inactif', 'maintenance']),
                     'battery_level' => fake()->numberBetween(30, 100),
-                    'coordinates' => json_encode($coords),
+                    'lat' => $lat,
+                    'lng' => $lng,
                     'zone_id' => $zone->id,
-                    'last_interaction' => now()->subMinutes(rand(1, 1440)),
+                    'last_interaction' => now()->subMinutes(rand(1, 1440)), // entre 1 min et 24h
                 ];
 
+                //  On adapte les champs spécifiques à chaque type d'objet
                 switch ($objectType) {
                     case 'lampadaire':
                         ConnectedObject::create(array_merge($commonData, [
                             'name' => 'Lampadaire intelligent',
                             'description' => 'Éclairage public adaptatif.',
                             'type' => 'lampadaire',
-                            'attributes' => json_encode([ 'intensité' => fake()->randomElement(['basse', 'moyenne', 'forte'])], JSON_UNESCAPED_UNICODE),
+                            'attributes' => json_encode([
+                                'intensité' => fake()->randomElement(['basse', 'moyenne', 'forte'])
+                            ], JSON_UNESCAPED_UNICODE),
                         ]));
                         break;
 
@@ -60,7 +65,9 @@ class ConnectedObjectSeeder extends Seeder
                             'name' => 'Capteur de pollution',
                             'description' => 'Mesure la qualité de l’air.',
                             'type' => 'capteur_pollution',
-                            'attributes' => json_encode(fake()->randomElement(['CO2', 'NO2', 'PM2.5'])),
+                            'attributes' => json_encode([
+                                'capteur' => fake()->randomElement(['CO2', 'NO2', 'PM2.5'])
+                            ]),
                         ]));
                         break;
 
@@ -69,7 +76,9 @@ class ConnectedObjectSeeder extends Seeder
                             'name' => 'Borne d’arrêt de bus',
                             'description' => 'Affiche les horaires et infos trafic.',
                             'type' => 'borne_bus',
-                            'attributes' => json_encode(['ligne' => fake()->randomElement(['12', '42', 'A', 'C'])]),
+                            'attributes' => json_encode([
+                                'ligne' => fake()->randomElement(['12', '42', 'A', 'C'])
+                            ]),
                         ]));
                         break;
 
@@ -78,7 +87,9 @@ class ConnectedObjectSeeder extends Seeder
                             'name' => 'Panneau d’information',
                             'description' => 'Affiche des annonces locales.',
                             'type' => 'panneau_information',
-                            'attributes' => json_encode(['contenu' => fake()->sentence()]),
+                            'attributes' => json_encode([
+                                'contenu' => fake()->sentence()
+                            ]),
                         ]));
                         break;
 
@@ -86,17 +97,14 @@ class ConnectedObjectSeeder extends Seeder
                         ConnectedObject::create(array_merge($commonData, [
                             'name' => 'Caméra de surveillance',
                             'description' => 'Surveille la zone et détecte les mouvements.',
-                            'type' => 'panneau_information', // ou change selon tes migrations
-                            'attributes' => json_encode(['résolution' => fake()->randomElement(['720p', '1080p', '4K'])],JSON_UNESCAPED_UNICODE),
+                            'type' => 'caméra', // ✅ correction ici
+                            'attributes' => json_encode([
+                                'résolution' => fake()->randomElement(['720p', '1080p', '4K'])
+                            ], JSON_UNESCAPED_UNICODE),
                         ]));
                         break;
                 }
             }
         }
-
-
-        // Laravel génère :
-// INSERT INTO connected_objects (name, type, description)
-// VALUES ('Caméra de surveillance', 'Sécurité', 'Détecte les mouvements suspects.')
     }
 }

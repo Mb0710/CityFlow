@@ -18,11 +18,13 @@ return new class extends Migration {
             $table->string('unique_id')->unique();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->enum('type', ['lampadaire', 'capteur_pollution', 'borne_bus', 'panneau_information']); //Velo,panneau solaire,
+            $table->enum('type', ['lampadaire', 'capteur_pollution', 'borne_bus', 'panneau_information','caméra']); //Velo,panneau solaire,
             $table->enum('status', ['actif', 'inactif', 'maintenance'])->default('actif');
             $table->json('attributes')->nullable();
             $table->integer('battery_level')->nullable();
-            $table->json('coordinates')->nullable();
+            //Nouvelle table.
+            $table->decimal('lat', 10, 6)->nullable();
+            $table->decimal('lng', 10, 6)->nullable();
             $table->foreignId('zone_id')->constrained('city_zones')->onDelete('cascade');
             $table->timestamp('last_interaction')->nullable();
             $table->timestamps();

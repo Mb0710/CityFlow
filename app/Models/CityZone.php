@@ -10,6 +10,7 @@ class CityZone extends Model
         'name',
         'description',
         'type',
-        'coordinates',
+        'lat',
+        'lng',
     ];
 }

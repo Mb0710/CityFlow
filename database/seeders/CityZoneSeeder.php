@@ -31,10 +31,9 @@ class CityZoneSeeder extends Seeder
                 'name' => $zone['name'],
                 'description' => "Zone générée automatiquement pour tests à Cergy.",
                 'type' => $zone['type'],
-                'coordinates' => json_encode([
-                    'lat' => $zone['lat'],
-                    'lng' => $zone['lng'],
-                ]),
+                'lat' => $zone['lat'],
+                'lng' => $zone['lng'],
+
             ]);
             $this->command->info(" Zone insérée : {$created->name}");
         }

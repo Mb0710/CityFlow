@@ -14,7 +14,8 @@ class ConnectedObject extends Model
         'status',
         'attributes',
         'battery_level',
-        'coordinates',
+        'lat',
+        'lng',
         'zone_id',
         'last_interaction',
 
