@@ -7,10 +7,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.querySelector('.box form');
 
 
-    // Gestion du formulaire de connexion
+
     if (loginForm) {
         loginForm.addEventListener('submit', function (e) {
             e.preventDefault();
+
+
+            const oldErrorContainer = document.querySelector('.error-container');
+            if (oldErrorContainer) {
+                oldErrorContainer.remove();
+            }
 
             const formData = new FormData(this);
 
@@ -26,11 +32,37 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(data => {
                     if (data.redirect) {
                         window.location.href = data.redirect;
+                    } else if (data.errors) {
+
+                        const errorContainer = document.createElement('div');
+                        errorContainer.className = 'error-container';
+
+
+                        const errorList = document.createElement('ul');
+
+
+                        for (const field in data.errors) {
+                            const errorItem = document.createElement('li');
+                            errorItem.textContent = data.errors[field];
+                            errorList.appendChild(errorItem);
+                        }
+
+                        errorContainer.appendChild(errorList);
+
+
+                        const loginTitle = document.querySelector('.login-title');
+                        loginTitle.parentNode.insertBefore(errorContainer, loginTitle.nextSibling);
                     }
                 })
                 .catch(error => {
                     console.error('Erreur:', error);
-                    // Gérer les erreurs de connexion
+
+                    const errorContainer = document.createElement('div');
+                    errorContainer.className = 'error-container';
+                    errorContainer.innerHTML = '<ul><li>Une erreur s\'est produite. Veuillez réessayer.</li></ul>';
+
+                    const loginTitle = document.querySelector('.login-title');
+                    loginTitle.parentNode.insertBefore(errorContainer, loginTitle.nextSibling);
                 });
         });
     }

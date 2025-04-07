@@ -32,6 +32,10 @@ Route::middleware('auth')->group(function () {
         return view('map');
     })->name('map');
 
+    Route::post('/update-profile', [App\Http\Controllers\UserController::class, 'updateProfile'])->name('update.profile');
+
+    Route::get('/profile', [App\Http\Controllers\UserController::class, 'showProfile'])->name('profile')->middleware('auth');
+
     Route::get('/dashboard', function () {
         return view('dashboard', ['user' => Auth::user()]);
     })->middleware('verified')->name('dashboard');
@@ -39,6 +43,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/Profil', function () {
         return view('profil', ['user' => Auth::user()]);
     })->middleware('verified')->name('profil');
+
+    Route::get('/admin', function () {
+        return view('admin');
+    })->middleware('verified')->name('admin');
+
+    Route::get('/admin/ajout', function () {
+        return view('ajout');
+    })->middleware('verified')->name('ajout');
 
     Route::get('/user/data', [UserController::class, 'getData'])->name('user.data');
 

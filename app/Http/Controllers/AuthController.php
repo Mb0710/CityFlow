@@ -158,11 +158,18 @@ class AuthController extends Controller
             ]);
         }
 
-        return response()->json([
-            'errors' => ['username' => 'Les identifiants sont incorrects']
-        ], 401);
-    }
+        $userExists = User::where('login', $credentials['login'])->exists();
 
+        if ($userExists) {
+            return response()->json([
+                'errors' => ['password' => 'Le mot de passe est incorrect']
+            ], 401);
+        } else {
+            return response()->json([
+                'errors' => ['login' => 'Aucun compte trouvé avec ce nom d\'utilisateur']
+            ], 401);
+        }
+    }
     public function logout(Request $request)
     {
         Auth::logout();

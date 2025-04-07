@@ -8,20 +8,15 @@ let object;
 let animationActive = true;
 
 const loader = new GLTFLoader();
-const userRole = document.body.getAttribute("data-user-role");
-const isAdmin = document.body.getAttribute("data-is-admin");
-const errorBox = document.getElementById("errorBox");
-const errorBox2 = document.getElementById("errorBox2");
 
-console.log("isAdmin:", isAdmin);
 
 const cloudPositions = [
-    { x: -10, y: -1, z: -19, action: () => { window.location.href = '/map'; } },
+    { x: -10, y: -1, z: -19, action: () => { window.location.href = '/inscriptions'; } },
     {
         x: -3, y: -3, z: -20,
         action: () => {
             if (userRole === "débutant") {
-                errorBox.style.display = "block";
+
             } else {
                 window.location.href = '/Gestion';
             }
@@ -31,15 +26,15 @@ const cloudPositions = [
         x: 4, y: -2, z: -20,
         action: () => {
             if (isAdmin == 1) {
-                errorBox2.style.display = "block";
+
             }
             else {
                 window.location.href = '/admin';
             }
         }
     },
-    { x: 10, y: -4, z: -20, action: () => { window.location.href = '/Profil'; } },
-    { x: 15, y: 0, z: -20, action: () => { window.location.href = '/logout'; } }
+    { x: 13, y: -2, z: -20, action: () => { window.location.href = '/admin/ajout'; } },
+    { x: 12, y: -10, z: -20, action: () => { window.location.href = '/dashboard'; } },
 ];
 
 
@@ -75,7 +70,7 @@ loader.load(
 
 cloudPositions.forEach((position, index) => {
     loader.load(
-        `./assets/cloud${index}.1.glb`,
+        `./assets/cloud${index}.2.glb`,
         function (gltf) {
             const cloudObject = gltf.scene;
 
@@ -186,8 +181,6 @@ window.addEventListener("mousemove", onMouseMove);
 
 window.addEventListener("click", function (event) {
 
-    errorBox.style.display = "none";
-    errorBox2.style.display = "none";
 
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;

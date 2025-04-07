@@ -538,6 +538,24 @@ body {
 }
 
 
+.error-container {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-left: 3px solid #f44336;
+    color: #f44336;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.error-container ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.error-container li {
+    margin-bottom: 5px;
+}
+
 
 
 @media only screen and (min-width: 769px) and (max-width: 1024px) {
