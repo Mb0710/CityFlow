@@ -279,12 +279,19 @@ function saveMarkerToDatabase(marker) {
     }
 
     function initMap() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success);
-      } else {
-        alert("La géolocalisation n'est pas supportée par ce navigateur.");
-      }
-    }
+  // Définir les coordonnées du centre souhaité
+  const centrePersonnalise = {
+    lat: 49.035, // Latitude de votre choix
+    lng: 2.065   // Longitude de votre choix
+  };
+  
+  // Créer la carte directement avec ces coordonnées
+  myLatLng = new google.maps.LatLng(centrePersonnalise.lat, centrePersonnalise.lng);
+  createmap(myLatLng);
+  
+  // Rechercher les points existants autour de ce centre
+  searchTestPoint(centrePersonnalise.lat, centrePersonnalise.lng);
+}
     
     // Attacher les fonctions aux boutons une fois que le DOM est chargé
     document.addEventListener('DOMContentLoaded', function() {
