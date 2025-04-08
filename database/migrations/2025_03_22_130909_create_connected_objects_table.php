@@ -19,7 +19,6 @@ return new class extends Migration {
             $table->string('name');
             $table->text('description')->nullable();
             $table->enum('type', ['lampadaire', 'capteur_pollution', 'borne_bus', 'panneau_information', 'caméra']); //Velo,panneau solaire,
-            $table->enum('type', ['lampadaire', 'capteur_pollution', 'borne_bus', 'panneau_information', 'caméra']); //Velo,panneau solaire,
             $table->enum('status', ['actif', 'inactif', 'maintenance'])->default('actif');
             $table->json('attributes')->nullable();
             $table->integer('battery_level')->nullable();
