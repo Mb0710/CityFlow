@@ -21,5 +21,17 @@ class ConnectedObject extends Model
 
 
     ];
-    //
+
+    protected $casts = [
+        'attributes' => 'array',
+        'battery_level' => 'integer',
+        'lat' => 'float',
+        'lng' => 'float'
+    ];
+
+
+    public function zone()
+    {
+        return $this->belongsTo(CityZone::class, 'zone_id');
+    }
 }
