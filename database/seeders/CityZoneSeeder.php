@@ -27,12 +27,16 @@ class CityZoneSeeder extends Seeder
         ];
 
         foreach ($zones as $zone) {
+            // 🔒 Clamp des coordonnées dans les bornes de la map
+            $lat = min(max($zone['lat'], 49.025), 49.045);
+            $lng = min(max($zone['lng'], 2.055), 2.075);
+
             $created = CityZone::create([
                 'name' => $zone['name'],
                 'description' => "Zone générée automatiquement pour tests à Cergy.",
                 'type' => $zone['type'],
-                'lat' => $zone['lat'],
-                'lng' => $zone['lng'],
+                'lat' => $lat,
+                'lng' => $lng,
 
             ]);
             $this->command->info(" Zone insérée : {$created->name}");

@@ -33,9 +33,13 @@ class ConnectedObjectSeeder extends Seeder
                 ]);
 
                 //  Coordonnées GPS générées dans les limites précises de Cergy
-                $lat = fake()->latitude(49.025, 49.045);
-                $lng = fake()->longitude(2.055, 2.075);
-
+                do {
+                    $lat = $zone->lat + fake()->randomFloat(6, -0.002, 0.002);
+                    $lng = $zone->lng + fake()->randomFloat(6, -0.002, 0.002);
+                } while (
+                    $lat < 49.025 || $lat > 49.045 ||
+                    $lng < 2.055 || $lng > 2.075
+                );
                 //  Données communes à tous les types d’objets
                 $commonData = [
                     'unique_id' => Str::uuid(),
