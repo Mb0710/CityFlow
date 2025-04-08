@@ -23,7 +23,7 @@ class CityZoneSeeder extends Seeder
             ['name' => 'Cergy Le Haut', 'type' => 'résidentiel', 'lat' => 49.0501, 'lng' => 2.0234],
             ['name' => 'Parc François Mitterrand', 'type' => 'loisirs', 'lat' => 49.0365, 'lng' => 2.0709],
             ['name' => 'Université de Cergy', 'type' => 'administratif', 'lat' => 49.0348, 'lng' => 2.0792],
-            ['name' => 'Quartier d'affaires', 'type' => 'commercial', 'lat' => 49.0377, 'lng' => 2.0684],
+            ['name' => 'Quartier d’affaires', 'type' => 'commercial', 'lat' => 49.0377, 'lng' => 2.0684],
         ];
 
         foreach ($zones as $zone) {
@@ -37,6 +37,7 @@ class CityZoneSeeder extends Seeder
                 'type' => $zone['type'],
                 'lat' => $lat,
                 'lng' => $lng,
+
             ]);
             $this->command->info(" Zone insérée : {$created->name}");
         }
