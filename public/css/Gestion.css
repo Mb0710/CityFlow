@@ -1,0 +1,391 @@
+/* === FOND DE PAGE === */
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', sans-serif;
+  background: linear-gradient(135deg, #2193b0, #6dd5ed); /* Dégradé bleu */
+  min-height: 100vh;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* === CONTAINER DU TITRE FLOTTANT AVEC NUAGE === */
+.titre-container {
+  margin-top: 70px;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Image de nuage animée */
+.nuage-img {
+  width: 400px;
+  height: auto;
+  opacity: 0.9;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Titre sur le nuage */
+.cloud-title {
+  font-size: 60px;
+  font-weight: bold;
+  color: #2e5f4d;
+  margin-top: -150px;
+  text-align: center;
+  text-shadow: 2px 2px #45403A;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Animation flottante */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+/* === LOGO EN HAUT À GAUCHE === */
+.logo-site {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+}
+
+.logo-site img {
+  height: 100px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo-site img:hover {
+  transform: scale(1.1);
+}
+
+/* === BOUTON "+" POUR AJOUT D'APPAREIL === */
+.add-device-btn {
+  position: absolute;
+  top: 260px;
+  right: 30px;
+  z-index: 4;
+  font-size: 26px;
+  padding: 10px 18px;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  background-color: #2e5f4d;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-family: 'Comic Sans MS', sans-serif;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+.add-device-btn:hover {
+  background-color: #3b7a63;
+  transform: scale(1.1);
+}
+
+/* === FORMULAIRE D’AJOUT / MODIFICATION === */
+.device-form-container {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  padding: 20px;
+  border: 2px dashed #45403A;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 10;
+  width: 90%;
+  max-width: 400px;
+  display: none;
+  flex-direction: column;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+/* Contenu du formulaire */
+.device-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.device-form h3,
+.device-form label {
+  color: #252422;
+}
+
+.device-form label {
+  font-weight: bold;
+}
+
+/* Champs texte / select du formulaire */
+.device-form input,
+.device-form select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  font-family: 'Comic Sans MS', sans-serif;
+}
+
+/* Bouton de validation du formulaire */
+.device-form button[type="submit"] {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #2e5f4d;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: 'Comic Sans MS', sans-serif;
+  transition: 0.3s;
+}
+
+.device-form button:hover {
+  background-color: #3b7a63;
+}
+
+/* Bouton de fermeture du formulaire */
+.close-form {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #252422;
+  font-weight: bold;
+}
+
+/* === MENU DE TRI PAR CATÉGORIE === */
+.menu-tri {
+  position: absolute;
+  top: 265px;
+  right: 110px;
+  z-index: 4;
+}
+
+.menu-tri select {
+  padding: 10px;
+  border-radius: 15px;
+  border: 2px solid #252422;
+  font-size: 16px;
+  font-family: 'Comic Sans MS', sans-serif;
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+/* === GRILLE DES CARTES D’APPAREILS === */
+.device-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 330px 20px 40px;
+  gap: 20px;
+}
+
+/* Carte individuelle */
+.device-card {
+  background: #ffffffdd;
+  border: 2px solid #C8BFB1;
+  border-radius: 20px;
+  padding: 15px;
+  width: 420px;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenu structuré de la carte */
+.device-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.device-infos {
+  font-size: 14px;
+  color: #252422;
+  flex: 1;
+}
+
+.info-item {
+  background-color: #ffffff;
+  padding: 6px 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #ddd;
+}
+
+/* Boutons à droite (rapport, modifier, supprimer...) */
+.device-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.device-actions button {
+  background-color: #2e5f4d;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-family: 'Comic Sans MS', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.device-actions button:hover {
+  background-color: #3b7a63;
+  transform: scale(1.05);
+  color: #ffd700;
+}
+
+/* === SWITCH ON/OFF === */
+.toggle-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Comic Sans MS', sans-serif;
+  font-size: 14px;
+  color: #252422;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 26px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.toggle-switch input:checked + .slider {
+  background-color: #2e5f4d;
+}
+
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+/* === MESSAGE DE CONFIRMATION TEMPORAIRE === */
+.message-confirmation {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2e5f4d;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 20px;
+  font-family: 'Comic Sans MS', sans-serif;
+  font-size: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  z-index: 1000;
+  animation: fadeOut 4s forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; display: none; }
+}
+
+/* === VERSION RESPONSIVE === */
+@media screen and (max-width: 600px) {
+  .titre-container {
+    top: 40px;
+    transform: translateX(-50%);
+    margin-top: 0;
+    width: 100%;
+    align-items: center;
+  }
+
+  .nuage-img {
+    width: 250px;
+  }
+
+  .cloud-title {
+    font-size: 32px;
+    margin-top: -95px;
+  }
+
+  .logo-site {
+    top: 0px;
+    right: 10px;
+    left: auto;
+  }
+
+  .logo-site img {
+    height: 60px;
+  }
+
+  .add-device-btn {
+    font-size: 18px;
+    padding: 10px;
+    width: 45px;
+    height: 45px;
+    top: 180px;
+    right: 20px;
+  }
+
+  .menu-tri {
+    top: 230px;
+    right: 20px;
+  }
+
+  .device-grid {
+    padding-top: 290px;
+  }
+
+  .device-form-container {
+    width: 95%;
+    max-width: 320px;
+    padding: 15px;
+    max-height: 80vh;
+  }
+}

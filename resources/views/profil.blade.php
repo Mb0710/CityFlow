@@ -83,7 +83,8 @@
         <div class="info-item"><strong>Nom : </strong> <input name="name" value="{{ $user->name }}" readonly></div>
         <div class="info-item"><strong>Prénom : </strong><input name="firstname" value="{{ $user->firstname }}"
           readonly></div>
-        <div class="info-item"><strong>Email : </strong><input name="email" value="{{ $user->email }}" readonly></div>
+        <div class="info-item"><strong>Email : </strong><input type="email" name="email" value="{{ $user->email }}"
+          readonly></div>
         <div class="info-item">
         <strong>Mot de passe : </strong>
         <input type="password" name="password" autocomplete="new-password" readonly>

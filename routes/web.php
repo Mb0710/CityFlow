@@ -20,7 +20,8 @@ Route::get('/freetour', function () {
     return view('freetour');
 });
 
-
+Route::post('/testpoint', 'App\Http\Controllers\ConnectedObjectController@searchConnectedObject');
+Route::post('/testpoint/store', 'App\Http\Controllers\ConnectedObjectController@store');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -35,6 +36,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/update-profile', [App\Http\Controllers\UserController::class, 'updateProfile'])->name('update.profile');
 
     Route::get('/profil/{username?}', [UserController::class, 'showProfile'])->name('profile');
+
+    Route::get('/Gestion', function () {
+        return view('gestion');
+    })->name('gestion');
+
+
+    Route::get('/connected-objects', [App\Http\Controllers\ConnectedObjectsController::class, 'index']);
+    Route::post('/connected-objects', [App\Http\Controllers\ConnectedObjectsController::class, 'store']);
+    Route::get('/connected-objects/{id}', [App\Http\Controllers\ConnectedObjectsController::class, 'show']);
+    Route::put('/connected-objects/{id}', [App\Http\Controllers\ConnectedObjectsController::class, 'update']);
 
     Route::get('/dashboard', function () {
         return view('dashboard', ['user' => Auth::user()]);

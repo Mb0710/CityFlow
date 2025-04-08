@@ -12,7 +12,9 @@ document.addEventListener('DOMContentLoaded', function () {
             // Passer en mode édition
             editMode = true;
             inputs.forEach(input => {
-                input.removeAttribute('readonly');
+                if (input.type !== "email") {
+                    input.removeAttribute('readonly');
+                }
             });
             selects.forEach(select => {
                 select.removeAttribute('disabled');

@@ -15,9 +15,20 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+
+        if (!User::where('login', 'testuser123')->exists()) {
+            User::factory()->create([
+                'name' => 'Test User',
+                'email' => 'test@example.com',
+                'login' => 'testuser123',
+            ]);
+        }
+
+        //Seeder pour insérer les objets connectés
+        $this->call([
+            CityZoneSeeder::class,
+            ConnectedObjectSeeder::class,
+            // UserSeeder::class,
         ]);
     }
 }

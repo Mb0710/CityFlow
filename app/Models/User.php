@@ -6,10 +6,12 @@ use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
-    use Notifiable;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'login',
@@ -21,7 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'gender',
         'member_type',
         'profile_picture',
-        'last_login_date'
+        'last_login_date',
     ];
 
     protected $hidden = [
