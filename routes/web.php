@@ -21,6 +21,8 @@ Route::get('/freetour', function () {
 });
 
 
+Route::post('/testpoint', 'App\Http\Controllers\ConnectedObjectController@searchConnectedObject');
+Route::post('/testpoint/store', 'App\Http\Controllers\ConnectedObjectController@store');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
