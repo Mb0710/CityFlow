@@ -1,4 +1,3 @@
-/* Structure générale de la page */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #2193b0, #6dd5ed);
@@ -7,6 +6,66 @@ body {
   align-items: center;
 }
 
+
+.titre-container {
+  margin-top: 70px;
+  position: absolute;
+  top: -50px;
+  left: 70%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.nuage-img {
+  width: 400px;
+  height: auto;
+  opacity: 0.8;
+}
+
+
+.cloud-title {
+  font-size: 60px;
+  font-weight: bold;
+  color: #2e5f4d;
+  margin-top: -150px;
+  transform: rotate(-3deg);
+}
+
+
+.logo-site {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  z-index: 3;
+}
+
+.logo-site img {
+  height: 90px;
+  width: auto;
+}
+
+
+@keyframes flotter {
+  0% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.flottant {
+  animation: flotter 4s ease-in-out infinite;
+}
 
 .profile-container {
   display: flex;
@@ -17,7 +76,7 @@ body {
   margin-top: 150px;
 }
 
-/* Carte contenant les infos du profil */
+
 .profile-card {
   background: #ffffffdd;
   padding: 25px 30px;
@@ -40,7 +99,7 @@ body {
   max-height: max-content;
 }
 
-/* Bloc individuel contenant une section d'informations */
+
 .info-block {
   margin-top: 15px;
   padding: 15px;
@@ -71,7 +130,7 @@ body {
   transform: none;
 }
 
-/* Titre de chaque bloc */
+
 .info-block h3 {
   margin-top: 0;
   font-size: 20px;
@@ -80,7 +139,7 @@ body {
   margin-bottom: 10px;
 }
 
-/* Conteneur de l'avatar */
+
 .avatar-container {
   position: relative;
   display: flex;
@@ -100,13 +159,13 @@ body {
   position: relative;
 }
 
-/* Effet au survol de l'avatar */
+
 .avatar:hover {
   opacity: 0.8;
   transform: scale(1.02);
 }
 
-/* Bouton "Modifier" en haut à droite de l'avatar */
+
 .edit-btn {
   position: absolute;
   top: -5px;
@@ -126,7 +185,7 @@ body {
   background-color: #ffc107;
 }
 
-/* Style général des formulaires */
+
 form {
   display: flex;
   flex-direction: column;
@@ -145,7 +204,7 @@ label {
   align-items: center;
 }
 
-/* Champs de formulaire */
+
 input[type="text"],
 input[type="number"],
 input[type="date"],
@@ -181,13 +240,13 @@ select {
   letter-spacing: 2px;
 }
 
-/* Groupe de boutons radio */
+
 .radio-group {
   display: flex;
   justify-content: space-around;
 }
 
-/* Bouton principal */
+
 button {
   margin-top: 15px;
   padding: 10px;
@@ -211,7 +270,7 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* Affichage du niveau sous forme de badge */
+
 .niveau-affichage {
   background-color: #ffefc3;
   border: 2px solid #d4a017;
@@ -233,7 +292,7 @@ button:hover {
 
 
 
-/* Bloc contenant toutes les infos texte du profil */
+
 .profile-info {
   display: flex;
   flex-direction: column;
@@ -243,7 +302,7 @@ button:hover {
   margin-top: 10px;
 }
 
-/* Élément individuel dans un bloc d'info */
+
 .info-item {
   background-color: #e6f7f2;
   padding: 10px;
@@ -256,17 +315,10 @@ button:hover {
 
 @media screen and (max-width: 600px) {
 
-  /* Masquer la barre de nav desktop */
-  .navbar {
-    display: none;
-  }
 
-  /* Afficher le bouton hamburger */
-  .hamburger {
-    display: block;
-  }
 
-  /* Menu mobile replié */
+
+
   .mobile-menu {
     display: none;
     flex-direction: column;
@@ -282,12 +334,12 @@ button:hover {
     z-index: 3;
   }
 
-  /* Menu mobile visible quand actif */
+
   .mobile-menu.active {
     display: flex;
   }
 
-  /* Liens du menu mobile */
+
   .mobile-menu li a {
     color: white;
     font-size: 18px;
@@ -298,13 +350,13 @@ button:hover {
     transition: 0.3s;
   }
 
-  /* Nuage plus petit en mobile */
+
   .nuage-img {
     width: 250px;
     opacity: 0.9;
   }
 
-  /* Titre plus petit et recentré */
+
   .cloud-title {
     font-size: 32px;
     margin-top: -100px;
@@ -312,20 +364,20 @@ button:hover {
     text-align: center;
   }
 
-  /* Conteneur du titre repositionné */
+
   .titre-container {
     top: 80px;
     margin-top: 0;
     transform: translateX(-50%);
   }
 
-  /* Avatar plus petit sur mobile */
+
   .avatar {
     width: 90px;
     height: 90px;
   }
 
-  /* Bouton modifier plus petit */
+
   .edit-btn {
     font-size: 12px;
     padding: 4px 10px;
@@ -333,13 +385,13 @@ button:hover {
     right: 10px;
   }
 
-  /* Ajustement de la carte profil */
+
   .profile-card {
     margin-top: 200px;
     padding: 20px;
   }
 
-  /* Logo réduit sur petit écran */
+
   .logo-site img {
     height: 60px;
   }

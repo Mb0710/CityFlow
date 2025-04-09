@@ -21,6 +21,14 @@
     <a href="/"><img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo"></a>
   </div>
 
+
+  <div class="titre-container flottant">
+
+    <img src="{{ asset('./assets/nuage.png') }}" alt="Nuage" class="nuage-img">
+
+    <div class="cloud-title">Profil</div>
+  </div>
+
   <form id="profile-form" method="POST" action="{{ route('update.profile') }}" enctype="multipart/form-data">
     @csrf
     <div class="profile-container @if($user->id !== $currentUser->id) centered @endif">

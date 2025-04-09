@@ -2,7 +2,8 @@
 body {
   margin: 0;
   font-family: 'Comic Sans MS', sans-serif;
-  background: linear-gradient(135deg, #2193b0, #6dd5ed); /* Dégradé bleu */
+  background: linear-gradient(135deg, #2193b0, #6dd5ed);
+  /* Dégradé bleu */
   min-height: 100vh;
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -20,6 +21,26 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+
+.recharger-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.recharger-btn:hover {
+  background-color: #388E3C;
+}
+
+.recharger-btn:disabled {
+  background-color: #A5D6A7;
+  cursor: wait;
 }
 
 /* Image de nuage animée */
@@ -43,9 +64,17 @@ body {
 
 /* Animation flottante */
 @keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0); }
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }
 
 /* === LOGO EN HAUT À GAUCHE === */
@@ -82,7 +111,7 @@ body {
   border: none;
   cursor: pointer;
   font-family: 'Comic Sans MS', sans-serif;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: 0.3s;
 }
 
@@ -101,7 +130,7 @@ body {
   padding: 20px;
   border: 2px dashed #45403A;
   border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   z-index: 10;
   width: 90%;
   max-width: 400px;
@@ -184,7 +213,7 @@ body {
   font-size: 16px;
   font-family: 'Comic Sans MS', sans-serif;
   background-color: white;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
 
@@ -304,11 +333,11 @@ body {
   border-radius: 50%;
 }
 
-.toggle-switch input:checked + .slider {
+.toggle-switch input:checked+.slider {
   background-color: #2e5f4d;
 }
 
-.toggle-switch input:checked + .slider:before {
+.toggle-switch input:checked+.slider:before {
   transform: translateX(24px);
 }
 
@@ -324,15 +353,24 @@ body {
   border-radius: 20px;
   font-family: 'Comic Sans MS', sans-serif;
   font-size: 16px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   animation: fadeOut 4s forwards;
 }
 
 @keyframes fadeOut {
-  0% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { opacity: 0; display: none; }
+  0% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
 }
 
 /* === VERSION RESPONSIVE === */

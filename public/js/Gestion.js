@@ -18,9 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const nom = document.getElementById("nom").value;
     const batterie = document.getElementById("batterie").value;
     const statut = document.getElementById("statut").value;
-    const zone = document.getElementById("zone").value;
-    const utilisateur = document.getElementById("utilisateur").value;
-    const creation = document.getElementById("creation").value;
     const coordonnees = document.getElementById("coordonnees").value;
     const categorie = document.getElementById("categorie").value;
 
@@ -29,9 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
       name: nom,
       battery_level: batterie,
       status: statut === "en_ligne" ? "actif" : "inactif",
-      zone_id: zone, // Assurez-vous que c'est un ID valide
-      last_user: utilisateur,
-      created_at: creation,
       lat: coordonnees.split(',')[0] || null,
       lng: coordonnees.split(',')[1] || null,
       type: categorie
@@ -77,6 +71,12 @@ function creerAppareil(donnees) {
   donnees.unique_id = 'DEV_' + Date.now();
   donnees.description = donnees.name + ' description';
 
+  // Ne pas inclure zone_id dans les données envoyées
+  // La méthode setZoneFromCoordinates() s'en chargera
+  if (donnees.zone_id) {
+    delete donnees.zone_id;
+  }
+
   fetch('/connected-objects', {
     method: 'POST',
     headers: {
@@ -112,24 +112,14 @@ function modifierAppareil(id, donnees) {
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        // Mettre à jour la carte dans l'interface
-        carteEnEdition.setAttribute("data-categorie", donnees.type);
-        carteEnEdition.querySelector(".device-infos").innerHTML = `
-        <div class="info-item"><strong>Nom:</strong> ${donnees.name}</div>
-        <div class="info-item"><strong>Batterie:</strong> ${donnees.battery_level}%</div>
-        <div class="info-item"><strong>Statut:</strong> ${donnees.status === "actif" ? "En ligne" : "Hors ligne"}</div>
-        <div class="info-item"><strong>Zone:</strong> ${donnees.zone_id}</div>
-        <div class="info-item"><strong>Utilisateur:</strong> ${donnees.last_user}</div>
-        <div class="info-item"><strong>Création:</strong> ${donnees.created_at}</div>
-        <div class="info-item"><strong>Coordonnées:</strong> ${donnees.lat},${donnees.lng}</div>
-        <div class="info-item"><strong>Catégorie:</strong> ${donnees.type}</div>
-      `;
+        // Charger tous les appareils pour s'assurer que les données sont à jour
+        chargerAppareils();
 
+        // Réinitialiser le formulaire
         carteEnEdition = null;
         closeForm();
         document.querySelector(".device-form").reset();
         document.querySelector('button[type="submit"]').textContent = "Enregistrer";
-        filtrerCategorie();
       } else {
         alert('Erreur: ' + JSON.stringify(data.errors));
       }
@@ -147,6 +137,17 @@ function ajouterCarteAppareil(appareil) {
   deviceCard.setAttribute("data-categorie", appareil.type);
   deviceCard.setAttribute("data-id", appareil.id);
 
+
+  let zoneName = "Non définie";
+  if (appareil.zone) {
+    zoneName = appareil.zone.name;
+  }
+
+  const dateCreation = appareil.created_at
+    ? new Date(appareil.created_at).toLocaleDateString('fr-FR')
+    : 'N/A';
+
+
   deviceCard.innerHTML = `
     <div class="device-content">
       <div class="device-infos">
@@ -154,14 +155,15 @@ function ajouterCarteAppareil(appareil) {
         <div class="info-item"><strong>Batterie:</strong> ${appareil.battery_level}%</div>
         <div class="info-item"><strong>Statut:</strong> ${appareil.status === "actif" ? "En ligne" : "Hors ligne"}</div>
         <div class="info-item"><strong>Zone:</strong> ${appareil.zone_id}</div>
-        <div class="info-item"><strong>Utilisateur:</strong> ${appareil.last_user || 'N/A'}</div>
-        <div class="info-item"><strong>Création:</strong> ${appareil.created_at}</div>
+         <div class="info-item"><strong>Dernière interaction:</strong> ${appareil.last_interaction ? new Date(appareil.last_interaction).toLocaleDateString('fr-FR') : 'N/A'}</div>
+        <div class="info-item"><strong>Création:</strong> ${new Date(appareil.created_at).toLocaleDateString('fr-FR')}</div>
         <div class="info-item"><strong>Coordonnées:</strong> ${appareil.lat},${appareil.lng}</div>
         <div class="info-item"><strong>Catégorie:</strong> ${appareil.type}</div>
       </div>
       <div class="device-actions">
         <button class="rapport-btn">Rapport</button>
         <button class="stats-btn">Statistiques</button>
+        <button class="recharger-btn">Recharger 🔋</button>
         <div class="toggle-wrapper">
           <label class="toggle-switch">
             <input type="checkbox" class="toggle-checkbox" ${appareil.status === "actif" ? "checked" : ""} />
@@ -205,13 +207,36 @@ function ajouterCarteAppareil(appareil) {
     }
   });
 
+  const btnRecharger = deviceCard.querySelector(".recharger-btn");
+  btnRecharger.addEventListener("click", () => {
+    const id = deviceCard.getAttribute("data-id");
+
+    // Mise à jour de l'affichage immédiatement
+    const batterieElement = deviceCard.querySelector(".info-item:nth-child(2)");
+    batterieElement.innerHTML = "<strong>Batterie:</strong> 100%";
+    batterieElement.style.color = "";
+
+    // Animation de recharge (effet visuel)
+    btnRecharger.textContent = "Recharge en cours...";
+    btnRecharger.disabled = true;
+
+    // Mise à jour dans la base de données
+    modifierAppareil(id, { battery_level: 100 });
+
+    // Réinitialisation du bouton après un délai
+    setTimeout(() => {
+      btnRecharger.textContent = "Recharger 🔋";
+      btnRecharger.disabled = false;
+    }, 2000);
+  });
+
   // Gestion du bouton Modifier
   const btnModifier = deviceCard.querySelector(".modifier-btn");
   btnModifier.addEventListener("click", () => {
     carteEnEdition = deviceCard;
     const infos = deviceCard.querySelectorAll(".info-item");
 
-    // Pré-remplissage du formulaire avec les données de la carte
+    // Pré-remplir le formulaire avec les données existantes
     document.getElementById("nom").value = infos[0].textContent
       .replace("Nom:", "")
       .trim();
@@ -223,21 +248,18 @@ function ajouterCarteAppareil(appareil) {
       .replace("Statut:", "")
       .trim()
       .toLowerCase() === "en ligne" ? "en_ligne" : "hors_ligne";
-    document.getElementById("zone").value = infos[3].textContent
-      .replace("Zone:", "")
-      .trim();
-    document.getElementById("utilisateur").value = infos[4].textContent
-      .replace("Utilisateur:", "")
-      .trim();
-    document.getElementById("creation").value = infos[5].textContent
-      .replace("Création:", "")
-      .trim();
-    document.getElementById("coordonnees").value = infos[6].textContent
+
+    // Pré-remplir les coordonnées
+    const coordonneesText = infos[6].textContent
       .replace("Coordonnées:", "")
       .trim();
-    document.getElementById("categorie").value = infos[7].textContent
+    document.getElementById("coordonnees").value = coordonneesText;
+
+    // Pré-remplir la catégorie
+    const categorieText = infos[7].textContent
       .replace("Catégorie:", "")
       .trim();
+    document.getElementById("categorie").value = categorieText;
 
     toggleDeviceForm();
     document.querySelector('button[type="submit"]').textContent = "Mettre à jour";

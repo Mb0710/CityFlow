@@ -12,6 +12,10 @@
 
 <body>
 
+  <div class="titre-container">
+    <img src="{{ asset('./assets/nuage.png') }}" alt="Nuage" class="nuage-img">
+    <div class="cloud-title">Gestion</div>
+  </div>
 
 
   <!-- === Bouton pour ouvrir le formulaire d'ajout === -->
@@ -22,10 +26,10 @@
     <select id="filtreCategorie" onchange="filtrerCategorie()">
       <option value="tous">Tous</option>
       <option value="lampadaire">Lampadaire</option>
-      <option value="pollution">Capteur pollution</option>
-      <option value="bus">Borne de bus</option>
-      <option value="panneau">Panneau d'information</option>
-      <option value="camera">Caméra</option>
+      <option value="capteur_pollution">Capteur pollution</option>
+      <option value="borne_bus">Borne de bus</option>
+      <option value="panneau_information">Panneau d'information</option>
+      <option value="caméra">Caméra</option>
     </select>
   </div>
 
@@ -39,7 +43,7 @@
       <input type="text" id="nom" name="nom" required />
 
       <label for="batterie">Batterie (%)</label>
-      <input type="number" id="batterie" name="batterie" min="0" max="100" />
+      <input type="number" id="batterie" name="batterie" min="0" max="100" value="100" />
 
       <label for="statut">Statut</label>
       <select id="statut" name="statut">
@@ -47,26 +51,17 @@
         <option value="hors ligne">Hors ligne</option>
       </select>
 
-      <label for="zone">Zone</label>
-      <input type="text" id="zone" name="zone" />
-
-      <label for="utilisateur">Dernier utilisateur</label>
-      <input type="text" id="utilisateur" name="utilisateur" />
-
-      <label for="creation">Date de création</label>
-      <input type="date" id="creation" name="creation" />
-
-      <label for="coordonnees">Coordonnées</label>
-      <input type="text" id="coordonnees" name="coordonnees" />
+      <label for="coordonnees">Coordonnées (lat,lng)</label>
+      <input type="text" id="coordonnees" name="coordonnees" required placeholder="49.035,2.065" />
 
       <label for="categorie">Catégorie</label>
       <select id="categorie" name="categorie" required>
         <option value="">-- Sélectionner --</option>
         <option value="lampadaire">Lampadaire</option>
-        <option value="pollution">Capteur pollution</option>
-        <option value="bus">Borne de bus</option>
-        <option value="panneau">Panneau d'information</option>
-        <option value="camera">Caméra</option>
+        <option value="capteur_pollution">Capteur pollution</option>
+        <option value="borne_bus">Borne de bus</option>
+        <option value="panneau_information">Panneau d'information</option>
+        <option value="caméra">Caméra</option>
       </select>
 
       <button type="submit">Enregistrer</button>

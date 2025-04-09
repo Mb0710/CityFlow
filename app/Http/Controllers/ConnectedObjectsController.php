@@ -81,33 +81,64 @@ class ConnectedObjectsController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'unique_id' => 'required|string|unique:connected_objects',
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'type' => 'required|in:lampadaire,capteur_pollution,borne_bus,panneau_information,caméra',
-            'status' => 'required|in:actif,inactif,maintenance',
-            'attributes' => 'nullable|json',
-            'battery_level' => 'nullable|integer|min:0|max:100',
-            'lat' => 'nullable|numeric',
-            'lng' => 'nullable|numeric',
-            'zone_id' => 'required|exists:city_zones,id',
-        ]);
+        try {
 
-        if ($validator->fails()) {
+            $validated = $request->validate([
+                'unique_id' => 'required|string|unique:connected_objects',
+                'name' => 'required|string|max:255',
+                'type' => 'required|string',
+                'description' => 'nullable|string',
+                'status' => 'required|string',
+                'battery_level' => 'integer|min:0|max:100',
+                'lat' => 'required|numeric',
+                'lng' => 'required|numeric',
+            ]);
+
+
+
+            $existingObject = ConnectedObject::where('lat', $request->lat)
+                ->where('lng', $request->lng)
+                ->first();
+
+            if ($existingObject) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Un objet existe déjà à ces coordonnées',
+                    'errors' => [
+                        'coordinates' => ['Un objet connecté existe déjà à l\'emplacement (lat: ' . $request->lat . ', lng: ' . $request->lng . ')']
+                    ]
+                ], 422);
+            }
+
+
+            $object = new ConnectedObject($validated);
+
+
+            if (!isset($object->description)) {
+                $object->description = $object->name . ' description';
+            }
+
+
+            $object->last_interaction = now();
+
+
+            $object->setZoneFromCoordinates();
+
+
+            $object->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Connected object created successfully',
+                'data' => $object
+            ], 201);
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'errors' => $validator->errors()
-            ], 422);
+                'message' => 'Failed to create connected object',
+                'errors' => $e->getMessage()
+            ], 500);
         }
-
-        $connectedObject = ConnectedObject::create($request->all());
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Objet connecté créé avec succès',
-            'data' => $connectedObject
-        ], 201);
     }
 
     /**
