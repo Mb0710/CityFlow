@@ -23,6 +23,27 @@ body {
   align-items: center;
 }
 
+.device-card.reported {
+  border-left: 4px solid #ff9800;
+  position: relative;
+}
+
+.device-card.reported::before {
+  content: "⚠️ Signalé";
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ff9800;
+  color: white;
+  padding: 2px 8px;
+  font-size: 0.8em;
+  border-radius: 0 0 0 8px;
+}
+
+.device-card.reported .supprimer-btn {
+  background-color: #ff9800;
+  cursor: not-allowed;
+}
 
 .recharger-btn {
   background-color: #4CAF50;

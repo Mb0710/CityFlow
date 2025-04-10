@@ -11,16 +11,9 @@ const loader = new GLTFLoader();
 
 
 const cloudPositions = [
-    { x: -10, y: -1, z: -19, action: () => { window.location.href = '/inscriptions'; } },
+    { x: -10, y: -1, z: -19, action: () => { window.location.href = '/admin/inscriptions'; } },
     {
-        x: -3, y: -3, z: -20,
-        action: () => {
-            if (userRole === "débutant") {
-
-            } else {
-                window.location.href = '/Gestion';
-            }
-        }
+        x: -3, y: -3, z: -20, action: () => { window.location.href = '/admin/suppression'; }
     },
     {
         x: 4, y: -2, z: -20,

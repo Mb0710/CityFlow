@@ -92,5 +92,31 @@ class UserController extends Controller
         ]);
     }
 
+    public function getPendingUsers()
+    {
+
+        $pendingUsers = User::whereNull('email_verified_at')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return response()->json($pendingUsers);
+    }
+
+    public function approveUser($id)
+    {
+        $user = User::findOrFail($id);
+        $user->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    public function rejectUser($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return response()->json(['success' => true]);
+    }
+
 
 }

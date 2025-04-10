@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ConnectedObjectsController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -63,8 +64,24 @@ Route::middleware('auth')->group(function () {
         return view('ajout');
     })->middleware('verified')->name('ajout');
 
-    Route::get('/user/data', [UserController::class, 'getData'])->name('user.data');
+    Route::get('/admin/inscriptions', function () {
+        return view('inscription');
+    })->middleware('verified')->name('ajout');
 
+
+    Route::get('/admin/suppression', function () {
+        return view('suppression');
+    })->middleware('verified')->name('suppression');
+
+    Route::get('/reported', [ConnectedObjectsController::class, 'getReportedObjects']);
+    Route::delete('/connected-objects/{id}', [ConnectedObjectsController::class, 'destroy']);
+    Route::post('/connected-objects/{id}/cancel-report', [ConnectedObjectsController::class, 'cancelReport']);
+
+    Route::put('/connected-objects/{id}/report', [ConnectedObjectsController::class, 'report']);
+    Route::get('/admin/users/pending', [UserController::class, 'getPendingUsers'])->middleware('auth', 'verified')->name('users.pending');
+    Route::get('/user/data', [UserController::class, 'getData'])->name('user.data');
+    Route::post('/admin/users/{id}/approve', [UserController::class, 'approveUser'])->middleware('auth', 'verified');
+    Route::post('/admin/users/{id}/reject', [UserController::class, 'rejectUser'])->middleware('auth', 'verified');
     Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->name('verification.notice');
 
     Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->middleware('signed')->name('verification.verify');

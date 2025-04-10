@@ -164,6 +164,90 @@ class ConnectedObjectsController extends Controller
         ]);
     }
 
+    public function report($id)
+    {
+        $connectedObject = ConnectedObject::find($id);
+
+        if (!$connectedObject) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Objet connecté non trouvé'
+            ], 404);
+        }
+
+        $connectedObject->reported = true;
+        $connectedObject->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Objet signalé avec succès',
+            'data' => $connectedObject
+        ]);
+    }
+
+
+    public function getReportedObjects()
+    {
+        $reportedObjects = ConnectedObject::where('reported', true)->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $reportedObjects
+        ]);
+    }
+
+    /**
+     * Supprimer un objet connecté
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy($id)
+    {
+        $connectedObject = ConnectedObject::find($id);
+
+        if (!$connectedObject) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Objet connecté non trouvé'
+            ], 404);
+        }
+
+        $connectedObject->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Objet connecté supprimé avec succès'
+        ]);
+    }
+
+    /**
+     * Annuler le signalement d'un objet
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cancelReport($id)
+    {
+        $connectedObject = ConnectedObject::find($id);
+
+        if (!$connectedObject) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Objet connecté non trouvé'
+            ], 404);
+        }
+
+        $connectedObject->reported = false;
+        $connectedObject->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Signalement annulé avec succès',
+            'data' => $connectedObject
+        ]);
+    }
+
     /**
      * Obtenir un objet connecté par son unique_id
      *

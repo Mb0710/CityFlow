@@ -27,7 +27,9 @@ return new class extends Migration {
             $table->decimal('lng', 10, 6)->nullable();
             $table->foreignId('zone_id')->constrained('city_zones')->onDelete('cascade');
             $table->timestamp('last_interaction')->nullable();
+            $table->boolean('reported')->default(false);
             $table->timestamps();
+
         });
     }
 

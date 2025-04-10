@@ -143,9 +143,17 @@ function ajouterCarteAppareil(appareil) {
     zoneName = appareil.zone.name;
   }
 
+  if (appareil.reported) {
+    deviceCard.classList.add("reported");
+  }
+
+  const suppressionBtnText = appareil.reported ? "Signalé ⚠️" : "Solliciter la suppression";
+  const suppressionBtnDisabled = appareil.reported ? "disabled" : "";
+
   const dateCreation = appareil.created_at
     ? new Date(appareil.created_at).toLocaleDateString('fr-FR')
     : 'N/A';
+
 
 
   deviceCard.innerHTML = `
@@ -173,7 +181,7 @@ function ajouterCarteAppareil(appareil) {
         </div>
         <button class="maj-btn">Mettre à jour</button>
         <button class="modifier-btn">Modifier</button>
-        <button class="supprimer-btn">Solliciter la suppression</button>
+        <button class="supprimer-btn" ${suppressionBtnDisabled}>${suppressionBtnText}</button>
       </div>
     </div>
   `;
@@ -195,15 +203,34 @@ function ajouterCarteAppareil(appareil) {
   btnSupprimer.addEventListener("click", () => {
     const id = deviceCard.getAttribute("data-id");
 
-    if (confirm("Êtes-vous sûr de vouloir demander la suppression de cet appareil ?")) {
-      const message = document.getElementById("confirmation-message");
-      message.style.display = "block";
-      setTimeout(() => {
-        message.style.display = "none";
-      }, 4000);
+    if (confirm("Êtes-vous sûr de vouloir signaler cet appareil pour suppression ?")) {
+      // Appel à l'API pour signaler l'appareil
+      fetch(`/connected-objects/${id}/report`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Afficher le message de confirmation
+            const message = document.getElementById("confirmation-message");
+            message.style.display = "block";
+            setTimeout(() => {
+              message.style.display = "none";
+            }, 4000);
 
-      // Option: Supprimer immédiatement ou juste afficher le message
-      // supprimerAppareil(id);
+            // Ajouter une indication visuelle que l'appareil a été signalé
+            deviceCard.classList.add("reported");
+            btnSupprimer.textContent = "Signalé ⚠️";
+            btnSupprimer.disabled = true;
+          } else {
+            alert('Erreur lors du signalement: ' + data.message);
+          }
+        })
+        .catch(error => console.error('Erreur lors du signalement de l\'appareil:', error));
     }
   });
 
