@@ -86,4 +86,20 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
             'progress' => $nextLevel ? round(($points / $nextLevelPoints) * 100) : 100
         ];
     }
+
+    public function updateLevelBasedOnPoints()
+    {
+        if ($this->points >= 200) {
+            $this->level = 'expert';
+        } elseif ($this->points >= 100) {
+            $this->level = 'avancé';
+        } elseif ($this->points >= 50) {
+            $this->level = 'intermédiaire';
+        } else {
+            $this->level = 'débutant';
+        }
+        $this->save();
+
+        return $this->level;
+    }
 }

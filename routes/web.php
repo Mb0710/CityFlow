@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ConnectedObjectsController;
 use Illuminate\Support\Facades\Auth;
 
+
 // Routes publiques
 Route::get('/', function () {
     if (Auth::check()) {
@@ -41,6 +42,10 @@ Route::get('/check-email', function (Illuminate\Http\Request $request) {
     return response()->json(['available' => !$exists]);
 });
 
+Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->middleware('signed')->name('verification.verify');
+Route::post('/email/verification-notification', [AuthController::class, 'verifyHandler'])->middleware('throttle:6,1')->name('verification.send');
+
 // Routes testpoint (à sécuriser si nécessaire)
 Route::post('/testpoint', 'App\Http\Controllers\ConnectedObjectController@searchConnectedObject');
 Route::post('/testpoint/store', 'App\Http\Controllers\ConnectedObjectController@store');
@@ -61,10 +66,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/update-profile', [UserController::class, 'updateProfile'])->name('update.profile');
     Route::get('/user/data', [UserController::class, 'getData'])->name('user.data');
 
-    // Vérification d'email
-    Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->name('verification.notice');
-    Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->middleware('signed')->name('verification.verify');
-    Route::post('/email/verification-notification', [AuthController::class, 'verifyHandler'])->middleware('throttle:6,1')->name('verification.send');
+
 
     // Routes accessibles aux utilisateurs de niveau intermédiaire et supérieur
     Route::middleware('level:intermédiaire,avancé,expert')->group(function () {
@@ -104,6 +106,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin/ajout', function () {
             return view('ajout');
         })->name('ajout');
+
+        Route::post('/admin/users/{id}/update-points', [UserController::class, 'updatePoints']);
+
 
         Route::get('/admin/inscriptions', function () {
             return view('inscription');

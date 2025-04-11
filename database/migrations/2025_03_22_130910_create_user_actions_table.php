@@ -15,12 +15,11 @@ return new class extends Migration {
          */
         Schema::create('user_actions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->enum('action_type', ['consultation', 'modification', 'ajout', 'suppression']);
-            $table->string('action_details');
-            $table->enum('related_to', ['object', 'service', 'profile']);
-            $table->unsignedBigInteger('related_id')->nullable();
-            $table->float('points_earned');
+            $table->foreignId('user_id')->constrained();
+            $table->string('action_type'); // recharge, ajout, signalement
+            $table->foreignId('object_id')->nullable()->constrained('connected_objects');
+            $table->text('description')->nullable();
+            $table->integer('points'); // Points gagnés
             $table->timestamps();
         });
     }

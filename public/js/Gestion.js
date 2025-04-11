@@ -431,7 +431,10 @@ function ajouterCarteAppareil(appareil) {
     btnRecharger.disabled = true;
 
     // Mise à jour dans la base de données
-    modifierAppareil(id, { battery_level: 100 });
+    modifierAppareil(id, {
+      battery_level: 100,
+      status: "actif"
+    });
 
     // Réinitialisation du bouton après un délai
     setTimeout(() => {

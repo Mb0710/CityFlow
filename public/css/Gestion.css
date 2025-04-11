@@ -401,6 +401,28 @@ body {
   transform: translateX(24px);
 }
 
+.logo-container {
+  position: fixed;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  z-index: 10;
+}
+
+.logo-container img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.logo-container.logo-left {
+  left: 0;
+  top: 0;
+  transform: none;
+}
+
+
 /* === MESSAGE DE CONFIRMATION TEMPORAIRE === */
 .message-confirmation {
   position: fixed;

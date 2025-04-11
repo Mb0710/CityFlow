@@ -37,6 +37,12 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="info-item"><strong>Date de naissance:</strong> ${formattedDate}</div>
             <div class="info-item"><strong>Type de membre:</strong> ${user.member_type}</div>
             <div class="info-item"><strong>Email:</strong> ${user.email}</div>
+            <div class="info-item">
+              <strong>Points:</strong> 
+              <input type="number" class="points-input" data-id="${user.id}" value="${user.points}" min="0">
+              <button class="save-points" data-id="${user.id}">💾</button>
+            </div>
+            <div class="info-item"><strong>Vérifié:</strong> ${user.email_verified_at ? 'Oui' : 'Non'}</div>
           </div>
           <div class="validation-zone">
             <button class="valider" data-id="${user.id}">✅</button>
@@ -56,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelectorAll('.refuser').forEach(btn => {
         btn.addEventListener('click', handleReject);
       });
+      handlePointsUpdate();
     })
     .catch(error => {
       console.error('Erreur lors de la récupération des utilisateurs:', error);
@@ -120,4 +127,53 @@ function afficherMessage(texte, isError = false) {
   setTimeout(() => {
     message.style.display = "none";
   }, 4000);
+}
+
+function handlePointsUpdate() {
+  // Ajouter des écouteurs pour tous les boutons de sauvegarde de points
+  document.querySelectorAll('.save-points').forEach(btn => {
+    btn.addEventListener('click', function (event) {
+      const userId = this.getAttribute('data-id');
+      const pointsInput = document.querySelector(`.points-input[data-id="${userId}"]`);
+      const newPoints = parseInt(pointsInput.value);
+
+      // Valider que les points sont un nombre positif
+      if (isNaN(newPoints) || newPoints < 0) {
+        afficherMessage("Veuillez entrer un nombre positif pour les points.", true);
+        return;
+      }
+
+      // Désactiver le bouton pendant la mise à jour
+      this.disabled = true;
+      this.textContent = '⏳';
+
+      // Envoyer la requête pour mettre à jour les points
+      fetch(`/admin/users/${userId}/update-points`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ points: newPoints })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            afficherMessage("Points mis à jour avec succès.");
+            // Réactiver le bouton
+            this.disabled = false;
+            this.textContent = '💾';
+          } else {
+            throw new Error(data.message || "Erreur lors de la mise à jour");
+          }
+        })
+        .catch(error => {
+          console.error('Erreur:', error);
+          afficherMessage("Erreur lors de la mise à jour des points.", true);
+          // Réactiver le bouton
+          this.disabled = false;
+          this.textContent = '💾';
+        });
+    });
+  });
 }

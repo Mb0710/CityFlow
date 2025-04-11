@@ -12,7 +12,10 @@
 <body data-is-expert="{{ Auth::user()->level === 'expert' ? 'true' : 'false' }}" ,
   data-is-Intermediate="{{ Auth::user()->level === 'intermédiaire' ? 'true' : 'false' }}"
   data-is-advanced="{{ Auth::user()->level === 'avancé' ? 'true' : 'false' }}">
-
+  <!--  Logo du site qui permet aussi de revenir au dashboard-->
+  <div class="logo-container logo-left">
+    <a href="/"><img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo"></a>
+  </div>
   <!--  Titre avec effet nuage -->
   <div class="titre-container">
     <img src="{{ asset('./assets/nuage.png') }}" alt="Nuage" class="nuage-img">
@@ -86,6 +89,16 @@
 
 
   <script src="{{ asset('js/Gestion.js') }}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Appeler la route pour mettre à jour les batteries quand la page se charge
+      fetch('/api/update-batteries')
+        .then(response => response.json())
+        .then(data => {
+          console.log('Mise à jour des batteries:', data);
+        });
+
+  </script>
 </body>
 
 </html>

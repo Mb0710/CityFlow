@@ -169,7 +169,7 @@
                 document.querySelector('input[name="nomObj"]').value = objData.name || name || "";
                 document.querySelector('input[name="description"]').value = objData.description || "";
                 document.querySelector('input[name="attributes"]').value = attributesStr;
-                document.querySelector('input[name="batterie"]').value = objData.battery_level || "";
+                document.querySelector('input[name="batterie"]').value = objData.battery_level || 0;
                 document.querySelector('input[name="status"]').value = objData.status || "";
                 document.querySelector('input[name="zoneId"]').value = objData.zone_id || "";
                 document.querySelector('input[name="Création"]').value = formattedDate;
@@ -200,22 +200,29 @@
                             var lngval = obj.lng;
                             var name = obj.name || "Sans nom";
                             var type = obj.type || "inconnu";
+                            var status = obj.status || "inconnu";
 
                             // Choisir l'icône en fonction du type d'objet
                             var icon;
-                            if (type === "lampadaire") {
-                                icon = '/assets/I_Lampadaire.png';
-                            } else if (type === "capteur_pollution") {
-                                icon = '/assets/I_CapteurPollution.png';
-                            } else if (type === "borne_bus") {
-                                icon = '/assets/I_BorneBus.png';
-                            } else if (type === "panneau_information") {
-                                icon = '/assets/I_PanneauInformation.png';
-                            } else if (type === "caméra") {
-                                icon = '/assets/I_Camera.png';
-                            } else {
-                                icon = "https://maps.google.com/mapfiles/ms/icons/red-dot.png";
+                            if (status === "maintenance" || status === "inactif") {
+                                icon = '/assets/I_Maintenance.png';
                             }
+                            else {
+                                if (type === "lampadaire") {
+                                    icon = '/assets/I_Lampadaire.png';
+                                } else if (type === "capteur_pollution") {
+                                    icon = '/assets/I_CapteurPollution.png';
+                                } else if (type === "borne_bus") {
+                                    icon = '/assets/I_BorneBus.png';
+                                } else if (type === "panneau_information") {
+                                    icon = '/assets/I_PanneauInformation.png';
+                                } else if (type === "caméra") {
+                                    icon = '/assets/I_Camera.png';
+                                } else {
+                                    icon = "https://maps.google.com/mapfiles/ms/icons/red-dot.png";
+                                }
+                            }
+
 
                             var objLatLng = new google.maps.LatLng(latval, lngval);
 

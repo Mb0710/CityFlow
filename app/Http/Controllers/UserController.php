@@ -95,7 +95,7 @@ class UserController extends Controller
     public function getPendingUsers()
     {
 
-        $pendingUsers = User::whereNull('email_verified_at')
+        $pendingUsers = User::where('is_admin', false)
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -130,6 +130,38 @@ class UserController extends Controller
             ->get();
 
         return response()->json($users);
+    }
+
+    public function updatePoints(Request $request, $id)
+    {
+        try {
+            $user = User::findOrFail($id);
+
+            $validated = $request->validate([
+                'points' => 'required|integer|min:0',
+            ]);
+
+            $user->points = $validated['points'];
+
+            if (isset($validated['status'])) {
+                $user->status = $validated['status'];
+            }
+
+            // Déterminer le niveau uniquement en fonction des points
+            $user->updateLevelBasedOnPoints();
+
+            $user->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Points mis à jour avec succès'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors de la mise à jour des points: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
 

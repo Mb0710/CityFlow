@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
+use App\Models\UserAction;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class ConnectedObjectsController extends Controller
 {
@@ -18,6 +24,7 @@ class ConnectedObjectsController extends Controller
     public function index()
     {
         $connectedObjects = ConnectedObject::all();
+        $this->updateBatteryLevels();
 
         return response()->json([
             'success' => true,
@@ -72,6 +79,70 @@ class ConnectedObjectsController extends Controller
             'data' => $connectedObjects
         ]);
     }
+
+
+
+
+    private function updateBatteryLevels()
+    {
+        $lastUpdate = Cache::get('last_battery_update_sim', now()->subMinutes(10));
+        $now = now();
+
+        $minutesElapsed = abs($now->diffInMinutes($lastUpdate));
+        if ($minutesElapsed >= 1) {
+            $baseDischargePerMinute = 1; // 1% par minute
+            $totalDischarge = $baseDischargePerMinute * $minutesElapsed;
+
+            $activeObjects = ConnectedObject::where('status', 'actif')->get();
+
+            foreach ($activeObjects as $object) {
+                $newLevel = max(0, $object->battery_level - $totalDischarge);
+                $object->battery_level = round($newLevel, 1);
+
+                if ($object->battery_level <= 0) {
+                    $object->status = 'inactif';
+                }
+
+                $object->save();
+            }
+
+            Cache::put('last_battery_update_sim', $now, 60 * 24);
+        }
+    }
+
+
+    private function awardPointsAndLogAction($userId, $actionType, $objectId, $points, $description = null)
+    {
+        // Récupérer le niveau avant l'attribution des points
+        $user = User::findOrFail($userId);
+        $oldLevel = $user->level;
+
+        // Ajout des points à l'utilisateur
+        $user->points += $points;
+        $user->save();
+
+        $newLevel = $user->updateLevelBasedOnPoints();
+        // Enregistrement de l'action
+        UserAction::create([
+            'user_id' => $userId,
+            'action_type' => $actionType,
+            'object_id' => $objectId,
+            'description' => $description,
+            'points' => $points
+        ]);
+
+        // Récupérer le niveau après l'attribution des points
+        $levelInfo = $user->getUserLevel();
+
+        return [
+            'total_points' => $user->points,
+            'level_changed' => ($oldLevel !== $newLevel),
+            'old_level' => $oldLevel,
+            'new_level' => $newLevel,
+            'level_info' => $levelInfo
+        ];
+    }
+
 
     /**
      * Stocker un nouvel objet connecté
@@ -163,11 +234,24 @@ class ConnectedObjectsController extends Controller
 
             $object->save();
 
+            $pointsResult = $this->awardPointsAndLogAction(
+                Auth::id(),
+                'ajout',
+                $object->id,
+                10,
+                "Ajout d'un nouvel objet: " . $object->name
+            );
+
             return response()->json([
                 'success' => true,
-                'message' => 'Connected object created successfully',
-                'data' => $object
-            ], 201);
+                'data' => $object,
+                'points_awarded' => 10,
+                'total_points' => $pointsResult['total_points'],
+                'level_changed' => $pointsResult['level_changed'],
+                'new_level' => $pointsResult['level_changed'] ? $pointsResult['new_level'] : null,
+                'old_level' => $pointsResult['level_changed'] ? $pointsResult['old_level'] : null,
+                'level_info' => $pointsResult['level_info']
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -214,10 +298,23 @@ class ConnectedObjectsController extends Controller
         $connectedObject->reported = true;
         $connectedObject->save();
 
+        $pointsResult = $this->awardPointsAndLogAction(
+            Auth::id(),
+            'ajout',
+            $connectedObject->id,
+            10,
+            "Ajout d'un nouvel objet: " . $connectedObject->name
+        );
+
         return response()->json([
             'success' => true,
-            'message' => 'Objet signalé avec succès',
-            'data' => $connectedObject
+            'data' => $connectedObject,
+            'points_awarded' => 10,
+            'total_points' => $pointsResult['total_points'],
+            'level_changed' => $pointsResult['level_changed'],
+            'new_level' => $pointsResult['level_changed'] ? $pointsResult['new_level'] : null,
+            'old_level' => $pointsResult['level_changed'] ? $pointsResult['old_level'] : null,
+            'level_info' => $pointsResult['level_info']
         ]);
     }
 
@@ -317,6 +414,7 @@ class ConnectedObjectsController extends Controller
     public function update(Request $request, $id)
     {
         $connectedObject = ConnectedObject::find($id);
+        $originalBatteryLevel = $connectedObject->battery_level;
 
         if (!$connectedObject) {
             return response()->json([
@@ -346,6 +444,24 @@ class ConnectedObjectsController extends Controller
         }
 
         $connectedObject->update($request->all());
+
+        if ($originalBatteryLevel < 100 && $connectedObject->battery_level == 100) {
+            $newPoints = $this->awardPointsAndLogAction(
+                Auth::id(),
+                'recharge',
+                $id,
+                5,
+                "Recharge de l'objet: " . $connectedObject->name
+            );
+
+            return response()->json([
+                'success' => true,
+                'data' => $connectedObject,
+                'points_awarded' => 5,
+                'total_points' => $newPoints
+            ]);
+        }
+
 
         return response()->json([
             'success' => true,

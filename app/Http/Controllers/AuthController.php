@@ -53,15 +53,7 @@ class AuthController extends Controller
 
             $user->points += $pointsToAdd;
 
-            if ($user->points >= 200) {
-                $user->level = 'expert';
-            } elseif ($user->points >= 100) {
-                $user->level = 'avancé';
-            } elseif ($user->points >= 50) {
-                $user->level = 'intermédiaire';
-            } else {
-                $user->level = 'débutant';
-            }
+            $user->updateLevelBasedOnPoints();
 
             $user->last_login_date = $today;
             $user->save();
