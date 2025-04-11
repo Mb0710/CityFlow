@@ -172,7 +172,6 @@
                 document.querySelector('input[name="batterie"]').value = objData.battery_level || "";
                 document.querySelector('input[name="status"]').value = objData.status || "";
                 document.querySelector('input[name="zoneId"]').value = objData.zone_id || "";
-                document.querySelector('input[name="Interaction"]').value = objData.last_user || "";
                 document.querySelector('input[name="Création"]').value = formattedDate;
                 document.querySelector('input[name="coordinates"]').value = latlng.lat().toFixed(6) + ", " + latlng.lng().toFixed(6);
             });

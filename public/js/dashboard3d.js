@@ -31,10 +31,10 @@ const cloudPositions = [
         x: 4, y: -2, z: -20,
         action: () => {
             if (isAdmin == 1) {
-                errorBox2.style.display = "block";
+                window.location.href = '/admin';
             }
             else {
-                window.location.href = '/admin';
+                errorBox2.style.display = "block";
             }
         }
     },

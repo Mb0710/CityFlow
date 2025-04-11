@@ -295,6 +295,21 @@ function ajouterCarteAppareil(appareil) {
     deviceCard.classList.add("reported");
   }
 
+  const bodyElement = document.body;
+  const isExpert = bodyElement.dataset.isExpert === 'true';
+  const isAdvanced = bodyElement.dataset.isAdvanced === 'true';
+  const isIntermediaire = bodyElement.dataset.isIntermediate === 'true';
+
+  console.log("Rôles récupérés du DOM:", { isExpert, isIntermediaire });
+
+
+  const showDeleteButton = isExpert;
+  const showModifyButton = isIntermediaire || isAdvanced || isExpert;
+
+  console.log("showModifyButton:", showModifyButton);
+
+  console.log("isExpert:", isExpert);
+
   const suppressionBtnText = appareil.reported ? "Signalé ⚠️" : "Solliciter la suppression";
   const suppressionBtnDisabled = appareil.reported ? "disabled" : "";
 
@@ -346,8 +361,8 @@ function ajouterCarteAppareil(appareil) {
           <span class="toggle-label">${appareil.status === "actif" ? "Activé" : "Désactivé"}</span>
         </div>
         <button class="maj-btn">Mettre à jour</button>
-        <button class="modifier-btn">Modifier</button>
-        <button class="supprimer-btn" ${suppressionBtnDisabled}>${suppressionBtnText}</button>
+        ${showModifyButton ? `<button class="modifier-btn">Modifier</button>` : ''}
+        ${showDeleteButton ? `<button class="supprimer-btn" ${suppressionBtnDisabled}>${suppressionBtnText}</button>` : ''}
       </div>
     </div>
   `;
@@ -365,40 +380,42 @@ function ajouterCarteAppareil(appareil) {
   });
 
   // Gestion du bouton Supprimer
-  const btnSupprimer = deviceCard.querySelector(".supprimer-btn");
-  btnSupprimer.addEventListener("click", () => {
-    const id = deviceCard.getAttribute("data-id");
+  if (showDeleteButton) {
+    const btnSupprimer = deviceCard.querySelector(".supprimer-btn");
+    btnSupprimer.addEventListener("click", () => {
+      const id = deviceCard.getAttribute("data-id");
 
-    if (confirm("Êtes-vous sûr de vouloir signaler cet appareil pour suppression ?")) {
-      // Appel à l'API pour signaler l'appareil
-      fetch(`/connected-objects/${id}/report`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            // Afficher le message de confirmation
-            const message = document.getElementById("confirmation-message");
-            message.style.display = "block";
-            setTimeout(() => {
-              message.style.display = "none";
-            }, 4000);
-
-            // Ajouter une indication visuelle que l'appareil a été signalé
-            deviceCard.classList.add("reported");
-            btnSupprimer.textContent = "Signalé ⚠️";
-            btnSupprimer.disabled = true;
-          } else {
-            alert('Erreur lors du signalement: ' + data.message);
+      if (confirm("Êtes-vous sûr de vouloir signaler cet appareil pour suppression ?")) {
+        // Appel à l'API pour signaler l'appareil
+        fetch(`/connected-objects/${id}/report`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
           }
         })
-        .catch(error => console.error('Erreur lors du signalement de l\'appareil:', error));
-    }
-  });
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              // Afficher le message de confirmation
+              const message = document.getElementById("confirmation-message");
+              message.style.display = "block";
+              setTimeout(() => {
+                message.style.display = "none";
+              }, 4000);
+
+              // Ajouter une indication visuelle que l'appareil a été signalé
+              deviceCard.classList.add("reported");
+              btnSupprimer.textContent = "Signalé ⚠️";
+              btnSupprimer.disabled = true;
+            } else {
+              alert('Erreur lors du signalement: ' + data.message);
+            }
+          })
+          .catch(error => console.error('Erreur lors du signalement de l\'appareil:', error));
+      }
+    });
+  }
 
   const btnRecharger = deviceCard.querySelector(".recharger-btn");
   btnRecharger.addEventListener("click", () => {
@@ -424,77 +441,79 @@ function ajouterCarteAppareil(appareil) {
   });
 
   // Gestion du bouton Modifier
-  const btnModifier = deviceCard.querySelector(".modifier-btn");
-  btnModifier.addEventListener("click", () => {
-    carteEnEdition = deviceCard;
-    const infos = deviceCard.querySelectorAll(".info-item");
+  if (showModifyButton) {
+    const btnModifier = deviceCard.querySelector(".modifier-btn");
+    btnModifier.addEventListener("click", () => {
+      carteEnEdition = deviceCard;
+      const infos = deviceCard.querySelectorAll(".info-item");
 
-    // Pré-remplir le formulaire avec les données existantes
-    document.getElementById("nom").value = infos[0].textContent
-      .replace("Nom:", "")
-      .trim();
-    document.getElementById("batterie").value = infos[1].textContent
-      .replace("Batterie:", "")
-      .replace("%", "")
-      .trim();
-    document.getElementById("statut").value = infos[3].textContent
-      .replace("Statut:", "")
-      .trim()
-      .toLowerCase() === "en ligne" ? "en_ligne" : "hors_ligne";
-
-    // Pré-remplir les coordonnées
-    const coordonneesText = infos[7].textContent
-      .replace("Coordonnées:", "")
-      .trim();
-    document.getElementById("coordonnees").value = coordonneesText;
-
-    // Pré-remplir la catégorie
-    const categorieText = infos[8].textContent
-      .replace("Catégorie:", "")
-      .trim();
-    document.getElementById("categorie").value = categorieText;
-
-    document.getElementById("categorie").value = categorieText;
-    actualiserAttributsDynamiques();
-
-    // Ensuite récupérer et définir les valeurs des attributs
-    try {
-      const attributsText = infos[2].textContent
-        .replace("Attributs:", "")
+      // Pré-remplir le formulaire avec les données existantes
+      document.getElementById("nom").value = infos[0].textContent
+        .replace("Nom:", "")
         .trim();
+      document.getElementById("batterie").value = infos[1].textContent
+        .replace("Batterie:", "")
+        .replace("%", "")
+        .trim();
+      document.getElementById("statut").value = infos[3].textContent
+        .replace("Statut:", "")
+        .trim()
+        .toLowerCase() === "en ligne" ? "en_ligne" : "hors_ligne";
 
-      if (attributsText !== 'Aucun') {
-        const attributsObj = typeof appareil.attributes === 'string'
-          ? JSON.parse(appareil.attributes)
-          : appareil.attributes;
+      // Pré-remplir les coordonnées
+      const coordonneesText = infos[7].textContent
+        .replace("Coordonnées:", "")
+        .trim();
+      document.getElementById("coordonnees").value = coordonneesText;
+
+      // Pré-remplir la catégorie
+      const categorieText = infos[8].textContent
+        .replace("Catégorie:", "")
+        .trim();
+      document.getElementById("categorie").value = categorieText;
+
+      document.getElementById("categorie").value = categorieText;
+      actualiserAttributsDynamiques();
+
+      // Ensuite récupérer et définir les valeurs des attributs
+      try {
+        const attributsText = infos[2].textContent
+          .replace("Attributs:", "")
+          .trim();
+
+        if (attributsText !== 'Aucun') {
+          const attributsObj = typeof appareil.attributes === 'string'
+            ? JSON.parse(appareil.attributes)
+            : appareil.attributes;
 
 
-        Object.entries(attributsObj).forEach(([key, value]) => {
-          const champAttribut = document.getElementById(`attr_${key}`);
-          if (champAttribut) {
-            if (champAttribut.type === 'checkbox') {
-              champAttribut.checked = value === true || value === "true";
-            } else {
-              champAttribut.value = value;
-            }
+          Object.entries(attributsObj).forEach(([key, value]) => {
+            const champAttribut = document.getElementById(`attr_${key}`);
+            if (champAttribut) {
+              if (champAttribut.type === 'checkbox') {
+                champAttribut.checked = value === true || value === "true";
+              } else {
+                champAttribut.value = value;
+              }
 
 
-            if (champAttribut.type === 'range') {
-              const valeurAffichee = document.getElementById(`${key}_valeur`);
-              if (valeurAffichee) {
-                valeurAffichee.textContent = champAttribut.value;
+              if (champAttribut.type === 'range') {
+                const valeurAffichee = document.getElementById(`${key}_valeur`);
+                if (valeurAffichee) {
+                  valeurAffichee.textContent = champAttribut.value;
+                }
               }
             }
-          }
-        });
+          });
+        }
+      } catch (e) {
+        console.error("Erreur lors du remplissage des attributs:", e);
       }
-    } catch (e) {
-      console.error("Erreur lors du remplissage des attributs:", e);
-    }
 
-    toggleDeviceForm();
-    document.querySelector('button[type="submit"]').textContent = "Mettre à jour";
-  });
+      toggleDeviceForm();
+      document.querySelector('button[type="submit"]').textContent = "Mettre à jour";
+    });
+  }
 
   deviceGrid.appendChild(deviceCard);
 }

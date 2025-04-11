@@ -9,7 +9,10 @@
   <link rel="stylesheet" href="{{ asset('css/Gestion.css') }}">
 </head>
 
-<body>
+<body data-is-expert="{{ Auth::user()->level === 'expert' ? 'true' : 'false' }}" ,
+  data-is-Intermediate="{{ Auth::user()->level === 'intermédiaire' ? 'true' : 'false' }}"
+  data-is-advanced="{{ Auth::user()->level === 'avancé' ? 'true' : 'false' }}">
+
   <!--  Titre avec effet nuage -->
   <div class="titre-container">
     <img src="{{ asset('./assets/nuage.png') }}" alt="Nuage" class="nuage-img">
@@ -17,8 +20,10 @@
   </div>
 
 
-  <!--  Bouton pour ouvrir le formulaire d'ajout  -->
-  <button class="add-device-btn" onclick="toggleDeviceForm()">+</button>
+  <!--  Bouton pour ouvrir le formulaire d'ajout uniquement visible pour les utilisateurs avancé et expert  -->
+  @if(Auth::check() && in_array(Auth::user()->level, ['avancé', 'expert'])) <button class="add-device-btn"
+  onclick="toggleDeviceForm()">+</button>
+  @endif
 
   <!--  Menu déroulant pour filtrer les appareils par catégorie -->
   <div class="menu-tri">
@@ -78,6 +83,7 @@
   <div id="confirmation-message" class="message-confirmation" style="display: none;">
     ✅ Message envoyé à l’administrateur pour confirmation de la suppression.
   </div>
+
 
   <script src="{{ asset('js/Gestion.js') }}"></script>
 </body>
