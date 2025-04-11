@@ -15,6 +15,7 @@
         </div>
         <div class="box">
             <h1>Reset your password.</h1>
+            <!-- simple gestion des erreurs -->
             @if ($errors->any())
                 <div class="error-container">
                     <ul>
@@ -30,6 +31,8 @@
                     {{ session('status') }}
                 </div>
             @endif
+            <!-- appel a la route password.update qui permet de reinitialiser le mot de passe-->
+            <!-- le token est un parametre de la requete qui permet de verifier l'identité de l'utilisateur-->
             <form action="{{route('password.update')}}" method="POST">
                 @csrf
                 <input type="hidden" name="token" value="{{$token}}">

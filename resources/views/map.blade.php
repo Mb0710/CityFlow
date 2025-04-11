@@ -16,11 +16,13 @@
 </head>
 
 <body>
+    <!--  Logo du site qui permet aussi de revenir au dashboard-->
     <div class="logo-container logo-left">
         <a href="/"><img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo"></a>
     </div>
     <div class="wrapper map-container">
         <div class="map-layout">
+            <!--  Division de la page en 2 parties, gauche pour la carte et droite pour les informations associés a chaque point -->
             <div class="box-left">
                 <div id="map"></div>
             </div>
@@ -78,7 +80,7 @@
     <!-- Script pour initialiser la carte -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script>// Variables globales
+    <script>
         let map;
         let markers = [];
         let currentMarker = null;
@@ -91,6 +93,8 @@
             'borne_bus': []
         };
 
+
+        // fonction appliquer different filtres selon le type d'objet qu'on veut afficher
         function applyFilters() {
             const filterCheckboxes = document.querySelectorAll('.filter');
 
@@ -104,7 +108,7 @@
             }
         }
 
-
+        // fonction  qui utilise la fonction precedente en fonction des case cochées
         function setupFilterListeners() {
             const filterCheckboxes = document.querySelectorAll('.filter');
             filterCheckboxes.forEach(checkbox => {
@@ -113,14 +117,14 @@
         }
 
 
-
+        // fonction qui permet de placer temporaire sur la carte
         function createMarker(latlng, icn, name, type, objData = {}) {
             var marker = new google.maps.Marker({
                 position: latlng,
                 map: map,
                 icon: icn,
                 title: name,
-                data: objData  // Stocker les données de l'objet dans le marqueur
+                data: objData
             });
 
             markers.push(marker);
@@ -131,7 +135,7 @@
             }
 
 
-            // Ajouter l'événement mouseover
+            // Ajouter l'événement  de survol du marqueur
             marker.addListener('mouseover', function () {
                 let formattedDate = "";
                 if (objData.created_at) {
@@ -257,6 +261,8 @@
             });
         }
 
+
+        //fonction qui permet de "creer" la carte.
         function createmap(latlng) {
             map = new google.maps.Map(document.getElementById("map"), {
                 center: latlng,
@@ -603,7 +609,7 @@
         }
 
 
-
+        // fonction qui permet d'afficher un message au cas où une erreur survient
         function showStatusMessage(message, type) {
             const statusElement = document.getElementById("status-message");
             statusElement.textContent = message;
@@ -615,7 +621,7 @@
                 statusElement.style.display = "none";
             }, 3000);
         }
-
+        // fonction qui permet d'initialiser les fonctionnalités de la carte
         function initMap() {
 
             const centrePersonnalise = {

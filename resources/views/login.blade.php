@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    <!--  Page de connexion avec un model3d réalisé via l'editeur three.js editor et manipulé par three.js-->
     <div class="wrapper">
         <div id="container3D"></div>
         <div class="logo-container">
@@ -20,6 +21,7 @@
         <div class="box">
             <h2 class="login-title">Bienvenue sur City Flow</h2>
             <p class="login-subtitle">Connectez-vous pour gérer votre ville intelligente</p>
+            <!-- Simple moyen de recuperer les quelconques erreur liée a la connexion ( compte inexistant, mot de passe incorrect...)-->
             @if ($errors->any())
                 <div class="error-container">
                     <ul>
@@ -35,6 +37,7 @@
                     {{ session('status') }}
                 </div>
             @endif
+            <!-- Envoi des données de l'utilisateur à login.submit qui via la methode login va verifier que l'utilisateur peut se connecter-->
             <form method="POST" action="{{ route('login.submit') }}">
                 @csrf
                 <div class="inputBox">
@@ -59,7 +62,7 @@
                 </div>
             </form>
         </div>
-
+        <!-- elements visuels pour le free tour -->
         <div class="city-features">
             <div class="feature">
                 <i class='bx bx-building-house'></i>

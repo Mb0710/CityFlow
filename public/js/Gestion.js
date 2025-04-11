@@ -209,8 +209,6 @@ function creerAppareil(donnees) {
   // Ajout d'un unique_id requis par votre API
   donnees.unique_id = 'DEV_' + Date.now();
 
-
-
   if (donnees.zone_id) {
     delete donnees.zone_id;
   }

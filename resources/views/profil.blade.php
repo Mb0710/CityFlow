@@ -10,25 +10,26 @@
 </head>
 
 <body>
-
+  <!--  Nous ne demandons et ne stockons pas l'age de l'utilisateur dans la base de données explicitement  -->
+  <!--  Mais on peut la calculer a partir de la date de naissance -->
   @php
   use Carbon\Carbon;
   $birthDate = Carbon::parse($user->birth_date);
   $age = $birthDate->age;
   @endphp
-
+  <!--  Logo du site qui permet aussi de revenir au dashboard-->
   <div class="logo-container logo-left">
     <a href="/"><img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo"></a>
   </div>
 
-
+  <!--  Titre avec effet flottant-->
   <div class="titre-container flottant">
 
     <img src="{{ asset('./assets/nuage.png') }}" alt="Nuage" class="nuage-img">
 
     <div class="cloud-title">Profil</div>
   </div>
-
+  <!--  formulaire pour modifier son profile associé à la route profil.update, s'active via le bouton modifier-->
   <form id="profile-form" method="POST" action="{{ route('update.profile') }}" enctype="multipart/form-data">
     @csrf
     <div class="profile-container @if($user->id !== $currentUser->id) centered @endif">
@@ -108,6 +109,7 @@
   </form>
 
   <script src="{{ asset('js/profilUpdate.js') }}"></script>
+  <!--  requete à user.data qui via une methode associé nous retourne les données de l'utilisateur dans "data"-->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       fetch('{{ route("user.data") }}')

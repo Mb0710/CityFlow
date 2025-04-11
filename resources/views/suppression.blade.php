@@ -11,7 +11,7 @@
 
 <body>
 
-
+  <!-- Logo du site qui permet aussi de revenir au dashboard et titre avec effet nuageux-->
   <div class="titre-container">
     <div class="logo-site">
       <a href="/"><img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo" class="logo-responsive"></a>

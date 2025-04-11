@@ -9,6 +9,8 @@
 </head>
 
 <body>
+    <!-- lorsque l'utilisateur crée son compte il accede a cet vue qui l'empeche de se connecter avant de verifier son email-->
+    <!-- la route verification.send permet de renvoyer un email de verification à l'utilisateur-->
     <div class="wrapper">
         <div class="logo-container">
             <img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo">

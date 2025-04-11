@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    <!-- simple menu 3d pour l'interface admin -->
     <div class="wrapper">
         <div id="container3D"></div>
     </div>

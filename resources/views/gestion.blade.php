@@ -6,22 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gestion des Appareils</title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <!-- Feuille de style CSS -->
   <link rel="stylesheet" href="{{ asset('css/Gestion.css') }}">
 </head>
 
 <body>
-
+  <!--  Titre avec effet nuage -->
   <div class="titre-container">
     <img src="{{ asset('./assets/nuage.png') }}" alt="Nuage" class="nuage-img">
     <div class="cloud-title">Gestion</div>
   </div>
 
 
-  <!-- === Bouton pour ouvrir le formulaire d'ajout === -->
+  <!--  Bouton pour ouvrir le formulaire d'ajout  -->
   <button class="add-device-btn" onclick="toggleDeviceForm()">+</button>
 
-  <!-- === Menu déroulant pour filtrer les appareils par catégorie === -->
+  <!--  Menu déroulant pour filtrer les appareils par catégorie -->
   <div class="menu-tri">
     <select id="filtreCategorie" onchange="filtrerCategorie()">
       <option value="tous">Tous</option>
@@ -33,7 +32,7 @@
     </select>
   </div>
 
-  <!-- === Formulaire pour ajouter ou modifier un appareil === -->
+  <!--  Formulaire pour ajouter ou modifier un appareil  -->
   <div class="device-form-container" id="deviceForm" style="display: none;">
     <button class="close-form" onclick="closeForm()">✖</button>
     <form class="device-form">
@@ -72,15 +71,14 @@
     </form>
   </div>
 
-  <!-- === Grille des appareils affichés dynamiquement par JS === -->
+  <!--  Grille des appareils affichés dynamiquement par JS  -->
   <div class="device-grid"></div>
 
-  <!-- === Message de confirmation temporaire après suppression === -->
+  <!--  Message de confirmation temporaire après suppression -->
   <div id="confirmation-message" class="message-confirmation" style="display: none;">
     ✅ Message envoyé à l’administrateur pour confirmation de la suppression.
   </div>
 
-  <!-- === Script JS principal === -->
   <script src="{{ asset('js/Gestion.js') }}"></script>
 </body>
 
