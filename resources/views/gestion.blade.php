@@ -46,7 +46,7 @@
       <input type="number" id="batterie" name="batterie" min="0" max="100" value="100" />
 
       <label for="statut">Statut</label>
-      <select id="statut" name="statut">
+      <select id="statut" name="statut" required>
         <option value="en ligne">En ligne</option>
         <option value="hors ligne">Hors ligne</option>
       </select>
@@ -63,6 +63,10 @@
         <option value="panneau_information">Panneau d'information</option>
         <option value="caméra">Caméra</option>
       </select>
+
+      <div id="attributs-dynamiques" class="attributs-container">
+
+      </div>
 
       <button type="submit">Enregistrer</button>
     </form>

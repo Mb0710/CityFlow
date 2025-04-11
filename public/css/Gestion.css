@@ -55,6 +55,45 @@ body {
   transition: all 0.3s;
 }
 
+.attributs-container {
+  margin-top: 15px;
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+}
+
+.attributs-container h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.attribut-item {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.attribut-item label {
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.attribut-item input[type="range"] {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.attribut-item input[type="checkbox"] {
+  align-self: flex-start;
+}
+
+
+.attribut-item span {
+  margin-left: 10px;
+  font-size: 0.9em;
+  color: #666;
+}
+
 .recharger-btn:hover {
   background-color: #388E3C;
 }

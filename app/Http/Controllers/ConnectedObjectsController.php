@@ -92,6 +92,7 @@ class ConnectedObjectsController extends Controller
                 'battery_level' => 'integer|min:0|max:100',
                 'lat' => 'required|numeric',
                 'lng' => 'required|numeric',
+                'attributes' => 'nullable|json',
             ]);
 
 
@@ -113,9 +114,44 @@ class ConnectedObjectsController extends Controller
 
             $object = new ConnectedObject($validated);
 
+            if ($request->has('attributes')) {
 
-            if (!isset($object->description)) {
-                $object->description = $object->name . ' description';
+                if (is_string($request->input('attributes'))) {
+
+                    json_decode($request->input('attributes'));
+                    if (json_last_error() === JSON_ERROR_NONE) {
+                        $object->attributes = $request->input('attributes');
+                    } else {
+                        $object->attributes = json_encode($request->input('attributes'));
+                    }
+                } else {
+                    $object->attributes = json_encode($request->input('attributes'));
+                }
+            }
+
+
+            if (!isset($object->description) || empty($object->description)) {
+                // Utiliser les mêmes descriptions que dans le seeder
+                switch ($object->type) {
+                    case 'lampadaire':
+                        $object->description = 'Éclairage public adaptatif.';
+                        break;
+                    case 'capteur_pollution':
+                        $object->description = 'Mesure la qualité de l’air.';
+                        break;
+                    case 'borne_bus':
+                        $object->description = 'Affiche les horaires et infos trafic.';
+                        break;
+                    case 'panneau_information':
+                        $object->description = 'Affiche des annonces locales.';
+                        break;
+                    case 'caméra':
+                        $object->description = 'Surveille la zone et détecte les mouvements.';
+                        break;
+                    default:
+                        $object->description = $object->name . ' description';
+                        break;
+                }
             }
 
 

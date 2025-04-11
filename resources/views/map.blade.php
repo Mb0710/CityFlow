@@ -26,43 +26,46 @@
             </div>
             <div class="box-right">
                 <div class="box">
-                    <h1>Informations</h1>
                     <form>
                         <div>
                             <label><input type="checkbox" class="filter" value="lampadaire" checked> Lampadaires</label>
-                            <label><input type="checkbox" class="filter" value="parc" checked> Parcs</label>
-                            <label><input type="checkbox" class="filter" value="immeuble" checked> Immeubles</label>
+                            <label><input type="checkbox" class="filter" value="caméra" checked> Caméra</label>
+                            <label><input type="checkbox" class="filter" value="capteur_pollution" checked>
+                                Capteur</label>
+                            <label><input type="checkbox" class="filter" value="panneau_information" checked>
+                                Informations</label>
+                            <label><input type="checkbox" class="filter" value="borne_bus" checked> Bus</label>
                         </div>
                         <div class="inputBox">
-                            <input type="text" placeholder="Nom Objet" name="nomObj" required>
+                            <input type="text" placeholder="Nom Objet" name="nomObj" readonly>
                             <i class='bx bxs-info-circle'></i>
                         </div>
                         <div class="inputBox">
-                            <input type="text" placeholder="Description" name="description" required>
+                            <input type="text" placeholder="Description" name="description" readonly>
                             <i class='bx bx-info-circle'></i>
                         </div>
                         <div class="inputBox">
-                            <input type="text" placeholder="Batterie" name="batterie" required>
+                            <input type="text" placeholder="Attributs" name="attributes" readonly>
+                            <i class='bx bx-list-ul'></i>
+                        </div>
+                        <div class="inputBox">
+                            <input type="text" placeholder="Batterie" name="batterie" readonly>
                             <i class='bx bx-battery'></i>
                         </div>
                         <div class="inputBox">
-                            <input type="text" placeholder="Status" name="status" required>
+                            <input type="text" placeholder="Status" name="status" readonly>
                             <i class='bx bx-station'></i>
                         </div>
                         <div class="inputBox">
-                            <input type="text" placeholder="Zone" name="zoneId" required>
+                            <input type="text" placeholder="Zone" name="zoneId" readonly>
                             <i class='bx bx-buildings'></i>
                         </div>
                         <div class="inputBox">
-                            <input type="text" placeholder="Dernier Utilisateur" name="Interaction" required>
-                            <i class='bx bxs-user'></i>
-                        </div>
-                        <div class="inputBox">
-                            <input type="text" placeholder="Date Création" name="Création" required>
+                            <input type="text" placeholder="Date Création" name="Création" readonly>
                             <i class='bx bx-calendar'></i>
                         </div>
                         <div class="inputBox">
-                            <input type="text" placeholder="Cordonnées" name="coordinates" required>
+                            <input type="text" placeholder="Cordonnées" name="coordinates" readonly>
                             <i class='bx bxs-map'></i>
                         </div>
                     </form>
@@ -80,6 +83,35 @@
         let markers = [];
         let currentMarker = null;
 
+        let markersByCategory = {
+            'lampadaire': [],
+            'caméra': [],
+            'capteur_pollution': [],
+            'panneau_information': [],
+            'borne_bus': []
+        };
+
+        function applyFilters() {
+            const filterCheckboxes = document.querySelectorAll('.filter');
+
+            for (const category in markersByCategory) {
+                const checkbox = Array.from(filterCheckboxes).find(cb => cb.value === category);
+                const shouldShow = checkbox ? checkbox.checked : true;
+
+                markersByCategory[category].forEach(marker => {
+                    marker.setVisible(shouldShow);
+                });
+            }
+        }
+
+
+        function setupFilterListeners() {
+            const filterCheckboxes = document.querySelectorAll('.filter');
+            filterCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', applyFilters);
+            });
+        }
+
 
 
         function createMarker(latlng, icn, name, type, objData = {}) {
@@ -91,6 +123,14 @@
                 data: objData  // Stocker les données de l'objet dans le marqueur
             });
 
+            markers.push(marker);
+
+
+            if (type && markersByCategory[type]) {
+                markersByCategory[type].push(marker);
+            }
+
+
             // Ajouter l'événement mouseover
             marker.addListener('mouseover', function () {
                 let formattedDate = "";
@@ -99,8 +139,32 @@
                     formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
 
                 }
+                let attributesStr = "";
+                if (objData.attributes) {
+                    try {
+
+                        let attrs = objData.attributes;
+                        if (typeof attrs === 'string') {
+                            attrs = JSON.parse(attrs);
+                        }
+
+
+                        if (typeof attrs === 'object') {
+                            attributesStr = Object.entries(attrs)
+                                .map(([key, value]) => `${key}: ${value}`)
+                                .join(', ');
+                        } else {
+                            attributesStr = attrs.toString();
+                        }
+                    } catch (e) {
+                        console.error("Erreur de parsing des attributs:", e);
+                        attributesStr = objData.attributes;
+                    }
+                }
+                document.querySelector('input[name="attributes"]').value = attributesStr;
                 document.querySelector('input[name="nomObj"]').value = objData.name || name || "";
                 document.querySelector('input[name="description"]').value = objData.description || "";
+                document.querySelector('input[name="attributes"]').value = attributesStr;
                 document.querySelector('input[name="batterie"]').value = objData.battery_level || "";
                 document.querySelector('input[name="status"]').value = objData.status || "";
                 document.querySelector('input[name="zoneId"]').value = objData.zone_id || "";
@@ -546,25 +610,27 @@
             statusElement.className = "status-message " + type;
             statusElement.style.display = "block";
 
-            // Effacer le message après 3 secondes
+
             setTimeout(() => {
                 statusElement.style.display = "none";
             }, 3000);
         }
 
         function initMap() {
-            // Définir les coordonnées du centre souhaité
+
             const centrePersonnalise = {
-                lat: 49.035, // Latitude de votre choix
-                lng: 2.065   // Longitude de votre choix
+                lat: 49.035,
+                lng: 2.065
             };
 
-            // Créer la carte directement avec ces coordonnées
+
             myLatLng = new google.maps.LatLng(centrePersonnalise.lat, centrePersonnalise.lng);
             createmap(myLatLng);
 
-            // Rechercher les points existants autour de ce centre
+
             searchTestPoint(centrePersonnalise.lat, centrePersonnalise.lng);
+
+            setTimeout(setupFilterListeners, 500);
         }
 
 

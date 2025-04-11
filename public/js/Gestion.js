@@ -1,6 +1,25 @@
 // Variable globale pour suivre la carte en cours d'édition
 let carteEnEdition = null;
 
+const attributsParCategorie = {
+  'lampadaire': [
+    { nom: 'luminosite', label: 'intensite', type: 'select', options: ['faible', 'moyenne', 'forte'] },
+  ],
+  'capteur_pollution': [
+    { nom: 'type_capteur', label: 'Type de capteur', type: 'select', options: ['co2', 'particules', 'nox'] },
+  ],
+  'borne_bus': [
+    { nom: 'ligne', label: 'Ligne de bus', type: 'text' },
+  ],
+  'panneau_information': [
+    { nom: 'type_affichage', label: 'Type d\'affichage', type: 'select', type: 'text' },
+  ],
+  'caméra': [
+    { nom: 'resolution', label: 'Résolution', type: 'select', options: ['720p', '1080p', '4K'] },
+  ]
+};
+
+
 // Code exécuté une fois le DOM entièrement chargé
 document.addEventListener("DOMContentLoaded", () => {
   const deviceForm = document.getElementById("deviceForm");
@@ -21,16 +40,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const coordonnees = document.getElementById("coordonnees").value;
     const categorie = document.getElementById("categorie").value;
 
-    // Préparation des données pour l'API
+
+    const attributs = {};
+
+    if (attributsParCategorie[categorie]) {
+      attributsParCategorie[categorie].forEach(attribut => {
+        const champAttribut = document.getElementById(`attr_${attribut.nom}`);
+
+        if (champAttribut && champAttribut.value) {
+          let valeur;
+
+          if (attribut.type === 'checkbox') {
+            valeur = champAttribut.checked;
+          } else {
+            valeur = champAttribut.value;
+          }
+
+          attributs[attribut.nom] = valeur;
+        }
+      });
+    }
+
     const donnees = {
       name: nom,
       battery_level: batterie,
       status: statut === "en_ligne" ? "actif" : "inactif",
       lat: coordonnees.split(',')[0] || null,
       lng: coordonnees.split(',')[1] || null,
-      type: categorie
+      type: categorie,
+      // Envoyer les attributs directement comme objet JavaScript, sans les convertir en JSON ici
+      attributes: Object.keys(attributs).length > 0 ? attributs : null
     };
-
     // Si on est en mode modification d'une carte existante
     if (carteEnEdition) {
       const id = carteEnEdition.getAttribute("data-id");
@@ -41,7 +81,106 @@ document.addEventListener("DOMContentLoaded", () => {
     // Sinon, création d'un nouvel appareil
     creerAppareil(donnees);
   });
+
+
+  const categorieSelect = document.getElementById("categorie");
+  categorieSelect.addEventListener("change", actualiserAttributsDynamiques);
 });
+
+// Fonction pour actualiser les attributs selon la catégorie sélectionnée
+function actualiserAttributsDynamiques() {
+  const categorieSelectionnee = document.getElementById("categorie").value;
+  const conteneurAttributs = document.getElementById("attributs-dynamiques");
+
+  // Vider le conteneur d'attributs
+  conteneurAttributs.innerHTML = '';
+
+  // Si aucune catégorie n'est sélectionnée ou si elle n'a pas d'attributs définis
+  if (!categorieSelectionnee || !attributsParCategorie[categorieSelectionnee]) {
+    return;
+  }
+
+  // Ajouter un titre pour la section attributs
+  const titreAttributs = document.createElement("h4");
+  titreAttributs.textContent = "Attributs spécifiques";
+  conteneurAttributs.appendChild(titreAttributs);
+
+  // Créer les champs pour chaque attribut de la catégorie
+  attributsParCategorie[categorieSelectionnee].forEach(attribut => {
+    const divAttribut = document.createElement("div");
+    divAttribut.classList.add("attribut-item");
+
+    // Créer le label
+    const label = document.createElement("label");
+    label.setAttribute("for", `attr_${attribut.nom}`);
+    label.textContent = attribut.label;
+    divAttribut.appendChild(label);
+
+    // Créer le champ selon le type
+    let champInput;
+
+    switch (attribut.type) {
+      case 'select':
+        champInput = document.createElement("select");
+        champInput.id = `attr_${attribut.nom}`;
+        champInput.name = `attr_${attribut.nom}`;
+
+        // Ajouter les options
+        attribut.options.forEach(option => {
+          const optionElement = document.createElement("option");
+          optionElement.value = option;
+          optionElement.textContent = option.charAt(0).toUpperCase() + option.slice(1);
+          champInput.appendChild(optionElement);
+        });
+        break;
+
+      case 'checkbox':
+        champInput = document.createElement("input");
+        champInput.type = "checkbox";
+        champInput.id = `attr_${attribut.nom}`;
+        champInput.name = `attr_${attribut.nom}`;
+        break;
+
+      case 'range':
+        champInput = document.createElement("input");
+        champInput.type = "range";
+        champInput.id = `attr_${attribut.nom}`;
+        champInput.name = `attr_${attribut.nom}`;
+        champInput.min = attribut.min || 0;
+        champInput.max = attribut.max || 100;
+        champInput.value = attribut.default || attribut.min || 0;
+
+        // Ajouter un affichage de la valeur
+        const valeurAffichee = document.createElement("span");
+        valeurAffichee.id = `${attribut.nom}_valeur`;
+        valeurAffichee.textContent = champInput.value;
+        champInput.addEventListener("input", () => {
+          valeurAffichee.textContent = champInput.value;
+        });
+        divAttribut.appendChild(champInput);
+        divAttribut.appendChild(valeurAffichee);
+        break;
+
+      default: // text, number, etc.
+        champInput = document.createElement("input");
+        champInput.type = attribut.type;
+        champInput.id = `attr_${attribut.nom}`;
+        champInput.name = `attr_${attribut.nom}`;
+
+        if (attribut.min !== undefined) champInput.min = attribut.min;
+        if (attribut.max !== undefined) champInput.max = attribut.max;
+        if (attribut.default !== undefined) champInput.value = attribut.default;
+    }
+
+
+    if (attribut.type !== 'range') {
+      divAttribut.appendChild(champInput);
+    }
+
+    conteneurAttributs.appendChild(divAttribut);
+  });
+}
+
 
 // Fonction pour charger tous les appareils depuis l'API
 function chargerAppareils() {
@@ -69,13 +208,18 @@ function chargerAppareils() {
 function creerAppareil(donnees) {
   // Ajout d'un unique_id requis par votre API
   donnees.unique_id = 'DEV_' + Date.now();
-  donnees.description = donnees.name + ' description';
 
-  // Ne pas inclure zone_id dans les données envoyées
-  // La méthode setZoneFromCoordinates() s'en chargera
+
+
   if (donnees.zone_id) {
     delete donnees.zone_id;
   }
+
+  if (donnees.attributes) {
+    donnees.attributes = JSON.stringify(donnees.attributes);
+  }
+
+  console.log("Attributs avant envoi:", donnees);
 
   fetch('/connected-objects', {
     method: 'POST',
@@ -101,6 +245,12 @@ function creerAppareil(donnees) {
 
 // Fonction pour modifier un appareil via l'API
 function modifierAppareil(id, donnees) {
+
+
+  if (donnees.attributes) {
+    donnees.attributes = JSON.stringify(donnees.attributes);
+  }
+
   fetch(`/connected-objects/${id}`, {
     method: 'PUT',
     headers: {
@@ -154,6 +304,23 @@ function ajouterCarteAppareil(appareil) {
     ? new Date(appareil.created_at).toLocaleDateString('fr-FR')
     : 'N/A';
 
+  let attributsText = 'Aucun';
+  if (appareil.attributes) {
+    try {
+
+      const attributsObj = typeof appareil.attributes === 'string'
+        ? JSON.parse(appareil.attributes)
+        : appareil.attributes;
+
+
+      attributsText = Object.entries(attributsObj)
+        .map(([key, value]) => `${key} : ${value}`)
+        .join(', ');
+    } catch (e) {
+      console.error("Erreur lors du parsing des attributs:", e);
+      attributsText = appareil.attributes;
+    }
+  }
 
 
   deviceCard.innerHTML = `
@@ -161,6 +328,7 @@ function ajouterCarteAppareil(appareil) {
       <div class="device-infos">
         <div class="info-item"><strong>Nom:</strong> ${appareil.name}</div>
         <div class="info-item"><strong>Batterie:</strong> ${appareil.battery_level}%</div>
+        <div class="info-item"><strong>Attributs:</strong> ${attributsText || 'Aucun'}</div>
         <div class="info-item"><strong>Statut:</strong> ${appareil.status === "actif" ? "En ligne" : "Hors ligne"}</div>
         <div class="info-item"><strong>Zone:</strong> ${appareil.zone_id}</div>
          <div class="info-item"><strong>Dernière interaction:</strong> ${appareil.last_interaction ? new Date(appareil.last_interaction).toLocaleDateString('fr-FR') : 'N/A'}</div>
@@ -271,22 +439,60 @@ function ajouterCarteAppareil(appareil) {
       .replace("Batterie:", "")
       .replace("%", "")
       .trim();
-    document.getElementById("statut").value = infos[2].textContent
+    document.getElementById("statut").value = infos[3].textContent
       .replace("Statut:", "")
       .trim()
       .toLowerCase() === "en ligne" ? "en_ligne" : "hors_ligne";
 
     // Pré-remplir les coordonnées
-    const coordonneesText = infos[6].textContent
+    const coordonneesText = infos[7].textContent
       .replace("Coordonnées:", "")
       .trim();
     document.getElementById("coordonnees").value = coordonneesText;
 
     // Pré-remplir la catégorie
-    const categorieText = infos[7].textContent
+    const categorieText = infos[8].textContent
       .replace("Catégorie:", "")
       .trim();
     document.getElementById("categorie").value = categorieText;
+
+    document.getElementById("categorie").value = categorieText;
+    actualiserAttributsDynamiques();
+
+    // Ensuite récupérer et définir les valeurs des attributs
+    try {
+      const attributsText = infos[2].textContent
+        .replace("Attributs:", "")
+        .trim();
+
+      if (attributsText !== 'Aucun') {
+        const attributsObj = typeof appareil.attributes === 'string'
+          ? JSON.parse(appareil.attributes)
+          : appareil.attributes;
+
+
+        Object.entries(attributsObj).forEach(([key, value]) => {
+          const champAttribut = document.getElementById(`attr_${key}`);
+          if (champAttribut) {
+            if (champAttribut.type === 'checkbox') {
+              champAttribut.checked = value === true || value === "true";
+            } else {
+              champAttribut.value = value;
+            }
+
+
+            if (champAttribut.type === 'range') {
+              const valeurAffichee = document.getElementById(`${key}_valeur`);
+              if (valeurAffichee) {
+                valeurAffichee.textContent = champAttribut.value;
+              }
+            }
+          }
+        });
+      }
+    } catch (e) {
+      console.error("Erreur lors du remplissage des attributs:", e);
+    }
 
     toggleDeviceForm();
     document.querySelector('button[type="submit"]').textContent = "Mettre à jour";

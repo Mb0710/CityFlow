@@ -26,7 +26,7 @@ class ConnectedObject extends Model
         'attributes' => 'array',
         'battery_level' => 'integer',
         'lat' => 'float',
-        'lng' => 'float'
+        'lng' => 'float',
     ];
 
 
