@@ -13,4 +13,15 @@ class UserAction extends Model
         'description',
         'points'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+    public function connectedObject()
+    {
+        return $this->belongsTo(ConnectedObject::class, 'object_id');
+    }
 }

@@ -1,0 +1,283 @@
+/* === Fond de page === */
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', sans-serif;
+  background: linear-gradient(135deg, #2193b0, #6dd5ed);
+  min-height: 100vh;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* === Titre flottant avec nuage === */
+.titre-container {
+  margin-top: 70px;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nuage-img {
+  width: 400px;
+  height: auto;
+  opacity: 0.9;
+  animation: float 3s ease-in-out infinite;
+}
+
+.cloud-title {
+  font-size: 60px;
+  font-weight: bold;
+  color: #2e5f4d;
+  margin-top: -150px;
+  text-align: center;
+  text-shadow: 2px 2px #45403A;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* === Logo en haut à gauche === */
+.logo-container {
+  position: fixed;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  z-index: 10;
+}
+
+.logo-container img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.logo-container.logo-left {
+  left: 0;
+  top: 0;
+  transform: none;
+}
+
+/* === Grille des actions === */
+.actions-grid {
+  display: flex;
+  flex-direction: column;
+  margin-top: 300px;
+  padding: 20px;
+  gap: 20px;
+}
+
+/* Style pour le tableau des actions */
+.actions-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+/* Style pour les lignes du tableau */
+.actions-table tr {
+  background-color: #ffffffee;
+  border-radius: 12px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.actions-table tr:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Style pour les cellules */
+.actions-table td,
+.actions-table th {
+  padding: 15px;
+  text-align: left;
+  border: none;
+}
+
+.actions-table th {
+  background-color: #2e5f4d;
+  color: white;
+  font-weight: bold;
+  padding: 12px 15px;
+}
+
+.actions-table th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.actions-table th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.actions-table tr:first-child td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.actions-table tr:first-child td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* Style pour les types d'action */
+.action-type {
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.type-ajout {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.type-modification {
+  background-color: #2196F3;
+  color: white;
+}
+
+.type-recharge {
+  background-color: #ff9800;
+  color: white;
+}
+
+.type-signalement {
+  background-color: #f44336;
+  color: white;
+}
+
+.type-consultation {
+  background-color: #9c27b0;
+  color: white;
+}
+
+/* Style pour les points */
+.points-positive {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.points-negative {
+  color: #f44336;
+  font-weight: bold;
+}
+
+.action-date {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Message de confirmation */
+.message-confirmation {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2e5f4d;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 20px;
+  font-family: 'Comic Sans MS', sans-serif;
+  font-size: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: fadeOut 4s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+.no-data {
+  text-align: center;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  font-size: 18px;
+  color: #666;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* === VERSION RESPONSIVE === */
+@media screen and (max-width: 768px) {
+  .titre-container {
+    top: 40px;
+    transform: translateX(-50%);
+    margin-top: 0;
+    width: 100%;
+    align-items: center;
+  }
+
+  .nuage-img {
+    width: 250px;
+  }
+
+  .cloud-title {
+    font-size: 32px;
+    margin-top: -95px;
+  }
+
+  .logo-site,
+  .logo-container.logo-left {
+    top: 0px;
+    left: 10px;
+  }
+
+  .logo-site img,
+  .logo-container img {
+    height: 60px;
+  }
+
+  .actions-grid {
+    margin-top: 200px;
+    padding: 10px;
+  }
+
+  .actions-table {
+    font-size: 12px;
+  }
+
+  .actions-table td,
+  .actions-table th {
+    padding: 8px 5px;
+  }
+
+  /* Ajuster l'affichage sur mobile pour les colonnes */
+  .actions-table th:nth-child(4),
+  .actions-table td:nth-child(4),
+  .actions-table th:nth-child(1),
+  .actions-table td:nth-child(1) {
+    display: none;
+  }
+}

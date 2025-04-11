@@ -17,14 +17,7 @@ const cloudPositions = [
     },
     {
         x: 4, y: -2, z: -20,
-        action: () => {
-            if (isAdmin == 1) {
-
-            }
-            else {
-                window.location.href = '/admin';
-            }
-        }
+        action: () => { window.location.href = '/admin/inspections'; }
     },
     { x: 13, y: -2, z: -20, action: () => { window.location.href = '/admin/ajout'; } },
     { x: 12, y: -10, z: -20, action: () => { window.location.href = '/dashboard'; } },

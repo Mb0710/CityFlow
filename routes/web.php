@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserActions;
 use App\Http\Controllers\ConnectedObjectsController;
 use Illuminate\Support\Facades\Auth;
 
@@ -89,7 +90,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::middleware('level:expert')->group(function () {
-        // Création et modification d'objets connectés
+
 
         Route::put('/connected-objects/{id}/report', [ConnectedObjectsController::class, 'report']);
     });
@@ -122,6 +123,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin/suppression', function () {
             return view('suppression');
         })->name('suppression');
+
+        Route::get('/admin/inspections', function () {
+            return view('inspections');
+        })->name('inspections');
+
+        Route::get('/admin/user-actions', [UserActions::class, 'index'])->name('user.actions');
 
         Route::get('/reported', [ConnectedObjectsController::class, 'getReportedObjects']);
         Route::delete('/connected-objects/{id}', [ConnectedObjectsController::class, 'destroy']);
