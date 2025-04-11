@@ -72,7 +72,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/suppression', function () {
         return view('suppression');
     })->middleware('verified')->name('suppression');
-
+    Route::get('/search-users', [UserController::class, 'searchUsers'])->name('search.users');
     Route::get('/reported', [ConnectedObjectsController::class, 'getReportedObjects']);
     Route::delete('/connected-objects/{id}', [ConnectedObjectsController::class, 'destroy']);
     Route::post('/connected-objects/{id}/cancel-report', [ConnectedObjectsController::class, 'cancelReport']);

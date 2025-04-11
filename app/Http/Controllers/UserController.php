@@ -118,5 +118,19 @@ class UserController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function searchUsers(Request $request)
+    {
+        $query = $request->input('query');
+        $users = User::where('login', 'like', '%' . $query . '%')
+            ->orWhere('name', 'like', '%' . $query . '%')
+            ->orWhere('firstname', 'like', '%' . $query . '%')
+            ->where('id', '!=', Auth::id()) // Exclure l'utilisateur actuel
+            ->select('id', 'login', 'name', 'firstname', 'profile_picture')
+            ->limit(10)
+            ->get();
+
+        return response()->json($users);
+    }
+
 
 }

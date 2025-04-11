@@ -28,7 +28,18 @@
     <img src="{{ asset('./assets/nuage.png') }}" alt="Nuage" class="nuage-img">
 
     <div class="cloud-title">Profil</div>
+    @if($user->id === $currentUser->id)
+    <div class="search-container-standalone">
+      <div class="search-box">
+      <input type="text" id="user-search" placeholder="Rechercher un utilisateur...">
+      <button type="button" id="search-button">🔍</button>
+      </div>
+      <div id="search-results" class="search-results"></div>
+    </div>
+  @endif
   </div>
+
+
   <!--  formulaire pour modifier son profile associé à la route profil.update, s'active via le bouton modifier-->
   <form id="profile-form" method="POST" action="{{ route('update.profile') }}" enctype="multipart/form-data">
     @csrf
@@ -109,6 +120,7 @@
   </form>
 
   <script src="{{ asset('js/profilUpdate.js') }}"></script>
+  <script src="{{ asset('js/userSearch.js') }}"></script>
   <!--  requete à user.data qui via une methode associé nous retourne les données de l'utilisateur dans "data"-->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
