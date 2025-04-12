@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    <!--  Page de connexion avec un model3d réalisé via l'editeur three.js editor et manipulé par three.js-->
     <div class="wrapper">
         <div id="container3D"></div>
         <div class="logo-container">
@@ -20,8 +21,25 @@
         <div class="box">
             <h2 class="login-title">Bienvenue sur City Flow</h2>
             <p class="login-subtitle">Connectez-vous pour gérer votre ville intelligente</p>
+            <!-- Simple moyen de recuperer les quelconques erreur liée a la connexion ( compte inexistant, mot de passe incorrect...)-->
+            @if ($errors->any())
+                <div class="error-container">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-            <form>
+            @if (session('status'))
+                <div class="success-message">
+                    {{ session('status') }}
+                </div>
+            @endif
+            <!-- Envoi des données de l'utilisateur à login.submit qui via la methode login va verifier que l'utilisateur peut se connecter-->
+            <form method="POST" action="{{ route('login.submit') }}">
+                @csrf
                 <div class="inputBox">
                     <input type="text" placeholder="Nom d'utilisateur" name="login" required>
                     <i class='bx bxs-user-circle'></i>
@@ -38,21 +56,13 @@
 
                 <button type="submit" class="button">Se connecter</button>
 
-                <div class="login-divider">
-                    <span>ou</span>
-                </div>
-
-                <div class="social-login">
-                    <button type="button" class="social-btn google"><i class='bx bxl-google'></i> Google</button>
-                    <button type="button" class="social-btn linkedin"><i class='bx bxl-linkedin'></i> LinkedIn</button>
-                </div>
 
                 <div class="newAcc">
                     <p>Vous n'avez pas de compte? <a href="#">Créer un compte</a></p>
                 </div>
             </form>
         </div>
-
+        <!-- elements visuels pour le free tour -->
         <div class="city-features">
             <div class="feature">
                 <i class='bx bx-building-house'></i>

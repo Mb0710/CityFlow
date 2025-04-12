@@ -17,6 +17,7 @@ body {
 .wrapper {
     width: 100%;
     max-width: 1200px;
+    height: 100vh;
     margin: 0 auto;
     position: relative;
     z-index: 5;
@@ -25,144 +26,80 @@ body {
     align-items: center;
 }
 
-.round-image {
-    border-radius: 50%;
-    width: 150px;
-    object-fit: cover;
-}
 
-.round-image:hover {
-    filter: brightness(-120%);
-}
-
-
-
-
-.logo-container {
+.cloud-button {
     position: absolute;
-    top: -300px;
-    left: 10%;
-    transform: translateX(-50%);
-    width: 300px;
-    z-index: 10;
-}
-
-#deco {
-    background: #34c924;
-}
-
-.logo-container img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-}
-
-#container3D {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-
-.cloud {
-    position: relative;
-    height: 80px;
-    aspect-ratio: 2.4;
-    background: linear-gradient(180deg, #ffffff, #e3f2fd);
-    --g: radial-gradient(50% 50%, #000 98%, #0000) no-repeat;
-    mask:
-        var(--g) 100% 100%/30% 60%,
-        var(--g) 70% 0%/50% 100%,
-        var(--g) 0 100%/36% 68%,
-        var(--g) 27% 18%/26% 40%,
-        linear-gradient(#000 0 0) bottom/67% 58% no-repeat;
-    box-shadow: 0 8px 20px rgba(173, 216, 230, 0.4);
-    border-radius: 40px;
-    transition: all 0.3s ease;
-    overflow: hidden;
-    /* Nouveau */
-}
-
-.cloud::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg,
-            transparent,
-            rgba(255, 255, 255, 0.2),
-            transparent);
-    transform: rotate(-45deg);
-    transition: all 0.5s ease;
-    opacity: 0;
-}
-
-.cloud:hover::before {
-    opacity: 1;
-}
-
-.cloud button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    background: transparent;
-    color: #37474f;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: 600;
+    padding: 10px 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 10px;
     cursor: pointer;
-    text-align: center;
-    margin: 0;
-    z-index: 2;
+    pointer-events: auto;
+    transition: transform 0.3s;
+    text-decoration: none;
+    width: 120px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 10;
+    transition: transform 0.3s;
+
+}
+
+
+.box {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 380px;
+    max-height: 70vh;
+    box-sizing: border-box;
+    margin: 0 auto;
     transition: all 0.3s ease;
-    /* Nouveau */
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    z-index: 5;
+    opacity: 0.95;
+    overflow-y: auto;
+    position: absolute;
+    left: 10%;
+    top: 60%;
 }
 
-.cloud:hover button {
-    color: #1976d2;
-    transform: translate(-50%, -50%) scale(1.1);
-    /* Nouveau */
+.box.right {
+    left: 70%;
 }
 
-.cloud:hover {
-    transform: scale(1.05);
-    box-shadow: 0 12px 25px rgba(173, 216, 230, 0.6);
+.box#errorBox,
+.box#errorBox2 {
+    left: 40%;
+    top: 10%;
+    z-index: 100;
+    display: none;
+    border: solid red;
 }
 
-/* Style spécial pour le bouton de déconnexion */
-#deco {
+.box.addTable {
+    align-items: center;
+}
+
+
+.cloud-button:hover {
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+
+#logout-btn {
     background: linear-gradient(135deg, #34c924, #2ecc71);
     color: white;
 }
 
-#deco button {
-    color: white;
-}
-
-#deco:hover {
+#logout-btn:hover {
     background: linear-gradient(135deg, #2ecc71, #27ae60);
 }
 

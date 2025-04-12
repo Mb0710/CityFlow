@@ -9,9 +9,64 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
+use Carbon\Carbon;
+
 
 class AuthController extends Controller
 {
+    private function updateLoginPoints($user)
+    {
+        $today = Carbon::now()->toDateString();
+        $pointsToAdd = 0;
+
+
+        $firstLoginToday = ($user->last_login_date === null || $user->last_login_date < $today);
+
+        if ($firstLoginToday) {
+
+            $yesterday = Carbon::now()->subDay()->toDateString();
+            $isConsecutiveLogin = ($user->last_login_date === $yesterday);
+
+            if ($isConsecutiveLogin) {
+
+                $loginStreak = $user->login_streak ?? 0;
+                $loginStreak++;
+
+
+                if ($loginStreak > 7) {
+                    $loginStreak = 1;
+                }
+
+
+                if ($loginStreak == 7) {
+                    $pointsToAdd = 240;
+                } else {
+                    $pointsToAdd = 5 * pow(2, $loginStreak - 1);
+                }
+
+                $user->login_streak = $loginStreak;
+            } else {
+
+                $user->login_streak = 1;
+                $pointsToAdd = 5;
+            }
+
+            $user->points += $pointsToAdd;
+
+            $user->updateLevelBasedOnPoints();
+
+            $user->last_login_date = $today;
+            $user->save();
+        }
+
+
+        \App\Models\UserConnection::create([
+            'user_id' => $user->id,
+            'connection_time' => now(),
+            'points_earned' => $pointsToAdd
+        ]);
+    }
+
     public function register(Request $request)
     {
         // Validation des données
@@ -26,14 +81,14 @@ class AuthController extends Controller
             'member_type' => 'required|in:resident,visitor,official,worker'
         ]);
 
-        // Si la validation échoue
+
         if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors()
             ], 422);
         }
 
-        // Création de l'utilisateur
+
         $user = User::create([
             'login' => $request->login,
             'name' => $request->name,
@@ -48,18 +103,13 @@ class AuthController extends Controller
                 : null
         ]);
 
-        // Connexion automatique après l'inscription
+
         Auth::login($user);
+        $this->updateLoginPoints($user);
 
         event(new Registered($user));
 
-        /*if ($request->ajax() || $request->wantsJson()) {
-            return response()->json([
-                'message' => 'Compte créé avec succès',
-                'redirect' => route('login')
-            ], 201);
 
-        }*/
 
         return redirect()->route('verification.notice')->with('success', 'Compte créé avec succès');
     }
@@ -90,17 +140,28 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            $user = Auth::user();
+
+            $this->updateLoginPoints($user);
+
             return response()->json([
                 'message' => 'Connexion réussie',
                 'redirect' => route('dashboard')
             ]);
         }
 
-        return response()->json([
-            'errors' => ['username' => 'Les identifiants sont incorrects']
-        ], 401);
-    }
+        $userExists = User::where('login', $credentials['login'])->exists();
 
+        if ($userExists) {
+            return response()->json([
+                'errors' => ['password' => 'Le mot de passe est incorrect']
+            ], 401);
+        } else {
+            return response()->json([
+                'errors' => ['login' => 'Aucun compte trouvé avec ce nom d\'utilisateur']
+            ], 401);
+        }
+    }
     public function logout(Request $request)
     {
         Auth::logout();
@@ -108,7 +169,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect('/');
     }
 
     public function resetPassword(Request $request)
@@ -123,8 +184,6 @@ class AuthController extends Controller
             ], 422);
         }
 
-        // Ici, vous devriez implémenter la logique d'envoi d'email de réinitialisation
-        // Laravel a un système intégré pour cela : Password::sendResetLink()
 
         return response()->json([
             'message' => 'Un email de réinitialisation a été envoyé'

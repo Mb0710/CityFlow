@@ -1,0 +1,208 @@
+/* === Fond général avec dégradé et police cartoon === */
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', sans-serif;
+  background: linear-gradient(135deg, #2193b0, #6dd5ed);
+  min-height: 100vh;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* === Titre centralisé (nuage + texte) === */
+.titre-container {
+  margin-top: 70px;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Nuage animé */
+.nuage-img {
+  width: 400px;
+  opacity: 0.9;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Titre sur le nuage */
+.cloud-title {
+  font-size: 60px;
+  font-weight: bold;
+  color: #2e5f4d;
+  margin-top: -150px;
+  text-align: center;
+  text-shadow: 2px 2px #45403A;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Animation flottante douce */
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Logo dans le coin inférieur gauche */
+.logo-site {
+  position: absolute;
+  bottom: 60px;
+  left: -20px;
+  z-index: 3;
+}
+
+.logo-site img {
+  height: 100px;
+  transition: transform 0.3s ease;
+}
+
+.logo-site img:hover {
+  transform: scale(1.1);
+}
+
+/* === Grille contenant les cartes des objets à supprimer === */
+.device-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 330px 20px 40px;
+  gap: 20px;
+}
+
+/* Carte individuelle */
+.device-card {
+  background: #ffffffdd;
+  border: 2px solid #C8BFB1;
+  border-radius: 20px;
+  padding: 15px;
+  width: 420px;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenu d'infos de l'objet */
+.device-infos {
+  font-size: 14px;
+  color: #252422;
+  flex: 1;
+  margin-bottom: 15px;
+}
+
+/* Ligne individuelle dans la carte */
+.info-item {
+  background-color: #ffffff;
+  padding: 6px 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #ddd;
+}
+
+/* === Zone des boutons valider / refuser === */
+.validation-zone {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.validation-zone button {
+  font-size: 22px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  font-family: 'Comic Sans MS', sans-serif;
+}
+
+/* Bouton Valider */
+.validation-zone .valider {
+  background-color: #2e5f4d;
+  color: white;
+}
+
+.validation-zone .valider:hover {
+  background-color: #3b7a63;
+  transform: scale(1.05);
+}
+
+/* Bouton Refuser */
+.validation-zone .refuser {
+  background-color: #a94442;
+  color: white;
+}
+
+.validation-zone .refuser:hover {
+  background-color: #d9534f;
+  transform: scale(1.05);
+}
+
+/* === Message de confirmation temporaire === */
+.message-confirmation {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2e5f4d;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 20px;
+  font-family: 'Comic Sans MS', sans-serif;
+  font-size: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: fadeOut 4s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+/* === Responsive mobile === */
+@media screen and (max-width: 600px) {
+  .nuage-img {
+    width: 250px;
+  }
+
+  .cloud-title {
+    font-size: 32px;
+    margin-top: -95px;
+  }
+
+  .logo-site {
+    bottom: 25px;
+    right: -5px;
+    left: auto;
+  }
+
+  .logo-site img {
+    height: 60px;
+  }
+
+  .device-grid {
+    padding-top: 290px;
+  }
+}

@@ -9,17 +9,19 @@
 </head>
 
 <body>
+    <!-- lorsque l'utilisateur crée son compte il accede a cet vue qui l'empeche de se connecter avant de verifier son email-->
+    <!-- la route verification.send permet de renvoyer un email de verification à l'utilisateur-->
     <div class="wrapper">
         <div class="logo-container">
             <img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo">
         </div>
         <div class="box">
-            <h1>Please Verify your email through the email we've sent you.</h1>
+            <h1>Merci de Vérifier l'email que nous venons de vous envoyer.</h1>
 
-            <p>Didn't get the email ?</p>
+            <p>Email non recu ?</p>
             <form action="{{ route('verification.send') }}" method="POST">
                 @csrf
-                <button class="button">Send Again</button>
+                <button class="button">Renvoyer l'email</button>
             </form>
         </div>
     </div>

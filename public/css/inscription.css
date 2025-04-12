@@ -1,0 +1,399 @@
+/* === Fond de page === */
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', sans-serif;
+  background: linear-gradient(135deg, #2193b0, #6dd5ed);
+  min-height: 100vh;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* === Titre flottant avec nuage === */
+.titre-container {
+  margin-top: 70px;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nuage-img {
+  width: 400px;
+  height: auto;
+  opacity: 0.9;
+  animation: float 3s ease-in-out infinite;
+}
+
+.cloud-title {
+  font-size: 60px;
+  font-weight: bold;
+  color: #2e5f4d;
+  margin-top: -150px;
+  text-align: center;
+  text-shadow: 2px 2px #45403A;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* === Logo en haut à gauche === */
+.logo-site {
+  position: absolute;
+  bottom: 60px;
+  left: 0px;
+  z-index: 3;
+}
+
+.logo-site img {
+  height: 100px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo-site img:hover {
+  transform: scale(1.1);
+}
+
+/* === Grille des demandes d'inscription === */
+.device-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 300px;
+  /* Ajoute de l'espace en haut */
+  padding: 20px;
+  gap: 20px;
+}
+
+.device-card {
+  flex: 0 0 300px;
+  /* Largeur fixe pour chaque carte */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.device-infos {
+  font-size: 14px;
+  color: #252422;
+  flex: 1;
+  margin-bottom: 15px;
+}
+
+.info-item {
+  background-color: #ffffff;
+  padding: 6px 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #ddd;
+}
+
+/* === Boutons valider/refuser === */
+.validation-zone {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.validation-zone button {
+  font-size: 22px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  font-family: 'Comic Sans MS', sans-serif;
+}
+
+.validation-zone .valider {
+  background-color: #2e5f4d;
+  color: white;
+}
+
+.validation-zone .valider:hover {
+  background-color: #3b7a63;
+  transform: scale(1.05);
+}
+
+.validation-zone .refuser {
+  background-color: #a94442;
+  color: white;
+}
+
+.validation-zone .refuser:hover {
+  background-color: #d9534f;
+  transform: scale(1.05);
+}
+
+/* === Message de confirmation === */
+.message-confirmation {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2e5f4d;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 20px;
+  font-family: 'Comic Sans MS', sans-serif;
+  font-size: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: fadeOut 4s forwards;
+}
+
+.no-data-message {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  color: #666;
+  width: 100%;
+}
+
+.message-confirmation {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.message-confirmation.error {
+  background-color: #f44336;
+}
+
+.device-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.device-infos {
+  margin-bottom: 15px;
+}
+
+.info-item {
+  margin-bottom: 5px;
+}
+
+.validation-zone {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.valider,
+.refuser {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.valider {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.refuser {
+  background-color: #f44336;
+  color: white;
+}
+
+.no-data-message {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  color: #666;
+  width: 100%;
+}
+
+.message-confirmation {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.message-confirmation.error {
+  background-color: #f44336;
+}
+
+.device-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.device-infos {
+  margin-bottom: 15px;
+}
+
+.info-item {
+  margin-bottom: 5px;
+}
+
+.validation-zone {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.valider,
+.refuser {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.valider {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.refuser {
+  background-color: #f44336;
+  color: white;
+}
+
+.device-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+
+.points-input {
+  width: 60px;
+  padding: 2px 5px;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #f9f9f9;
+}
+
+.save-points {
+  padding: 2px 5px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.save-points:hover {
+  background-color: #388E3C;
+}
+
+.save-points:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.logo-container {
+  position: fixed;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  z-index: 10;
+}
+
+.logo-container img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.logo-container.logo-left {
+  left: 0;
+  top: 0;
+  transform: none;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+/* === Responsive === */
+@media screen and (max-width: 600px) {
+  .nuage-img {
+    width: 250px;
+  }
+
+  .cloud-title {
+    font-size: 32px;
+    margin-top: -95px;
+  }
+
+  .logo-site {
+    top: 0px;
+    right: 10px;
+    left: auto;
+  }
+
+  .logo-site img {
+    height: 50px;
+  }
+
+  .device-grid {
+    padding-top: 290px;
+  }
+}

@@ -27,7 +27,9 @@ return new class extends Migration {
             $table->string('profile_picture')->nullable();
             $table->enum('level', ['débutant', 'intermédiaire', 'avancé', 'expert'])->default('débutant');
             $table->float('points')->default(0);
+            $table->date('last_login_date')->nullable();
             $table->boolean('is_admin')->default(false);
+            $table->integer('login_streak')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

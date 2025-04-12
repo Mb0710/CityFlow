@@ -1,0 +1,289 @@
+[33mcommit 2691a983a2c031ceb8fabd3e77be34fa6c64f5d0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Mon Apr 7 23:18:14 2025 +0200
+
+    route pr afficher le profil des autres,
+    empechement de voir les infos personnelles des autres,
+    empechement de modifier le profil des autres.
+
+[33mcommit 676a29aaf37d1517150a26a953a42e806d5c679c[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Mon Apr 7 21:34:48 2025 +0200
+
+    debut session admin,
+    modif du profil,
+
+[33mcommit c5ad57ad3241d16f30dec7ee538669460518c1a3[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Sun Apr 6 23:33:09 2025 +0200
+
+    bug fix: Fix bug in profil.blade.php
+
+[33mcommit 68584913587e2b389ba76a450a16742f1b5ec0d9[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Sun Apr 6 22:21:04 2025 +0200
+
+    gestion erreur rubrique admin,
+    affichage profil,
+    next : route pour les permissions a faire
+
+[33mcommit bfcae351b8214ca9c2db0643aba5711840707131[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Sat Apr 5 17:50:09 2025 +0200
+
+    gestion erreur
+
+[33mcommit 5b408b04619589fd505bfed16fd29bd25e1ba3f6[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Sat Apr 5 14:58:15 2025 +0200
+
+    changement de role en fonction des pts
+
+[33mcommit 6933d301ee57001d00d984354519fd0c0780b603[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Sat Apr 5 14:21:40 2025 +0200
+
+    systeme de streak de points fonctionnel
+
+[33mcommit 76fecb26f7cd31e769d46c4f32ce761b4951f774[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Sat Apr 5 13:45:35 2025 +0200
+
+    ajout de streak de points
+
+[33mcommit 49b12756cfa62abfa3f8c975c4cd36da697d14d1[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Sat Apr 5 12:42:15 2025 +0200
+
+    systeme de points a la connexion journaliere
+
+[33mcommit 44c80925b8fe02dc0b3c5923a2bc016c1b6a6817[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Sat Apr 5 11:46:48 2025 +0200
+
+    logo de retour au dashboard , ajustement de route
+
+[33mcommit 99e442acc5330cdca7c4be752bcd354eaa7bd474[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Fri Apr 4 21:44:47 2025 +0200
+
+    mapping
+
+[33mcommit 0e2507936988cc66d818d401f59379f050c672e0[m
+Author: Nicolas Lagrange <130107205+Grimkujow@users.noreply.github.com>
+Date:   Fri Apr 4 14:36:33 2025 +0200
+
+    MAP GTA
+
+[33mcommit 3a94018b8459a685e35149bf87efd6941a398fe0[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Thu Apr 3 20:46:45 2025 +0200
+
+    petite modiff
+
+[33mcommit d2a127fb225ff7e8855804aa20f96438608e609e[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Wed Apr 2 22:05:08 2025 +0200
+
+    nuage V2
+
+[33mcommit f179eb25ffda2df3b4407fdc8863918126e617cf[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Wed Apr 2 20:18:35 2025 +0200
+
+    Correction de langue
+
+[33mcommit 737a0312c4308966f3203f17e0ed134a9f253ddc[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Wed Apr 2 20:06:54 2025 +0200
+
+    plein de trucs a vrai dire
+
+[33mcommit 93da0fe6fe5c9fb0f6c566ea2759541b6f6ec4b3[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Sun Mar 30 22:46:51 2025 +0200
+
+    validation de compte par email
+
+[33mcommit 8534069ac5b6000ffbee8ab4b49c675c92c263c9[m
+Author: Nicolas Lagrange <130107205+Grimkujow@users.noreply.github.com>
+Date:   Sat Mar 29 18:29:07 2025 +0100
+
+    Restriction lat lng
+
+[33mcommit db592d84802ce5a126352749ed9b75907b2142db[m
+Author: Nicolas Lagrange <130107205+Grimkujow@users.noreply.github.com>
+Date:   Sat Mar 29 18:17:14 2025 +0100
+
+    Map waypoint
+    
+    a lier avec la bdd
+
+[33mcommit b963f714700b38b0eb16330bbb5f50ba12440402[m
+Author: Nicolas Lagrange <130107205+Grimkujow@users.noreply.github.com>
+Date:   Sat Mar 29 16:36:29 2025 +0100
+
+    MAP RESTRICTION FINI
+    
+    zoom + delimitation + couleur map + control
+
+[33mcommit 209c12b89bfe56270ef84763739337cdc6f487b0[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Sat Mar 29 15:41:51 2025 +0100
+
+    verification par email (pas encore fonctionnel)
+
+[33mcommit 26780cc2912bb5bc8c8625920736a766fbba206b[m
+Merge: c6de183 6fe4b7a
+Author: Grimkujow <nicolaslagrange14.com>
+Date:   Sat Mar 29 12:14:58 2025 +0100
+
+    Merge branch 'master' of https://github.com/Mb0710/CityFlow
+
+[33mcommit c6de1831b68d3f13bbe28baeff9d9728a6957fd3[m
+Author: Grimkujow <nicolaslagrange14.com>
+Date:   Sat Mar 29 11:55:43 2025 +0100
+
+    maptest presque ok, manque juste la restriction latlngbounds
+
+[33mcommit 6fe4b7a5d2d24d94034632f68d1b0caabc8c176d[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Sat Mar 29 11:48:42 2025 +0100
+
+    commentaires login
+
+[33mcommit 75d099391bfb1950b38ca6bbf04302be0e24dc57[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Sat Mar 29 11:47:13 2025 +0100
+
+    Systeme d'authentification fonctionnel
+
+[33mcommit 43193cc7cd894a8f009a0e742896d2da99e104d3[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Thu Mar 27 17:55:21 2025 +0100
+
+    dashboard test
+
+[33mcommit 353ec731b1ac4f2794daa32eed0dcc4ddb5bcb3d[m
+Merge: 64e6b62 5b01df0
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Thu Mar 27 17:23:44 2025 +0100
+
+    Merge branch 'master' of https://github.com/Mb0710/CityFlow
+
+[33mcommit 64e6b62277731e7cc6b1e769ee9749cddf0ff96d[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Thu Mar 27 17:19:33 2025 +0100
+
+    Amelioration des formulaires , idee de dashboard
+
+[33mcommit 5b01df040314edbe929940bce944874f660de98f[m
+Author: Grimkujow <nicolaslagrange14.com>
+Date:   Wed Mar 26 12:41:28 2025 +0100
+
+    map restrictions
+
+[33mcommit f6db76c7ffdbbca46b0ca19202230a36f13151af[m
+Author: Grimkujow <nicolaslagrange14.com>
+Date:   Tue Mar 25 22:04:15 2025 +0100
+
+    j'ai essayé a perte je réessaie demain
+
+[33mcommit 9155a1a5c9e99ed8b9f006177ce7782cbc7d4581[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Tue Mar 25 13:00:31 2025 +0100
+
+    bug avec une method post
+
+[33mcommit 7d9cba40f6e99327ab51cfc3d9c6ffa521a8b8bc[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Tue Mar 25 11:59:37 2025 +0100
+
+    modif du form d'inscription
+
+[33mcommit 4356202ab1127b99a0e77533fd4f090c7a649449[m
+Author: Grimkujow <nicolaslagrange14.com>
+Date:   Mon Mar 24 21:38:04 2025 +0100
+
+    MAP DEBUT FRONT + SNAZZYMAPS
+
+[33mcommit e43fd5221f623203f17b51fd6786930f36b47340[m
+Merge: 0813130 71aac30
+Author: Grimkujow <nicolaslagrange14.com>
+Date:   Sun Mar 23 18:43:34 2025 +0100
+
+    Merge branch 'master' of https://github.com/Mb0710/CityFlow
+    MAP + API
+
+[33mcommit 081313009d20b6384925d86bd261fb2003ae0195[m
+Author: Grimkujow <nicolaslagrange14.com>
+Date:   Sun Mar 23 18:39:12 2025 +0100
+
+    map + API
+
+[33mcommit 71aac30f4aa5100aeb4e653a1848d893ea10cd8d[m
+Merge: b3da3b7 151c695
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Sun Mar 23 16:36:07 2025 +0100
+
+    Merge branch 'master' of https://github.com/Mb0710/CityFlow
+
+[33mcommit b3da3b7ad8c0489b30c36a6ef57123421ee5a5e3[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Sun Mar 23 16:35:47 2025 +0100
+
+    icone de site
+
+[33mcommit 151c695d10213c7f5c947aeb0263525abc4a72b2[m
+Author: Grimkujow <nicolaslagrange14.com>
+Date:   Sun Mar 23 15:48:01 2025 +0100
+
+    commit test
+
+[33mcommit 34177ca268c65c1b9fd0c4e6c1400e5997e0484a[m
+Author: Grimkujow <nicolaslagrange14.com>
+Date:   Sun Mar 23 15:30:48 2025 +0100
+
+    commit test
+
+[33mcommit 53ca60ffbc78f4c69922796cd3f7f308f80753c8[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Sat Mar 22 16:38:17 2025 +0100
+
+    login route ajouté
+
+[33mcommit c688190dec52a5b1a9a8f1ecf97d22a524f77f85[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Sat Mar 22 14:24:45 2025 +0100
+
+    Création  tables  BDD + migration
+
+[33mcommit 0b80af1d13fcaacfaf6733ebedec83c26163740e[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Fri Mar 21 21:53:17 2025 +0100
+
+    modification du formulaire d'inscription
+
+[33mcommit 155029e6820f8cc491a35af90585664286b13771[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Fri Mar 21 18:26:55 2025 +0100
+
+    ajout de la fonctionnalité de réinitialisation
+
+[33mcommit ca105da2881ae48fb080f373395921fc4c426f0f[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Fri Mar 21 11:01:26 2025 +0100
+
+    modification du  formulaire d'inscription
+
+[33mcommit 8fec1ef0747f4bfc7209191594bbdfc80c52d01f[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Fri Mar 21 10:54:08 2025 +0100
+
+    mm
+
+[33mcommit 6a1e2f61edcc32512535bfed0a107ef2d29349e5[m
+Author: Mohamed <benlaifao@cy-tech.fr>
+Date:   Thu Mar 20 19:32:03 2025 +0100
+
+    Laravel 12 + page inscription et connexion

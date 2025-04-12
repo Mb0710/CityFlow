@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamp('connection_time');
-            $table->float('points_earned')->default(0.25);
+            $table->float('points_earned');
             $table->timestamps();
         });
     }

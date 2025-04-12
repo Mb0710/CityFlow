@@ -5,13 +5,18 @@ document.addEventListener('DOMContentLoaded', function () {
     attachCreateAccountEvent();
     attachFeatureTourEvents();
     const loginForm = document.querySelector('.box form');
-    const signupForm = document.querySelector('.signup-box form');
-    const resetForm = document.querySelector('.signup-box form'); // Ajustez si nécessaire
 
-    // Gestion du formulaire de connexion
+
+
     if (loginForm) {
         loginForm.addEventListener('submit', function (e) {
             e.preventDefault();
+
+
+            const oldErrorContainer = document.querySelector('.error-container');
+            if (oldErrorContainer) {
+                oldErrorContainer.remove();
+            }
 
             const formData = new FormData(this);
 
@@ -27,11 +32,37 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(data => {
                     if (data.redirect) {
                         window.location.href = data.redirect;
+                    } else if (data.errors) {
+
+                        const errorContainer = document.createElement('div');
+                        errorContainer.className = 'error-container';
+
+
+                        const errorList = document.createElement('ul');
+
+
+                        for (const field in data.errors) {
+                            const errorItem = document.createElement('li');
+                            errorItem.textContent = data.errors[field];
+                            errorList.appendChild(errorItem);
+                        }
+
+                        errorContainer.appendChild(errorList);
+
+
+                        const loginTitle = document.querySelector('.login-title');
+                        loginTitle.parentNode.insertBefore(errorContainer, loginTitle.nextSibling);
                     }
                 })
                 .catch(error => {
                     console.error('Erreur:', error);
-                    // Gérer les erreurs de connexion
+
+                    const errorContainer = document.createElement('div');
+                    errorContainer.className = 'error-container';
+                    errorContainer.innerHTML = '<ul><li>Une erreur s\'est produite. Veuillez réessayer.</li></ul>';
+
+                    const loginTitle = document.querySelector('.login-title');
+                    loginTitle.parentNode.insertBefore(errorContainer, loginTitle.nextSibling);
                 });
         });
     }
@@ -330,9 +361,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // Validation du mot de passe avec critères renforcés
         passwordInput.addEventListener('input', function () {
             const password = this.value;
-            const hasNumber = /[0-9]/.test(password);
-            const hasUpperCase = /[A-Z]/.test(password);
-            const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
             const hasMinLength = password.length >= 8;
 
             let feedback = '';
@@ -343,20 +371,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 isValid = false;
             }
 
-            if (!hasNumber) {
-                feedback += '• Au moins un chiffre<br>';
-                isValid = false;
-            }
-
-            if (!hasUpperCase) {
-                feedback += '• Au moins une majuscule<br>';
-                isValid = false;
-            }
-
-            if (!hasSpecialChar) {
-                feedback += '• Au moins un caractère spécial<br>';
-                isValid = false;
-            }
 
             if (isValid) {
                 passwordFeedback.innerHTML = 'Mot de passe valide ✓';
@@ -565,7 +579,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <button type="submit" class="button">Créer un compte</button>
 
                     <div class="newAcc">
-                        <p>Vous avez déjà un compte? <a href="#" id="back-to-login">Se connecter</a></p>
+                        <p>Vous avez déjà un compte? <a href="/">Se connecter</a></p>
                     </div>
                 </form>
             `;
@@ -605,7 +619,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 50);
 
 
-            document.getElementById('back-to-login').addEventListener('click', showLoginForm);
+
         }, 500);
     }
 
@@ -632,13 +646,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
             signupBox.innerHTML = `
                 <h2 class="login-title">Reintialiser votre mot de passe</h2>
-                <form>
+                <form method="post"  action="/forgot-password">
+                <input type="hidden" name="_token" value="${document.querySelector('meta[name="csrf-token"]').getAttribute('content')}">
                     <div class="inputBox">
                         <input type="email" placeholder="Adresse e-mail" name="email" required>
                         <i class='bx bxs-envelope'></i>
                     </div>
+                    <button type="submit" class="button">Réinitialiser le mot de passe</button>
                     <div class="newAcc">
-                        <p>Vous vous souvenez de votre mot de passe ?  <a href="#" id="back-to-login">Se connecter</a></p>
+                        <p>Vous vous souvenez de votre mot de passe ?  <a href="/">Se connecter</a></p>
                     </div>
                 </form>
             `;
@@ -653,79 +669,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 50);
 
 
-            document.getElementById('back-to-login').addEventListener('click', showLoginForm);
+
         }, 500);
     }
 
 
-    function showLoginForm(e) {
-        e.preventDefault();
 
-
-        const signupBox = document.querySelector('.box.signup-box');
-        const wrapper = document.querySelector('.wrapper');
-
-
-        signupBox.style.opacity = '0';
-        signupBox.style.transform = 'translateY(20px)';
-
-        setTimeout(() => {
-
-            const newLoginBox = document.createElement('div');
-            newLoginBox.className = 'box';
-            newLoginBox.style.opacity = '0';
-            newLoginBox.style.transform = 'translateY(20px)';
-            newLoginBox.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-
-            newLoginBox.innerHTML = `
-                
-
-                <form>
-                    <div class="inputBox">
-                        <input type="text" placeholder="Nom d'utilisateur" name="login" required>
-                        <i class='bx bxs-user-circle'></i>
-                    </div>
-                    <div class="inputBox">
-                        <input type="password" placeholder="Mot de passe" name="password" required>
-                        <i class='bx bxs-lock'></i>
-                    </div>
-
-                    <div class="remember-forgot">
-                        <label><input type="checkbox"> Se souvenir de moi</label>
-                        <a href="#" class="forgot-link">Mot de passe oublié?</a>
-                    </div>
-
-                    <button type="submit" class="button">Se connecter</button>
-
-                    <div class="login-divider">
-                        <span>ou</span>
-                    </div>
-
-                    <div class="social-login">
-                        <button type="button" class="social-btn google"><i class='bx bxl-google'></i> Google</button>
-                        <button type="button" class="social-btn linkedin"><i class='bx bxl-linkedin'></i> LinkedIn</button>
-                    </div>
-
-                    <div class="newAcc">
-                        <p>Vous n'avez pas de compte? <a href="#">Créer un compte</a></p>
-                    </div>
-                </form>
-            `;
-
-
-            signupBox.remove();
-            wrapper.insertBefore(newLoginBox, document.querySelector('.city-features'));
-
-
-            setTimeout(() => {
-                newLoginBox.style.opacity = '0.95';
-                newLoginBox.style.transform = 'translateY(0)';
-
-
-                attachCreateAccountEvent();
-            }, 50);
-        }, 500);
-    }
 });
 
 
