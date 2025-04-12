@@ -98,4 +98,41 @@ class ConnectedObject extends Model
 
         return false;
     }
+
+    public static function generateReport()
+    {
+        $totalObjects = self::count();
+    
+        $objectsByType = self::select('type', \DB::raw('count(*) as count'))
+            ->groupBy('type')
+            ->get();
+    
+        $activeObjects = self::where('status', 'actif')->count();
+        $inactiveObjects = self::where('status', '!=', 'actif')->count();
+    
+        $averageBatteryLevel = self::avg('battery_level');
+        
+        // Objets avec batterie faible (moins de 20%)
+        $lowBatteryObjects = self::where('battery_level', '<', 20)->count();
+        
+        // Dernière interaction
+        $lastInteractionDate = self::max('last_interaction');
+        
+        // Distribution par zone
+        $objectsByZone = self::select('zone_id', \DB::raw('count(*) as count'))
+            ->groupBy('zone_id')
+            ->with('zone') // Pour charger le nom de la zone
+            ->get();
+    
+        return [
+            'total_objects' => $totalObjects,
+            'objects_by_type' => $objectsByType,
+            'active_objects' => $activeObjects,
+            'inactive_objects' => $inactiveObjects,
+            'average_battery_level' => $averageBatteryLevel,
+            'low_battery_objects' => $lowBatteryObjects,
+            'last_interaction_date' => $lastInteractionDate,
+            'objects_by_zone' => $objectsByZone,
+        ];
+    }
 }
