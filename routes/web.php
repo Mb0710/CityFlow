@@ -86,7 +86,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return view('rapport');
         });
         Route::get('/rapport', [App\Http\Controllers\RapportController::class, 'showReport'])->name('rapport');
-        
+
 
         Route::get('/search-users', [UserController::class, 'searchUsers'])->name('search.users');
     });
