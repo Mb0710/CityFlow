@@ -18,9 +18,19 @@
   <div class="logo-container logo-left">
     <a href="/"><img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo"></a>
   </div>
-  <div class="actions-grid" id="actionsContainer">
 
+  <div class="menu-tri">
+    <select id="filtreCategorie" onchange="filtrerCategorie()">
+      <option value="tous">Tous</option>
+      <option value="Recharge">Recharge</option>
+      <option value="Modification">Modification</option>
+      <option value="Ajout">Ajout</option>
+      <option value="Signalement">Signalement</option>
+    </select>
   </div>
+
+
+  <div class="actions-grid" id="actionsContainer"></div>
 
 
   <div id="confirmation-message" class="message-confirmation" style="display: none;">

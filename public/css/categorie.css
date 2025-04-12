@@ -1,0 +1,233 @@
+/* FOND ET TYPO */
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', sans-serif;
+  background: linear-gradient(135deg, #2193b0, #6dd5ed);
+  min-height: 100vh;
+  background-size: cover;
+}
+
+
+/* === Logo en haut à gauche === */
+.logo-container {
+  position: fixed;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  z-index: 10;
+}
+
+.logo-container img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.logo-container.logo-left {
+  left: 0;
+  top: 0;
+  transform: none;
+}
+
+
+/* TITRE FLOTTANT + NUAGE */
+.titre-container {
+  margin-top: 70px;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nuage-img {
+  width: 400px;
+  opacity: 0.9;
+  animation: float 3s ease-in-out infinite;
+}
+
+.cloud-title {
+  font-size: 60px;
+  font-weight: bold;
+  color: #2e5f4d;
+  margin-top: -150px;
+  text-shadow: 2px 2px #45403A;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* LOGO */
+.logo-site {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 3;
+}
+
+.logo-site img {
+  height: 60px;
+  transition: transform 0.3s ease;
+}
+
+.logo-site img:hover {
+  transform: scale(1.1);
+}
+
+/* CONTENEUR CENTRAL */
+.form-container {
+  margin-top: 320px;
+  padding: 20px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* SECTION UNIQUE DE FORMULAIRE */
+.card-section {
+  background: #ffffffdd;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-section h2 {
+  color: #2e5f4d;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* FORMULAIRE */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: 'Comic Sans MS', sans-serif;
+}
+
+button {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #2e5f4d;
+  color: white;
+  font-family: 'Comic Sans MS', sans-serif;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #3b7a63;
+}
+
+/* LISTE DES ENTRÉES */
+.list {
+  padding-left: 15px;
+}
+
+.list li {
+  margin: 5px 0;
+  color: #252422;
+}
+
+/* MESSAGE TEMPORAIRE */
+.message-confirmation {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2e5f4d;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-family: 'Comic Sans MS', sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: fadeOut 4s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .nuage-img {
+    width: 250px;
+  }
+
+  .cloud-title {
+    font-size: 34px;
+    margin-top: -95px;
+  }
+
+  .logo-site {
+    top: 5px;
+    left: 0px;
+    right: auto;
+  }
+
+  .logo-site img {
+    height: 50px;
+  }
+
+  .form-container {
+    padding: 10px;
+    margin-top: 280px;
+  }
+
+  .card-section {
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .card-section h2 {
+    font-size: 18px;
+  }
+
+  input[type="text"],
+  button {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .message-confirmation {
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+}

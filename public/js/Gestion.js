@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Si on est en mode modification d'une carte existante
     if (carteEnEdition) {
       const id = carteEnEdition.getAttribute("data-id");
-      modifierAppareil(id, donnees);
+      modifierAppareil(id, donnees, "modification");
       return;
     }
 
@@ -242,8 +242,11 @@ function creerAppareil(donnees) {
 }
 
 // Fonction pour modifier un appareil via l'API
-function modifierAppareil(id, donnees) {
+function modifierAppareil(id, donnees, action_type = null) {
 
+  if (action_type) {
+    donnees.action_type = action_type;
+  }
 
   if (donnees.attributes) {
     donnees.attributes = JSON.stringify(donnees.attributes);

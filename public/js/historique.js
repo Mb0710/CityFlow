@@ -1,3 +1,5 @@
+let allActions = [];
+
 document.addEventListener("DOMContentLoaded", () => {
   fetchUserActions();
 });
@@ -7,6 +9,7 @@ function fetchUserActions() {
     .then(response => response.json())
     .then(data => {
       if (data.success) {
+        allActions = data.data;
         displayUserActions(data.data);
       } else {
         console.error('Erreur lors du chargement des actions utilisateurs');
@@ -16,6 +19,22 @@ function fetchUserActions() {
       console.error('Erreur:', error);
     });
 }
+
+function filtrerCategorie() {
+  const filtreValue = document.getElementById('filtreCategorie').value;
+
+  if (filtreValue === 'tous') {
+
+    displayUserActions(allActions);
+  } else {
+
+    const actionsFiltrees = allActions.filter(action =>
+      action.action_type.toLowerCase() === filtreValue.toLowerCase()
+    );
+    displayUserActions(actionsFiltrees);
+  }
+}
+
 
 function displayUserActions(actions) {
   const container = document.getElementById('actionsContainer');

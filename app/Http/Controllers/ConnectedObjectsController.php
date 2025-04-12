@@ -300,10 +300,10 @@ class ConnectedObjectsController extends Controller
 
         $pointsResult = $this->awardPointsAndLogAction(
             Auth::id(),
-            'ajout',
+            'signalement',
             $connectedObject->id,
             10,
-            "Ajout d'un nouvel objet: " . $connectedObject->name
+            "signalement d'un nouvel objet: " . $connectedObject->name
         );
 
         return response()->json([
@@ -434,6 +434,7 @@ class ConnectedObjectsController extends Controller
             'lat' => 'nullable|numeric',
             'lng' => 'nullable|numeric',
             'zone_id' => 'exists:city_zones,id',
+            'action_type' => 'nullable|string'
         ]);
 
         if ($validator->fails()) {
@@ -443,10 +444,12 @@ class ConnectedObjectsController extends Controller
             ], 422);
         }
 
-        $connectedObject->update($request->all());
+        $actionType = $request->input('action_type');
+
+        $connectedObject->update($request->except('action_type'));
 
         if ($originalBatteryLevel < 100 && $connectedObject->battery_level == 100) {
-            $newPoints = $this->awardPointsAndLogAction(
+            $pointsResult = $this->awardPointsAndLogAction(
                 Auth::id(),
                 'recharge',
                 $id,
@@ -458,7 +461,30 @@ class ConnectedObjectsController extends Controller
                 'success' => true,
                 'data' => $connectedObject,
                 'points_awarded' => 5,
-                'total_points' => $newPoints
+                'total_points' => $pointsResult['total_points'],
+                'level_changed' => $pointsResult['level_changed'],
+                'new_level' => $pointsResult['new_level'],
+                'old_level' => $pointsResult['old_level'],
+                'level_info' => $pointsResult['level_info']
+            ]);
+        } elseif ($actionType === 'modification') {
+            $pointsResult = $this->awardPointsAndLogAction(
+                Auth::id(),
+                'modification',
+                $id,
+                7,
+                "Modification de l'objet: " . $connectedObject->name
+            );
+
+            return response()->json([
+                'success' => true,
+                'data' => $connectedObject,
+                'points_awarded' => 7,
+                'total_points' => $pointsResult['total_points'],
+                'level_changed' => $pointsResult['level_changed'],
+                'new_level' => $pointsResult['new_level'],
+                'old_level' => $pointsResult['old_level'],
+                'level_info' => $pointsResult['level_info']
             ]);
         }
 
