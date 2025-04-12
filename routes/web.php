@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserActions;
 use App\Http\Controllers\ConnectedObjectsController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ChartController;
 
 
 // Routes publiques
@@ -145,3 +146,7 @@ Route::get('/test-email', function () {
     });
     return 'Email de test envoyé à ' . $to;
 });
+
+//Route vers la page des statistiques des objets connectés
+Route::get('/stats', [ChartController::class, 'stats'])
+    ->name('stats'); //  Nom de la route

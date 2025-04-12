@@ -18,11 +18,7 @@ return new class extends Migration {
             $table->string('unique_id')->unique();
             $table->string('name');
             $table->text('description')->nullable();
-<<<<<<< HEAD
-            $table->enum('type', ['lampadaire', 'capteur_pollution', 'borne_bus', 'panneau_information','caméra']); //Velo,panneau solaire,
-=======
             $table->enum('type', ['lampadaire', 'capteur_pollution', 'borne_bus', 'panneau_information', 'caméra']); //Velo,panneau solaire,
->>>>>>> origin/master
             $table->enum('status', ['actif', 'inactif', 'maintenance'])->default('actif');
             $table->json('attributes')->nullable();
             $table->integer('battery_level')->nullable();
