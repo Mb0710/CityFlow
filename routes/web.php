@@ -104,7 +104,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/rapport', function () {
             return view('rapport');
         });
-        Route::get('/admin/rapport', [App\Http\Controllers\RapportController::class, 'showReport'])->name('rapport');
+        Route::get('/rapport', [App\Http\Controllers\RapportController::class, 'showReport'])->name('rapport');
 
         Route::get('/stats', [ChartController::class, 'stats'])
             ->name('stats'); //  Nom de la route
