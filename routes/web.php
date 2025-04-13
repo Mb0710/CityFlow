@@ -19,7 +19,12 @@ Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('dashboard');
     }
-    return view('login');
+
+    $report = \App\Models\ConnectedObject::generateReport();
+    $usersCount = \App\Models\User::count();
+    $pollutionSensorsCount = \App\Models\ConnectedObject::where('type', 'capteur_pollution')->count();
+
+    return view('login', compact('report', 'usersCount', 'pollutionSensorsCount'));
 })->name('login');
 
 Route::get('/freetour', function () {

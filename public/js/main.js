@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     attachCreateAccountEvent();
-    attachFeatureTourEvents();
     const loginForm = document.querySelector('.box form');
 
 
@@ -84,124 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             resetPasswordLink.addEventListener('click', showResetForm);
         }
-    }
-
-    function attachFeatureTourEvents() {
-        const features = document.querySelectorAll('.feature');
-
-        features.forEach((feature, index) => {
-            feature.addEventListener('click', () => {
-                switch (index) {
-                    case 0:
-                        showUrbanManagementTour();
-                        break;
-                    case 1:
-                        showRealTimeAnalysisTour();
-                        break;
-                    case 2:
-                        showSustainableDevelopmentTour();
-                        break;
-                }
-            });
-        });
-    }
-
-    function showUrbanManagementTour() {
-        const tourOverlay = createTourOverlay(
-            "Gestion Urbaine",
-            "Explorez notre système intelligent de gestion urbaine. Visualisez et gérez les infrastructures, les services publics et les ressources de votre ville en temps réel.",
-            [
-                "Cartographie détaillée des infrastructures",
-                "Suivi des projets urbains",
-                "Gestion des bâtiments et des espaces publics",
-                "Planification urbaine stratégique"
-            ]
-        );
-        document.body.appendChild(tourOverlay);
-    }
-
-    function showRealTimeAnalysisTour() {
-        const tourOverlay = createTourOverlay(
-            "Analyse en Temps Réel",
-            "Découvrez notre plateforme d'analyse en temps réel qui transforme les données urbaines en insights stratégiques.",
-            [
-                "Tableaux de bord dynamiques",
-                "Indicateurs de performance clés",
-                "Rapports détaillés et personnalisables",
-                "Alertes et notifications instantanées"
-            ]
-        );
-        document.body.appendChild(tourOverlay);
-    }
-
-    function showSustainableDevelopmentTour() {
-        const tourOverlay = createTourOverlay(
-            "Développement Durable",
-            "Engagez-vous dans une approche écologique avec nos outils de développement durable. Surveillez et améliorez l'empreinte environnementale de votre ville.",
-            [
-                "Mesure des émissions de carbone",
-                "Gestion des ressources durables",
-                "Initiatives écologiques",
-                "Rapport d'impact environnemental"
-            ]
-        );
-        document.body.appendChild(tourOverlay);
-    }
-
-    function createTourOverlay(title, description, features) {
-        const overlay = document.createElement('div');
-        overlay.style.position = 'fixed';
-        overlay.style.top = '0';
-        overlay.style.left = '0';
-        overlay.style.width = '100%';
-        overlay.style.height = '100%';
-        overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
-        overlay.style.zIndex = '1000';
-        overlay.style.display = 'flex';
-        overlay.style.alignItems = 'center';
-        overlay.style.justifyContent = 'center';
-        overlay.style.color = 'white';
-        overlay.style.padding = '20px';
-        overlay.style.boxSizing = 'border-box';
-        overlay.style.textAlign = 'center';
-
-        const content = document.createElement('div');
-        content.style.maxWidth = '600px';
-        content.style.background = 'rgba(255,255,255,0.1)';
-        content.style.padding = '40px';
-        content.style.borderRadius = '15px';
-        content.style.backdropFilter = 'blur(10px)';
-
-        content.innerHTML = `
-            <h2 style="color: #1976d2; margin-bottom: 20px;">${title}</h2>
-            <p style="margin-bottom: 20px; line-height: 1.6;">${description}</p>
-            <h3 style="color: #1976d2; margin-bottom: 15px;">Fonctionnalités Clés:</h3>
-            <ul style="list-style-type: none; padding: 0;">
-                ${features.map(feature => `
-                    <li style="margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">
-                        <span style="margin-right: 10px; color: #1976d2;">•</span>${feature}
-                    </li>
-                `).join('')}
-            </ul>
-            <button id="closeTourOverlay" style="
-                margin-top: 20px; 
-                background-color: #1976d2; 
-                color: white; 
-                border: none; 
-                padding: 10px 20px; 
-                border-radius: 5px; 
-                cursor: pointer;
-                transition: background-color 0.3s;
-            ">Fermer</button>
-        `;
-
-        const closeButton = content.querySelector('#closeTourOverlay');
-        closeButton.addEventListener('click', () => {
-            document.body.removeChild(overlay);
-        });
-
-        overlay.appendChild(content);
-        return overlay;
     }
 
 

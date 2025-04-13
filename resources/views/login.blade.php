@@ -67,14 +67,17 @@
             <div class="feature">
                 <i class='bx bx-building-house'></i>
                 <span>Gestion Urbaine</span>
+                <p><strong>{{ $report['active_objects'] }}</strong> objets connectés actifs</p>
             </div>
             <div class="feature">
                 <i class='bx bx-line-chart'></i>
                 <span>Analyse en Temps Réel</span>
+                <p><strong>{{ $usersCount ?? 0 }}</strong> utilisateurs connectés</p>
             </div>
             <div class="feature">
                 <i class='bx bx-leaf'></i>
                 <span>Développement Durable</span>
+                <p><strong>{{ $pollutionSensorsCount ?? 0 }}</strong> capteurs de pollution</p>
             </div>
         </div>
     </div>
