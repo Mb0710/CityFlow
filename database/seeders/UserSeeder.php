@@ -6,6 +6,8 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Faker\Factory as Faker;
+
 
 class UserSeeder extends Seeder
 {
@@ -19,6 +21,8 @@ class UserSeeder extends Seeder
         // Créer différents types d'utilisateurs
         $memberTypes = ['resident', 'visitor', 'official', 'worker'];
         $genders = ['male', 'female'];
+        $faker = Faker::create();
+
         
         // Créer 50 utilisateurs avec des données aléatoires
         for ($i = 5; $i <= 50; $i++) {
