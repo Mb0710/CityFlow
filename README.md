@@ -1,5 +1,7 @@
 
-![CityFlow Logo](public/assets/logo.png)
+<p align="center">
+  <img src="public/assets/logo.png" alt="CityFlow Logo" width="200"/>
+</p>
 
 # 🌆 CityFlow
 
