@@ -161,8 +161,8 @@ class ConnectedObjectsController extends Controller
                 'description' => 'nullable|string',
                 'status' => 'required|string',
                 'battery_level' => 'integer|min:0|max:100',
-                'lat' => 'required|numeric',
-                'lng' => 'required|numeric',
+                'lat' => 'required|numeric|min:49.015|max:49.055',
+                'lng' => 'required|numeric|min:2.02|max:2.11',
                 'attributes' => 'nullable|json',
             ]);
 
@@ -337,21 +337,26 @@ class ConnectedObjectsController extends Controller
      */
     public function destroy($id)
     {
-        $connectedObject = ConnectedObject::find($id);
+        try {
+            $object = ConnectedObject::findOrFail($id);
 
-        if (!$connectedObject) {
+            // Supprimer explicitement toutes les actions liées à cet objet
+            UserAction::where('object_id', $id)->delete();
+
+            // Puis supprimer l'objet
+            $object->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Objet connecté supprimé avec succès'
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Erreur lors de la suppression: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Objet connecté non trouvé'
-            ], 404);
+                'message' => 'Impossible de supprimer cet objet: ' . $e->getMessage()
+            ], 500);
         }
-
-        $connectedObject->delete();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Objet connecté supprimé avec succès'
-        ]);
     }
 
     /**
@@ -427,12 +432,12 @@ class ConnectedObjectsController extends Controller
             'unique_id' => 'string|unique:connected_objects,unique_id,' . $id,
             'name' => 'string|max:255',
             'description' => 'nullable|string',
-            'type' => 'in:lampadaire,capteur_pollution,borne_bus,panneau_information,caméra',
+            'type' => 'exists:object_types,name',
             'status' => 'in:actif,inactif,maintenance',
             'attributes' => 'nullable|json',
             'battery_level' => 'nullable|integer|min:0|max:100',
-            'lat' => 'nullable|numeric',
-            'lng' => 'nullable|numeric',
+            'lat' => 'nullable|numeric|min:49.015|max:49.055',
+            'lng' => 'nullable|numeric|min:2.02|max:2.11',
             'zone_id' => 'exists:city_zones,id',
             'action_type' => 'nullable|string'
         ]);

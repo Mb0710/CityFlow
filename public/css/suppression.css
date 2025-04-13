@@ -55,21 +55,26 @@ body {
   }
 }
 
-/* Logo dans le coin inférieur gauche */
-.logo-site {
-  position: absolute;
-  bottom: 60px;
-  left: -20px;
-  z-index: 3;
+/* === Logo en haut à gauche === */
+.logo-container {
+  position: fixed;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  z-index: 10;
 }
 
-.logo-site img {
-  height: 100px;
-  transition: transform 0.3s ease;
+.logo-container img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
-.logo-site img:hover {
-  transform: scale(1.1);
+.logo-container.logo-left {
+  left: 0;
+  top: 0;
+  transform: none;
 }
 
 /* === Grille contenant les cartes des objets à supprimer === */

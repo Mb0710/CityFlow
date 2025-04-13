@@ -13,13 +13,13 @@
 
   <!-- Logo du site qui permet aussi de revenir au dashboard et titre avec effet nuageux-->
   <div class="titre-container">
-    <div class="logo-site">
-      <a href="/"><img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo" class="logo-responsive"></a>
-    </div>
-
     <img src="{{ asset('./assets/nuage.png') }}" alt="Nuage" class="nuage-img">
 
     <div class="cloud-title">Suppression</div>
+  </div>
+
+  <div class="logo-container logo-left">
+    <a href="/admin"><img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo"></a>
   </div>
 
   <!-- Grille des demandes de suppression -->

@@ -17,7 +17,7 @@
     <div class="cloud-title">Validation des Inscriptions</div>
   </div>
   <div class="logo-container logo-left">
-    <a href="/"><img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo"></a>
+    <a href="/admin"><img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo"></a>
   </div>
   <div class="device-grid" id="inscriptionGrid">
     <!-- Les inscriptions en attente seront chargées ici -->

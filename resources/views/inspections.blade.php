@@ -16,7 +16,7 @@
     <div class="cloud-title">Inspections</div>
   </div>
   <div class="logo-container logo-left">
-    <a href="/"><img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo"></a>
+    <a href="/admin"><img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo"></a>
   </div>
 
   <div class="menu-tri">

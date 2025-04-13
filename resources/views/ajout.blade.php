@@ -4,46 +4,89 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ajouter Catégories</title>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>Gestion des types d'objets</title>
   <link rel="stylesheet" href="{{ asset('css/Categorie.css') }}">
 </head>
 
 <body>
 
-  <!--  Logo du site qui permet aussi de revenir au dashboard et titre nuageux-->
-  <div class="titre-container">
-    <img src="{{ asset('./assets/nuage.png') }}" alt="Nuage" class="nuage-img">
-
-    <div class="cloud-title">Catégories</div>
-  </div>
   <div class="logo-container logo-left">
-    <a href="/"><img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo"></a>
+    <a href="/admin"><img src="{{ asset('./assets/logo.png') }}" alt="City Flow Logo"></a>
   </div>
 
-  <!-- Conteneur principal unique -->
   <div class="form-container">
-
-    <!-- Formulaire unique -->
+    <!-- Section d'ajout -->
     <div class="card-section">
-      <h2>Ajouter une catégorie</h2>
-      <form id="formCategorie">
-        <input type="text" id="categorieInput" name="Categorie" placeholder="Nom de la catégorie" required />
-        <input type="text" id="uniteInput" name="nom_attribut" placeholder="Nom de l'attribut " required />
-        <input type="text" id="uniteInput" name="valeurs" placeholder="Valeurs" required />
-        <button type="submit">Ajouter</button>
-      </form>
+      <h2>Ajouter un type d'objet</h2>
+      <form id="formType">
+        <div class="form-group">
+          <label for="typeInput">Nom du type:</label>
+          <input type="text" id="typeInput" name="name" placeholder="Nom du type d'objet" required />
+        </div>
 
-      <!-- Liste affichant les couples catégorie / unité -->
-      <ul id="categorieList" class="list"></ul>
+        <div class="form-group">
+          <label for="descriptionInput">Description:</label>
+          <input type="text" id="descriptionInput" name="description" placeholder="Description du type" />
+        </div>
+
+        <div id="attributesContainer">
+          <h3>Attributs</h3>
+          <div class="attributes-list" id="attributesList">
+            <!-- Les attributs seront ajoutés ici dynamiquement -->
+          </div>
+          <button type="button" id="addAttributeBtn" class="secondary-btn">+ Ajouter un attribut</button>
+        </div>
+
+        <button type="submit" class="primary-btn">Sauvegarder le type d'objet</button>
+      </form>
+    </div>
+
+    <!-- Section de liste -->
+    <div class="card-section">
+      <h2>Types d'objets existants</h2>
+      <ul id="typeList" class="list"></ul>
     </div>
   </div>
 
-  <!-- Message visuel temporaire -->
-  <div id="confirmation-message" class="message-confirmation" style="display: none;">
-    ✅ Élément ajouté avec succès.
-  </div>
+  <!-- Template pour un nouvel attribut -->
+  <template id="attributeTemplate">
+    <div class="attribute-item">
+      <div class="attribute-header">
+        <h4>Attribut</h4>
 
-  <script src="{{ asset('js/Categorie.js') }}"></script>
+      </div>
+
+      <div class="form-group">
+        <label>Nom technique:</label>
+        <input type="text" name="attributes[INDEX].nom" placeholder="Nom technique" required />
+      </div>
+
+      <div class="form-group">
+        <label>Libellé:</label>
+        <input type="text" name="attributes[INDEX].label" placeholder="Libellé affiché" required />
+      </div>
+
+      <div class="form-group">
+        <label>Type:</label>
+        <select name="attributes[INDEX].type" class="attribute-type" required>
+          <option value="text">Texte</option>
+          <option value="number">Nombre</option>
+          <option value="select">Liste déroulante</option>
+        </select>
+      </div>
+
+      <div class="options-container" style="display: none;">
+        <label>Options (une par ligne):</label>
+        <textarea name="attributes[INDEX].options_text" placeholder="Une option par ligne" rows="3"></textarea>
+      </div>
+    </div>
+  </template>
+
+  <!-- Message visuel temporaire -->
+  <div id="confirmation-message" class="message-confirmation" style="display: none;"></div>
+
+  <script src="{{ asset('js/categorie.js') }}"></script>
 </body>
 
 </html>

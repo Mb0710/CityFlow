@@ -60,16 +60,16 @@
 
       <label for="coordonnees">Coordonnées (lat,lng)</label>
       <input type="text" id="coordonnees" name="coordonnees" required placeholder="49.035,2.065" />
+      <small class="form-text text-muted">Latitude entre 49.015 et 49.055, Longitude entre 2.02 et 2.11</small>
 
-      <label for="categorie">Catégorie</label>
-      <select id="categorie" name="categorie" required>
-        <option value="">-- Sélectionner --</option>
-        <option value="lampadaire">Lampadaire</option>
-        <option value="capteur_pollution">Capteur pollution</option>
-        <option value="borne_bus">Borne de bus</option>
-        <option value="panneau_information">Panneau d'information</option>
-        <option value="caméra">Caméra</option>
-      </select>
+      <div class="form-group">
+        <label for="categorie">Catégorie:</label>
+        <select id="categorie" name="categorie" data-refresh="true" required>
+          <option value="">Sélectionnez une catégorie</option>
+          <!-- Les options seront chargées dynamiquement par JavaScript -->
+        </select>
+        <button type="button" id="refresh-categories" class="btn-refresh">↻</button>
+      </div>
 
       <div id="attributs-dynamiques" class="attributs-container">
 

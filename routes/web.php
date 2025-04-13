@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ObjectTypeController;
 use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -136,6 +137,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin/inspections', function () {
             return view('inspections');
         })->name('inspections');
+
+        Route::get('/admin/object-types', [ObjectTypeController::class, 'index'])->name('object.types');
+        Route::post('/admin/object-types', [ObjectTypeController::class, 'store']);
+        Route::delete('/admin/object-types/{id}', [ObjectTypeController::class, 'destroy']);
 
         Route::get('/admin/user-actions', [UserActions::class, 'index'])->name('user.actions');
 

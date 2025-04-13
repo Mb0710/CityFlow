@@ -1,23 +1,51 @@
 // Variable globale pour suivre la carte en cours d'édition
 let carteEnEdition = null;
+let attributsParCategorie = {};
 
-const attributsParCategorie = {
-  'lampadaire': [
-    { nom: 'luminosite', label: 'intensite', type: 'select', options: ['faible', 'moyenne', 'forte'] },
-  ],
-  'capteur_pollution': [
-    { nom: 'type_capteur', label: 'Type de capteur', type: 'select', options: ['co2', 'particules', 'nox'] },
-  ],
-  'borne_bus': [
-    { nom: 'ligne', label: 'Ligne de bus', type: 'text' },
-  ],
-  'panneau_information': [
-    { nom: 'type_affichage', label: 'Type d\'affichage', type: 'select', type: 'text' },
-  ],
-  'caméra': [
-    { nom: 'resolution', label: 'Résolution', type: 'select', options: ['720p', '1080p', '4K'] },
-  ]
-};
+function chargerTypesObjets() {
+  const categorieSelect = document.getElementById("categorie");
+
+  // Vider le sélecteur avant de le remplir
+  categorieSelect.innerHTML = '<option value="">Sélectionnez une catégorie</option>';
+
+  fetch('/admin/object-types')
+    .then(response => response.json())
+    .then(response => {
+      console.log("Données reçues:", response); // Pour le débogage
+
+      // Accéder au tableau des types qui se trouve dans la propriété 'data'
+      const types = response.data;
+
+      if (Array.isArray(types)) {
+        // Réinitialiser attributsParCategorie avant de le remplir avec les nouvelles données
+        attributsParCategorie = {};
+
+        types.forEach(type => {
+          const option = document.createElement("option");
+          option.value = type.name;
+          option.textContent = type.name.charAt(0).toUpperCase() + type.name.slice(1);
+          categorieSelect.appendChild(option);
+
+          // Stocker les attributs par catégorie pour une utilisation ultérieure
+          try {
+            if (type.attributes) {
+              const attrs = typeof type.attributes === 'string'
+                ? JSON.parse(type.attributes)
+                : type.attributes;
+
+              attributsParCategorie[type.name] = attrs;
+            }
+          } catch (e) {
+            console.error(`Erreur lors du parsing des attributs pour ${type.name}:`, e);
+            attributsParCategorie[type.name] = [];
+          }
+        });
+      } else {
+        console.error("Format de données inattendu:", types);
+      }
+    })
+    .catch(error => console.error("Erreur lors du chargement des types d'objets:", error));
+}
 
 
 // Code exécuté une fois le DOM entièrement chargé
@@ -28,6 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Charger tous les appareils au chargement de la page
   chargerAppareils();
+
+  chargerTypesObjets();
 
   // Gestion de la soumission du formulaire (ajout ou modification)
   form.addEventListener("submit", (e) => {
@@ -40,6 +70,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const coordonnees = document.getElementById("coordonnees").value;
     const categorie = document.getElementById("categorie").value;
 
+    const coordArray = coordonnees.split(',');
+    if (coordArray.length !== 2) {
+      alert("Format de coordonnées invalide. Utilisez le format 'latitude,longitude'");
+      return;
+    }
+
+    const lat = parseFloat(coordArray[0].trim());
+    const lng = parseFloat(coordArray[1].trim());
+
+    // Vérification des limites des coordonnées
+    if (isNaN(lat) || lat < 49.015 || lat > 49.055) {
+      alert("La latitude doit être comprise entre 49.015 et 49.055");
+      return;
+    }
+
+    if (isNaN(lng) || lng < 2.02 || lng > 2.11) {
+      alert("La longitude doit être comprise entre 2.02 et 2.11");
+      return;
+    }
 
     const attributs = {};
 
@@ -85,6 +134,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const categorieSelect = document.getElementById("categorie");
   categorieSelect.addEventListener("change", actualiserAttributsDynamiques);
+
+  const refreshButton = document.getElementById("refresh-categories");
+  if (refreshButton) {
+    refreshButton.addEventListener("click", function () {
+      chargerTypesObjets();
+      console.log("Actualisation des types d'objets...");
+    });
+  }
 });
 
 // Fonction pour actualiser les attributs selon la catégorie sélectionnée

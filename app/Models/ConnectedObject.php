@@ -30,11 +30,20 @@ class ConnectedObject extends Model
     ];
 
 
+    public function objectType()
+    {
+        return $this->belongsTo(ObjectType::class, 'type', 'name');
+    }
     public function zone()
     {
         return $this->belongsTo(CityZone::class, 'zone_id');
     }
 
+
+    public function userActions()
+    {
+        return $this->hasMany(UserAction::class, 'object_id', 'id');
+    }
 
     public function findNearestZone()
     {

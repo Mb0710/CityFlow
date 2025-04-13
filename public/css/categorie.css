@@ -185,6 +185,149 @@ button:hover {
   }
 }
 
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.card-section {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+input[type="text"],
+textarea,
+select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.primary-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.secondary-btn {
+  background-color: #f1f1f1;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.attribute-item {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.attribute-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.attribute-header h4 {
+  margin: 0;
+}
+
+.remove-attribute-btn {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.options-container {
+  margin-top: 10px;
+}
+
+.type-item {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.type-info h3 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.type-attributes {
+  margin: 10px 0;
+}
+
+.type-attributes ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.type-attributes li {
+  margin-bottom: 5px;
+  padding-left: 10px;
+  border-left: 3px solid #4CAF50;
+}
+
+.delete-btn {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  float: right;
+}
+
+.message-confirmation {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  background-color: #ddffdd;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.no-attributes {
+  font-style: italic;
+  color: #888;
+}
+
 @media screen and (max-width: 600px) {
   .nuage-img {
     width: 250px;
@@ -229,5 +372,18 @@ button:hover {
   .message-confirmation {
     font-size: 14px;
     padding: 10px 16px;
+  }
+
+  .form-container {
+    padding: 10px;
+  }
+
+  .attribute-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .remove-attribute-btn {
+    margin-top: 8px;
   }
 }
