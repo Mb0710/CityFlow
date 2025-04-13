@@ -28,7 +28,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CityZoneSeeder::class,
             ConnectedObjectSeeder::class,
-            // UserSeeder::class,
+            UserSeeder::class,
+            UserActionSeeder::class,
+        
         ]);
-    }
-}
+    
+}}

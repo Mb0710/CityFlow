@@ -34,15 +34,15 @@ class UserSeeder extends Seeder
             }
             
             User::create([
-                'login' => 'user' . $i,
-                'name' => 'Nom' . $i,
-                'firstname' => 'Prénom' . $i,
+                'login' => $faker->unique()->userName,
+                'name' => $faker->lastName,
+                'firstname' => $faker->firstName,  
                 'email' => 'user' . $i . '@example.com',
                 'password' => Hash::make('password' . $i),
                 'birth_date' => Carbon::now()->subYears(rand(18, 70))->subDays(rand(0, 365)),
                 'gender' => $genders[array_rand($genders)],
                 'member_type' => $memberTypes[array_rand($memberTypes)],
-                'profile_picture' => null,
+                'profile_picture' => $faker->imageUrl(),
                 'last_login_date' => Carbon::now()->subDays(rand(0, 30)),
                 'points' => $points,
                 'login_streak' => rand(0, 30),
