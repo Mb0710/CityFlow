@@ -18,7 +18,7 @@
     </div>
     <div class="box">
         <h2>Telecharger le dernier rapport </h2>
-        <a class="download-btn">
+        <a href="admin/rapportUtilisateur" class="download-btn">
             <i class='bx bx-download'></i> Télécharger le rapport
         </a>
     </div>

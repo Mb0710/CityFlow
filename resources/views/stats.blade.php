@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Dashboard des Objets Connectés</title>
@@ -10,7 +11,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color:rgb(37, 150, 190)
+            background: linear-gradient(135deg, #2193b0, #6dd5ed);
         }
 
         h1 {
@@ -21,12 +22,14 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 graphes par ligne */
+            grid-template-columns: repeat(2, 1fr);
+            /* 2 graphes par ligne */
             gap: 20px;
             padding: 20px;
             max-width: 100vw;
             box-sizing: border-box;
         }
+
         .button {
             width: 100%;
             background-color: #1976d2;
@@ -46,19 +49,23 @@
             background-color: white;
             padding: 20px;
             border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            max-height: 400px; /*  limite la hauteur du bloc */
-            overflow: hidden; /*  empêche le contenu de déborder */
+            max-height: 400px;
+            /*  limite la hauteur du bloc */
+            overflow: hidden;
+            /*  empêche le contenu de déborder */
         }
 
-        canvas { /* Ca vient de chart.js*/
+        canvas {
+            /* Ca vient de chart.js*/
             width: 100% !important;
             max-width: 100%;
-            height: 250px !important; /* hauteur fixe raisonnable */
+            height: 250px !important;
+            /* hauteur fixe raisonnable */
             display: block;
         }
 
@@ -70,6 +77,7 @@
         }
     </style>
 </head>
+
 <body>
     <h1> Dashboard des Objets Connectés</h1>
 
@@ -97,9 +105,9 @@
             <h2>Répartition par statut</h2>
             <canvas id="statusChart" width="400" height="300"></canvas>
         </div>
-    </div>            
+    </div>
     <a href="{{ route('dashboard') }}" class="button">Retour au tableau de bord</a>
-    
+
 
     <script> //SCRIPT CHART.JS
         //  Objets par zone
@@ -202,4 +210,5 @@
         });
     </script>
 </body>
+
 </html>

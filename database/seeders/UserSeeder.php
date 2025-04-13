@@ -16,19 +16,19 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-      
+
 
         // Créer différents types d'utilisateurs
         $memberTypes = ['resident', 'visitor', 'official', 'worker'];
         $genders = ['male', 'female'];
         $faker = Faker::create();
 
-        
+
         // Créer 50 utilisateurs avec des données aléatoires
         for ($i = 5; $i <= 50; $i++) {
             $points = rand(0, 300);
             $level = 'débutant';
-            
+
             if ($points >= 200) {
                 $level = 'expert';
             } elseif ($points >= 100) {
@@ -36,11 +36,11 @@ class UserSeeder extends Seeder
             } elseif ($points >= 50) {
                 $level = 'intermédiaire';
             }
-            
+
             User::create([
                 'login' => $faker->unique()->userName,
                 'name' => $faker->lastName,
-                'firstname' => $faker->firstName,  
+                'firstname' => $faker->firstName,
                 'email' => 'user' . $i . '@example.com',
                 'password' => Hash::make('password' . $i),
                 'birth_date' => Carbon::now()->subYears(rand(18, 70))->subDays(rand(0, 365)),

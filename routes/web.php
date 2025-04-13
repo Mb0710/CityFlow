@@ -126,6 +126,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return view('ajout');
         })->name('ajout');
 
+
+        Route::get('admin/rapportUtilisateur', [App\Http\Controllers\UserActionReportController::class, 'showReport'])
+            ->name('user-actions');
+
+
         Route::post('/admin/users/{id}/update-points', [UserController::class, 'updatePoints']);
 
 

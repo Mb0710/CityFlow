@@ -29,14 +29,16 @@
   @endif
 
   <!--  Boutons de statistiques et rapport  -->
-  <div class="management-buttons">
+  @if(Auth::check() && in_array(Auth::user()->level, ['expert']))
+    <div class="management-buttons">
     <button class="stats-btn" onclick="window.location.href='/stats'">
       <i class='bx bx-stats'></i> Statistiques
     </button>
     <button class="report-btn" onclick="window.location.href='/rapport'">
       <i class='bx bx-file'></i> Rapport
     </button>
-  </div>
+    </div>
+  @endif
 
   <!--  Menu déroulant pour filtrer les appareils par catégorie -->
   <div class="menu-tri">
