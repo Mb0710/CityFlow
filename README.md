@@ -113,12 +113,4 @@ CityFlow a pour but d’imaginer la gestion d’une ville connectée :
 
 ---
 
-## 📬 Contact
 
-Pour toute question ou contribution, n’hésitez pas à ouvrir une *issue* ou une *pull request*.
-
----
-
-## 📄 Licence
-
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus d’informations.
