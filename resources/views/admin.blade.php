@@ -17,7 +17,10 @@
         <div id="container3D"></div>
     </div>
     <div class="box">
-        <h2>Bienvenue , admin </h2>
+        <h2>Telecharger le dernier rapport </h2>
+        <a class="download-btn">
+            <i class='bx bx-download'></i> Télécharger le rapport
+        </a>
     </div>
     <script type="module" src="{{ asset('js/adminDashboard3d.js') }}"></script>
 </body>

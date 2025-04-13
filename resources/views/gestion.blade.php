@@ -30,7 +30,7 @@
 
   <!--  Boutons de statistiques et rapport  -->
   <div class="management-buttons">
-    <button class="stats-btn" onclick="window.location.href='/statistiques'">
+    <button class="stats-btn" onclick="window.location.href='/stats'">
       <i class='bx bx-stats'></i> Statistiques
     </button>
     <button class="report-btn" onclick="window.location.href='/rapport'">
