@@ -2,6 +2,30 @@
 let carteEnEdition = null;
 let attributsParCategorie = {};
 
+
+function chargerOptionsFiltrage() {
+  const filtreSelect = document.getElementById("filtreCategorie");
+
+  // Garder l'option "Tous"
+  filtreSelect.innerHTML = '<option value="tous">Tous</option>';
+
+  // Utiliser les types d'objets déjà chargés pour remplir les options de filtrage
+  fetch('/admin/object-types')
+    .then(response => response.json())
+    .then(response => {
+      const types = response.data;
+
+      if (Array.isArray(types)) {
+        types.forEach(type => {
+          const option = document.createElement("option");
+          option.value = type.name;
+          option.textContent = type.name.charAt(0).toUpperCase() + type.name.slice(1);
+          filtreSelect.appendChild(option);
+        });
+      }
+    })
+    .catch(error => console.error("Erreur lors du chargement des options de filtrage:", error));
+}
 function chargerTypesObjets() {
   const categorieSelect = document.getElementById("categorie");
 
@@ -40,6 +64,7 @@ function chargerTypesObjets() {
             attributsParCategorie[type.name] = [];
           }
         });
+        chargerOptionsFiltrage();
       } else {
         console.error("Format de données inattendu:", types);
       }
@@ -138,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const refreshButton = document.getElementById("refresh-categories");
   if (refreshButton) {
     refreshButton.addEventListener("click", function () {
-      chargerTypesObjets();
+      chargerTypesObjets(); // Cette fonction met maintenant à jour les deux sélecteurs
       console.log("Actualisation des types d'objets...");
     });
   }

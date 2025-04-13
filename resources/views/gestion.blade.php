@@ -32,11 +32,7 @@
   <div class="menu-tri">
     <select id="filtreCategorie" onchange="filtrerCategorie()">
       <option value="tous">Tous</option>
-      <option value="lampadaire">Lampadaire</option>
-      <option value="capteur_pollution">Capteur pollution</option>
-      <option value="borne_bus">Borne de bus</option>
-      <option value="panneau_information">Panneau d'information</option>
-      <option value="caméra">Caméra</option>
+      <!-- Les options seront chargées dynamiquement -->
     </select>
   </div>
 
