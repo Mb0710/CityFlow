@@ -570,10 +570,6 @@
                 ]
             });
 
-            var marker = new google.maps.Marker({
-                position: latlng,
-                map: map,
-            });
 
             // Définir les limites strictes après création de la carte
             var strictBounds = new google.maps.LatLngBounds(
