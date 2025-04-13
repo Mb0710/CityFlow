@@ -107,6 +107,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
         Route::get('/admin/rapport', [App\Http\Controllers\RapportController::class, 'showReport'])->name('rapport');
 
+
         Route::put('/connected-objects/{id}/report', [ConnectedObjectsController::class, 'report']);
     });
 
