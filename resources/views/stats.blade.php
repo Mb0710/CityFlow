@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard des Objets Connectés</title>
+    <link rel="icon" href="{{ asset('/assets/logo2.png') }}">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #40e0d0; /* Bleu turquoise */
+            background-color:rgb(37, 150, 190)
         }
 
         h1 {
@@ -24,6 +26,20 @@
             padding: 20px;
             max-width: 100vw;
             box-sizing: border-box;
+        }
+        .button {
+            width: 100%;
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            margin-bottom: 20px;
         }
 
         .chart-card {
@@ -81,7 +97,9 @@
             <h2>Répartition par statut</h2>
             <canvas id="statusChart" width="400" height="300"></canvas>
         </div>
-    </div>
+    </div>            
+    <a href="{{ route('dashboard') }}" class="button">Retour au tableau de bord</a>
+    
 
     <script> //SCRIPT CHART.JS
         //  Objets par zone
