@@ -87,20 +87,32 @@ php artisan key:generate
 php artisan storage:link
 ```
 
-9. **Remplir la base de données :**
+9. **Installer le module qui permet de generer un rapport pdf**
+
+```bash
+composer require barryvdh/laravel-dompdf
+```
+
+10. **Ainsi que le fichier de configuration**
+
+```bash
+php artisan vendor:publish --provider="Barryvdh\DomPDF\ServiceProvider"
+```
+
+11. **Remplir la base de données :**
 
 ```bash
 php artisan db:seed
 ```
 
-10. **(Si erreur) Lancer les migrations :**
+12. **(Si erreur) Lancer les migrations :**
 
 ```bash
 php artisan migrate
 ```
 
 
-11. **Lancer le serveur :**
+13. **Lancer le serveur :**
 
 ```bash
 php artisan serve
