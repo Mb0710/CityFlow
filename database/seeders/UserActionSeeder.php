@@ -32,11 +32,10 @@ class UserActionSeeder extends Seeder
         
         // Types d'actions disponibles
         $actionTypes = [
-            'login' => [5, 'Connexion au système'],
-            'scan' => [10, 'Scan d\'un objet'],
-            'interaction' => [15, 'Interaction avec un objet'],
-            'completion' => [25, 'Completion d\'une action'],
-            'sharing' => [20, 'Partage de contenu'],
+            'recharger' => [5, 'Rechargement d\'un objet connecté'],
+            'signalement' => [10, 'signalement d\'un objet connecté'],
+            'ajout' => [10, 'ajout d\'un objet connecté'],
+            'modification' => [7, 'modification d\'un objet connecté'],
         ];
         
         // Générer des actions pour les 90 derniers jours

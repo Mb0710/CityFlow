@@ -11,6 +11,8 @@ use App\Http\Controllers\UserActions;
 use App\Http\Controllers\ConnectedObjectsController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\RapportController;
+use App\Http\Controllers\ChartController;
+
 
 
 
@@ -87,8 +89,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/connected-objects/{id}', [ConnectedObjectsController::class, 'show']);
         Route::put('/connected-objects/{id}', [ConnectedObjectsController::class, 'update']);
 
-
-
+        //rapport 
+        Route::get('/rapport', function () {
+            return view('rapport');
+        });
+        Route::get('/rapport', [App\Http\Controllers\RapportController::class, 'showReport'])->name('rapport');
+        Route::get('/stats', [ChartController::class, 'stats'])
+            ->name('stats'); //  Nom de la route
 
         Route::get('/search-users', [UserController::class, 'searchUsers'])->name('search.users');
     });
