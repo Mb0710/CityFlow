@@ -28,6 +28,16 @@
   onclick="toggleDeviceForm()">+</button>
   @endif
 
+  <!--  Boutons de statistiques et rapport  -->
+  <div class="management-buttons">
+    <button class="stats-btn" onclick="window.location.href='/statistiques'">
+      <i class='bx bx-stats'></i> Statistiques
+    </button>
+    <button class="report-btn" onclick="window.location.href='/rapport'">
+      <i class='bx bx-file'></i> Rapport
+    </button>
+  </div>
+
   <!--  Menu déroulant pour filtrer les appareils par catégorie -->
   <div class="menu-tri">
     <select id="filtreCategorie" onchange="filtrerCategorie()">

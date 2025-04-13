@@ -440,6 +440,56 @@ body {
   animation: fadeOut 4s forwards;
 }
 
+.management-buttons {
+  position: absolute;
+  top: 50px;
+  right: 110px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stats-btn,
+.report-btn {
+  padding: 10px 15px;
+  border-radius: 15px;
+  border: 2px solid #252422;
+  font-size: 16px;
+  font-family: 'Comic Sans MS', sans-serif;
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.stats-btn {
+  background-color: #3b7a63;
+  color: white;
+}
+
+.report-btn {
+  background-color: #4a6fa5;
+  color: white;
+}
+
+.stats-btn:hover,
+.report-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.3);
+}
+
+.stats-btn i,
+.report-btn i {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+/* Ajustez la position du menu de tri pour qu'il soit sous les nouveaux boutons */
+
+
 @keyframes fadeOut {
   0% {
     opacity: 1;

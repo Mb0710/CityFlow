@@ -435,8 +435,6 @@ function ajouterCarteAppareil(appareil) {
         <div class="info-item"><strong>Catégorie:</strong> ${appareil.type}</div>
       </div>
       <div class="device-actions">
-        <button class="rapport-btn">Rapport</button>
-        <button class="stats-btn">Statistiques</button>
         <button class="recharger-btn">Recharger 🔋</button>
         <div class="toggle-wrapper">
           <label class="toggle-switch">
