@@ -81,17 +81,29 @@ composer install
 ```bash
 php artisan key:generate
 ```
-
-8. **Lancer le serveur :**
+8. **Crée un lien symbolique :**
 
 ```bash
-php artisan serve
+php artisan storage:link
 ```
 
-9. **(Si erreur) Lancer les migrations :**
+9. **Remplir la base de données :**
+
+```bash
+php artisan db:seed
+```
+
+10. **(Si erreur) Lancer les migrations :**
 
 ```bash
 php artisan migrate
+```
+
+
+11. **Lancer le serveur :**
+
+```bash
+php artisan serve
 ```
 
 ---
