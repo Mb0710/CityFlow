@@ -157,6 +157,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('/admin/user-actions', [UserActions::class, 'index'])->name('user.actions');
 
+        Route::get('admin/rapportUtilisateur/pdf', [App\Http\Controllers\UserActionReportController::class, 'downloadPDF'])
+            ->name('user-actions.pdf');
+
         Route::get('/reported', [ConnectedObjectsController::class, 'getReportedObjects']);
         Route::delete('/connected-objects/{id}', [ConnectedObjectsController::class, 'destroy']);
         Route::post('/connected-objects/{id}/cancel-report', [ConnectedObjectsController::class, 'cancelReport']);

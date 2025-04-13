@@ -199,7 +199,7 @@
 
             <div class="mt-4">
                 <a href="{{ route('dashboard') }}" class="btn btn-secondary">Retour au tableau de bord</a>
-                <button onclick="window.print()" class="btn btn-primary">Telecharger</button>
+                <a href="{{ route('user-actions.pdf') }}" class="btn btn-primary">Télécharger en PDF</a>
             </div>
         </div>
     </div>
@@ -247,6 +247,7 @@
             });
         });
     </script>
+
 </body>
 
 </html>

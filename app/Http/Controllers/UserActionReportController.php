@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\UserAction;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+
 
 class UserActionReportController extends Controller
 {
@@ -44,6 +47,10 @@ class UserActionReportController extends Controller
 
         return view('reports.filtered_user_actions', compact('actions', 'actionTypes', 'users'));
     }
+
+
+
+
 
     private function generateUserActionReport()
     {
@@ -161,5 +168,14 @@ class UserActionReportController extends Controller
             'current_month_actions' => $currentMonthActions,
             'previous_month_actions' => $previousMonthActions
         ];
+    }
+
+    public function downloadPDF()
+    {
+        $report = $this->generateUserActionReport();
+
+        $pdf = PDF::loadView('user_actions_pdf', compact('report'));
+
+        return $pdf->download('rapport-actions-utilisateurs.pdf');
     }
 }
